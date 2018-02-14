@@ -25,7 +25,6 @@
 #' \code{Frames per Second}.
 #'
 #' @seealso \code{\link{looming_animation}}, \code{\link{looming_animation}}
-#'  \code{\link{???}}
 #'
 #' @usage
 #' constant_speed_model(...)
