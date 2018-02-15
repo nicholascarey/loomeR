@@ -55,7 +55,7 @@ loom_model <- constant_speed_model(
 
 }
 \seealso{
-\code{\link{looming_animation}}, \code{\link{looming_animation}}
+\code{\link{looming_animation}}, \code{\link{looming_animation_calib}}
 }
 \author{
 Nicholas Carey - \link{nicholascarey@gmail.com}

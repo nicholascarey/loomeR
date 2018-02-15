@@ -8,13 +8,14 @@
 #' encoding video, to be installed on your system.
 #'
 #' @details
-#' NOTE - READ THIS! The function works by saving an image (\code{.png} file) for every frame of the animation to the
-#' current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
-#' (saved as \code{animation.mp4}). It then deletes EVERY \code{.png} file in the working directory, including
-#' \code{.png} files not created by the function. It will also overwrite any \code{.png} or \code{.mp4} file it encounters
-#' which has an identical name. It's therefore strongly recommended you create a new directory (i.e. folder) for each
-#' animation, and use \code{setwd()} to set this as the current working directory before running the function. If you want
-#' to save an animation, move it or rename it before running the function again or it will get overwritten.
+#' NOTE - The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
+#' to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
+#' (saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
+#' \code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
+#' (i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
+#' function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
+#' I have not tested this on old systems with slow read-write speeds to the hard drive. This may cause problems. Please
+#' provide feedback if you encounter any problems.
 #'
 #' The function creates a video at the frame rate (\code{anim_frame_rate}) specified in the \code{\link{constant_speed_model}}
 #' object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
@@ -132,11 +133,11 @@
 #' @export
 
 ## To Do
-## fix deletion of png files to match same pattern as their creation in the function (i.e. not any others)
 ## option to set position (i.e. distance from side) of dots and frame number
 ## pad animation with frames before/after, or loop it. i.e. make very long video, or constant looping animation.
 ## add time check = "video should be ...s long" = total frames/fps
 ## option to NOT convert images using ffmpeg
+## set package dependencies
 
 looming_animation <-
 
@@ -185,12 +186,12 @@ looming_animation <-
 
     ## create image for each frame
     for(i in 1:total_frames){
-      # create a name for plot file with leading zeros
-      if (i < 10) {name = paste('plot', '00000',i,'.png',sep='')}
-      if (i < 100 && i >= 10) {name = paste('plot', '0000',i,'.png', sep='')}
-      if (i < 1000 && i >= 100) {name = paste('plot', '000', i,'.png', sep='')}
-      if (i < 10000 && i >= 1000) {name = paste('plot', '00', i,'.png', sep='')}
-      if (i >= 10000) {name = paste('plot', '0', i,'.png', sep='')}
+      # create a name for each file with leading zeros
+      if (i < 10) {name = paste('loom_img_', '00000',i,'.png',sep='')}
+      if (i < 100 && i >= 10) {name = paste('loom_img_', '0000',i,'.png', sep='')}
+      if (i < 1000 && i >= 100) {name = paste('loom_img_', '000', i,'.png', sep='')}
+      if (i < 10000 && i >= 1000) {name = paste('loom_img_', '00', i,'.png', sep='')}
+      if (i >= 10000) {name = paste('loom_img_', '0', i,'.png', sep='')}
 
       # make png file
       png(name, width=width, height=height, res=72)
@@ -327,7 +328,7 @@ looming_animation <-
     if(os() == "mac"){
       instruction_string <-
         glue::glue(
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i plot%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4; rm *.png'
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4; rm loom_img_*.png'
         )
       ## run the command
       system(instruction_string)
@@ -339,13 +340,13 @@ looming_animation <-
     else if(os() == "win"){
       instruction_string <-
         glue::glue(
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i plot%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4'
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4'
         )
       ## run command
       system(instruction_string)
 
       ## delete png files
-      shell("del *.png")
+      shell("del loom_img_*.png")
     }
 
   }

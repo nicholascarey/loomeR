@@ -24,7 +24,7 @@
 #' Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in \code{Hz} or
 #' \code{Frames per Second}.
 #'
-#' @seealso \code{\link{looming_animation}}, \code{\link{looming_animation}}
+#' @seealso \code{\link{looming_animation}}, \code{\link{looming_animation_calib}}
 #'
 #' @usage
 #' constant_speed_model(...)
