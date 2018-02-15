@@ -314,7 +314,7 @@ looming_animation <-
     # -f = Force input or output file format
     # -s = Set frame size
     # -i = input file url
-    # plot%06d.png = specifies to look for files called plot, followed by number composed of six digits
+    # plot%06d.png = specifies to look for files called loom_img_, followed by number composed of six digits
     # padded with zeroes to express the sequence number
     # -vcodec = Set the video codec (libx264)
     # -crf = Constant Rate Factor for x264. Decides how many bits will be used for each frame.
