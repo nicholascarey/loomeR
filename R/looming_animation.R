@@ -116,7 +116,7 @@
 #'                      screen_distance = 20,
 #'                      anim_frame_rate = 60,
 #'                      speed = 500,
-#'                      diameter = 50,
+#'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
 #'
 #' # use it to create an animation with frame numbers in top right corner

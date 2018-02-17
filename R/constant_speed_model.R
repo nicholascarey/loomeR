@@ -32,7 +32,7 @@
 #' @param screen_distance numeric. Distance (cm) from the playback screen to your specimen.
 #' @param anim_frame_rate numeric. Frames per second (Hz) you want the resulting animation to be.
 #' @param speed numeric. Speed (cm/s) of the hypothetical approaching attacker.
-#' @param diameter numeric. Diameter of the hypothetical approaching attacker
+#' @param attacker_diameter numeric. Diameter of the hypothetical approaching attacker
 #' @param start_distance numeric. Starting distance of the hypothetical approaching attacker
 #'
 #' @return List object containing the input parameters and the resulting diameter for each
@@ -43,7 +43,7 @@
 #'                      screen_distance = 20,
 #'                      anim_frame_rate = 60,
 #'                      speed = 500,
-#'                      diameter = 50,
+#'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
 #'
 #' @author Nicholas Carey - \link{nicholascarey@gmail.com}
@@ -55,7 +55,7 @@ constant_speed_model <-
     screen_distance = 20,
     anim_frame_rate = 60,
     speed = 500,
-    diameter = 50,
+    attacker_diameter = 50,
     start_distance = 1000){
 
     ## calculate total time of animation
@@ -79,7 +79,7 @@ constant_speed_model <-
     results_df$distance <- start_distance-((results_df$frame-1) * distance_per_frame)
 
     ## add screen diameter of model for each frame
-    results_df$diam_on_screen <- (diameter*screen_distance)/results_df$distance
+    results_df$diam_on_screen <- (attacker_diameter*screen_distance)/results_df$distance
 
     ## assemble output list object
     output <- list(
@@ -87,7 +87,7 @@ constant_speed_model <-
       screen_distance = screen_distance,
       anim_frame_rate = anim_frame_rate,
       speed = speed,
-      diameter = diameter,
+      attacker_diameter = attacker_diameter,
       start_distance = start_distance
     )
 
