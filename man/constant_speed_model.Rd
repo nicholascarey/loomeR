@@ -13,7 +13,7 @@ constant_speed_model(...)
 
 \item{speed}{numeric. Speed (cm/s) of the hypothetical approaching attacker.}
 
-\item{diameter}{numeric. Diameter of the hypothetical approaching attacker}
+\item{attacker_diameter}{numeric. Diameter of the hypothetical approaching attacker}
 
 \item{start_distance}{numeric. Starting distance of the hypothetical approaching attacker}
 }
@@ -50,7 +50,7 @@ loom_model <- constant_speed_model(
                      screen_distance = 20,
                      anim_frame_rate = 60,
                      speed = 500,
-                     diameter = 50,
+                     attacker_diameter = 50,
                      start_distance = 1000)
 
 }

@@ -61,12 +61,14 @@ determined. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cr
 encoding video, to be installed on your system.
 }
 \details{
-NOTE - READ THIS! The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
+NOTE - The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
 to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
 (saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
 \code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
 (i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
 function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
+I have not tested this on old systems with slow read-write speeds to the hard drive. This may cause problems. Please
+provide feedback if you encounter any problems.
 
 The function creates a video at the frame rate (\code{anim_frame_rate}) specified in the \code{\link{constant_speed_model}}
 object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
@@ -133,7 +135,7 @@ loom_model <- constant_speed_model(
                      screen_distance = 20,
                      anim_frame_rate = 60,
                      speed = 500,
-                     diameter = 50,
+                     attacker_diameter = 50,
                      start_distance = 1000)
 
 # use it to create an animation with frame numbers in top right corner

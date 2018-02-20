@@ -39,18 +39,22 @@ the 10cm distance falls between two \code{correction} values. If creating differ
 value will be the same for a particular screen as long as the display resolution remains the same (see details).
 }
 \details{
-NOTE - READ THIS! The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
+NOTE - The function works by saving an image (\code{loom_img_**.png} file) for every frame of the animation
 to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
 (saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
 \code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
 (i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
 function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
+I have not tested this on old systems with slow read-write speeds to the hard drive. This may cause problems. Please
+provide feedback if you encounter any problems.
 
 The function creates a short 60 frame video containing a static image of 10 horizontal bars along with the
-\code{correction} value used to create each. If the closest result onscreen to 10cm fals between two values, these
-can be entered as the \code{correction_range} and the function re-run to further refine the estimate. When a good
-\code{correction} value is determined, this should be used in the \code{looming_animation} function to produce
-the final animation.
+\code{correction} value used to create each. It is a video not an image file to ensure software rendering onscreen is
+consistent. Open the file in the software you intend to use to play back the final animation, make it fullscreen, pause it,
+and measure the bars physically on the screen with a ruler to identify the correct \code{correction} value. If the closest
+result to 10cm falls between two values, these can be entered as the \code{correction_range} and the function re-run to
+further refine the estimate. When a good \code{correction} value is determined, this should be used in the
+\code{looming_animation} function to produce the final animation.
 
 The display resolution of the screen you will use to play the animation should be entered as \code{width} and
 \code{height}. NOTE - This is the current DISPLAY resolution, which is not necessarily the native resolution
@@ -77,7 +81,7 @@ loom_model <- constant_speed_model(
                      screen_distance = 20,
                      anim_frame_rate = 60,
                      speed = 500,
-                     diameter = 50,
+                     attacker_diameter = 50,
                      start_distance = 1000)
 
 # use it to create a calibration video
