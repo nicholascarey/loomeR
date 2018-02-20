@@ -21,6 +21,9 @@
 #' \code{\link{looming_animation}} to create the animation, play it back and if it is not what you want,
 #' go back and vary the inputs until you are happy with the result.
 #'
+#' To change the starting diameter of the animation (and hence its total duration), modify the
+#' \code{start_distance} parameter until you get the starting diameter or total duration you want.
+#'
 #' Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in \code{Hz} or
 #' \code{Frames per Second}.
 #'
