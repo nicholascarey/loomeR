@@ -135,6 +135,7 @@
 ## To Do
 ## option to set position (i.e. distance from side) of dots and frame number
 ## pad animation with frames before/after, or loop it. i.e. make very long video, or constant looping animation.
+  ## option to add dots/frame number to every frame or just when anim starts
 ## add time check = "video should be ...s long" = total frames/fps
 ## option to NOT convert images using ffmpeg
 ## set package dependencies
@@ -143,6 +144,7 @@ looming_animation <-
 
   function(x,
            correction = 0.0285,
+           pad_start = NULL,
            width=1280,
            height=1024,
            fill = "black",
@@ -171,17 +173,46 @@ looming_animation <-
     ## check for mac or windows thne change this to...
     #ani.options(convert = '/opt/local/bin/convert')
 
-    ## take out data
-    diams <- x$model
+    ## extract data and parameters
+    cs_model <- x$model
     frame_rate <- x$anim_frame_rate
-    total_frames <- nrow(diams)
+
+
+              ## use pad_start to duplicate starting frame the required number of times
+              ## this modifies the input 'constant_speed_model' cs_model and replaces it
+              if(!is.null(pad_start)){
+
+              # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
+              temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad_start*frame_rate), cs_model$diam_on_screen)
+              temp_distance <- c(rep(cs_model$distance[1], pad_start*frame_rate), cs_model$distance)
+              temp_frame <- seq(1, length(temp_diam_on_screen), 1)
+              temp_time <- temp_frame/frame_rate
+
+              ## make new padded model
+              padded_model <- data.frame(
+                temp_frame,
+                temp_time,
+                temp_distance,
+                temp_diam_on_screen
+              )
+
+              names(padded_model) <- names(cs_model)
+
+              cs_model <- padded_model
+              }
+
+
+    ## total frames
+    total_frames <- nrow(cs_model)
+
 
     ## use correction factor to modify diameters
     if(!is.null(correction)){
-      diams$diam_on_screen_corrected <- diams$diam_on_screen * correction
+      cs_model$diam_on_screen_corrected <- cs_model$diam_on_screen * correction
     } else {
-      diams$diam_on_screen_corrected <- diams$diam_on_screen
+      cs_model$diam_on_screen_corrected <- cs_model$diam_on_screen
     }
+
 
 
     ## create image for each frame
@@ -203,7 +234,7 @@ looming_animation <-
       # make circle - centered
       draw.circle(x=0.5, y=0.5,
                   ## NOTE - use corrected column
-                  r <- diams$diam_on_screen_corrected[i]/2,
+                  r <- cs_model$diam_on_screen_corrected[i]/2,
                   nv=100,
                   border=fill,
                   col=fill,
@@ -304,7 +335,7 @@ looming_animation <-
                              '.csv'
       )
 
-      write.csv(diams, file = glue::glue(filename))
+      write.csv(cs_model, file = glue::glue(filename))
     }
 
 
