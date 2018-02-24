@@ -1,11 +1,11 @@
 #' @title Create a looming animation
 #'
 #' @description
-#' \code{looming_animation} creates a movie files (\code{.mp4}) from an animation of a circle increasing in size which
-#' represents an object (e.g. an attacking predator) coming towards a target. The input must be an object created in
-#' \code{\link{constant_speed_model}}, which is where the parameters determining the size and speed of the simulation are
-#' determined. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform, command line utility for
-#' encoding video, to be installed on your system.
+#' \code{looming_animation} creates a movie file (\code{.mp4}) of a circle increasing in size to represent
+#' an object (e.g. an attacking predator) coming towards a target. The function input must be an object created in
+#' \code{\link{constant_speed_model}}, which is where the parameters determining the size and speed of the
+#' simulation are determined. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform,
+#' command line utility for encoding video, to be installed on your system.
 #'
 #' @details
 #' NOTE - The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
@@ -14,22 +14,23 @@
 #' \code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
 #' (i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
 #' function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
-#' I have not tested this on old systems with slow read-write speeds to the hard drive. This may cause problems. Please
-#' provide feedback if you encounter any problems.
+#' It has not been rigorously tested on older systems with slow read-write speeds to the hard drive, which may cause
+#' unknown problems. Please provide feedback if you encounter any issues.
 #'
 #' The function creates a video at the frame rate (\code{anim_frame_rate}) specified in the \code{\link{constant_speed_model}}
 #' object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
 #' rate of 60 Hz, so videos at frame rates higher than this may not be displayed correctly. I recommend using either 30
-#' or 60 frames per second (Hz). The output video is a circle increasing in diameter over time, as specified in the
-#' \code{$model$diam_on_screen} component of the \code{\link{constant_speed_model}} object.
+#' or 60 frames per second (Hz) which is a frame rate most video playback software should handle correctly. The output
+#' video is a circle increasing in diameter over time, as specified in the \code{$model$diam_on_screen} component of
+#' the \code{\link{constant_speed_model}} object.
 #'
 #' The display resolution of the screen you will use to play the animation should be entered as \code{width} and
 #' \code{height}. NOTE - This is the current DISPLAY resolution, which is not necessarily the native resolution
 #' of the screen, but determined in the Displays preferences of your operating system. If you are unsure, visit
 #' \url{https://whatismyscreenresolution.com} on the device. These settings ensure the animation is in the
 #' correct aspect ratio and uses the full screen (although you can modify the aspect ratio if, for example,
-#' you want your animation to be square). Incorrect resolution values *should* still produce the correct widths onscreen,
-#' however I cannot guarantee all playback software will honour this, so best to follow the above guidelines.
+#' you want your animation to be square). Incorrect resolution values *should* still produce the correct widths
+#' onscreen, however I cannot guarantee all playback software will honour this, so best to follow the above guidelines.
 #'
 #' All screens are different, so an object of a hypothetical size may displayed at a different size on a different
 #' screen, due to differences in resolution or the physical size of the pixels that make up the screen. The \code{correction}
@@ -43,22 +44,32 @@
 #' syntax as used in graphics functions such as \code{plot()} etc.
 #'
 #' In your experiment you may want to identify the particular frame of the animation at which an event such as an escape
-#' response occurs. There are two ways of marking the animation so the frame can be identified. If \code{dots = TRUE},
-#' a small dot is placed in the corner of the frame at the interval specified with \code{dots_interval} starting from
-#' the first frame. The colour, size, and corner of the screen to place the dot can be specified with \code{dots_colour},
-#' \code{dots_size}, and \code{dots_position} respectively. Alternatively, the frame number can be placed in every frame using
-#' \code{frame_number = TRUE}. Again, colour, size and corner can be specified with \code{frame_number_colour},
-#' \code{frame_number_size}, and \code{frame_number_position}. In addition, the frame number orientation can be set with
-#' \code{frame_number_rotation}.
+#' response occurs. There are two ways of marking the animation so the frame can be identified in video recordings of the
+#' experiment. If \code{dots = TRUE}, a small dot is placed in the corner of the frame at the interval specified with
+#' \code{dots_interval} starting from the first frame. The colour, size, and corner of the screen to place the dot can be
+#' specified (see \code{Arguments}). Alternatively, the frame number can be placed in every frame using
+#' \code{frame_number = TRUE}. Again, colour, size and corner can be specified. In addition, the frame number orientation
+#' can be set with \code{frame_number_rotation}.
+#'
+#' The animation can be extended to a required total duration using the \code{pad_start} option. This value is a duration in
+#' seconds added to the start of the animation before it starts playback. This duplicates the starting frame of the animation
+#' the required number of times to achieve the padding duration. Essentially, this makes the animation static for \code{pad_start}
+#' seconds before it starts to play. Depending on the \code{start_distance} set in \code{constant_speed_model}, this obviously
+#' means the video will potentially show a static circle until animation playback starts. If you do not want this, either modify
+#' the \code{start_distance} until the initial diameter is negligible, or use the \code{pad_blank = TRUE} option, in which case
+#' blank frames will be added rather than duplicating the starting frame. Under this option, after \code{pad_start} seconds of
+#' blank screen, the animation will suddenly appear and play. Again, how noticable this is depends on the starting diamater as
+#' determined with \code{start_distance} in \code{constant_speed_model}. Note that padding the video with extra frames will
+#' increase the time it takes for the function to run.
 #'
 #' The function should work with both Windows and macOS (Linux coming soon), however it requires \code{ffmpeg}
 #' (\url{http://ffmpeg.org}), an external, cross-platform, command line utility for encoding video, to be installed on your
 #' system. For installation instructions see \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need to
 #' restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
 #'
-#' On Windows after installation, if you encounter an error (e.g. \code{unable to start png() device}), try setting
-#' the working directory with \code{setwd()} to the current or desired folder. Please provide feedback on any other
-#' errors you encounter.
+#' On Windows, if you encounter an error after installation (e.g. \code{unable to start png() device}), try setting
+#' the working directory with \code{setwd()} to the current or desired folder. It has not been extensively tested on Windows,
+#' so please provide feedback on any other issues you encounter.
 #'
 #' For triggered playback of the animation I recommend Apple Quicktime Player. Others applications such as VLC
 #' have quirks, for example automatically closing the window at the end of the video, however find the application that works
@@ -84,6 +95,10 @@
 #' @param x list. A list object of class \code{constant_speed_model}.
 #' @param correction numeric. Correction factor for the display used to play the animation. Default = 0.0285.
 #'  Typically falls between 0.02-0.03. Exact value can be determined using \code{\link{looming_animation_calib}}
+#' @param pad_start numeric. Duration in seconds to pad the start of the video. This replicates the first
+#'  frame of the animation the required number of times to create this duration. Essentially, it makes the
+#'  animation static for \code{pad_start} number of seconds before it starts playing (but see \code{pad_blank}).
+#' @param pad_blank logical. Optionally pad with blank frames rather than the first animation frame.
 #' @param width numeric. Width resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
 #'  this is \code{width = 1080}. Note: this is NOT the native resolution, but the display resolution as set in the
 #'  operating system settings. Visit \url{https://whatismyscreenresolution.com} on the playback display to check.
@@ -145,6 +160,7 @@ looming_animation <-
   function(x,
            correction = 0.0285,
            pad_start = NULL,
+           pad_blank = FALSE,
            width=1280,
            height=1024,
            fill = "black",
@@ -182,8 +198,16 @@ looming_animation <-
               ## this modifies the input 'constant_speed_model' cs_model and replaces it
               if(!is.null(pad_start)){
 
+              # If pad_blank is not TRUE
               # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
-              temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad_start*frame_rate), cs_model$diam_on_screen)
+              if(!isTRUE(pad_blank)){
+                temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad_start*frame_rate), cs_model$diam_on_screen)
+              # otherwise set the diamater to Zero for those frames to achieve a blank frame
+              } else {
+                temp_diam_on_screen <- c(rep(0, pad_start*frame_rate), cs_model$diam_on_screen)
+              }
+
+
               temp_distance <- c(rep(cs_model$distance[1], pad_start*frame_rate), cs_model$distance)
               temp_frame <- seq(1, length(temp_diam_on_screen), 1)
               temp_time <- temp_frame/frame_rate
