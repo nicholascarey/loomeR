@@ -10,13 +10,14 @@
 #' @details
 #' NOTE - The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
 #' to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
-#' (saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
-#' \code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
-#' (i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
-#' function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
-#' It has not been rigorously tested on older systems with slow read-write speeds to the hard drive, which may cause
-#' unknown problems. Please provide feedback if you encounter any issues.
+#' (saved as \code{animation.mp4}). It then deletes (actually deleted, not just sent to the trash) the \code{.png} files from
+#' the working directory. It will overwrite any \code{.png} or \code{.mp4} file it encounters which has an identical name.
+#' It's recommended you create a new directory (i.e. folder) for each animation, and use \code{setwd()} to set this as the
+#' current working directory before running the function. If you want to save an animation, move it or rename it before
+#' running the function again or it will get overwritten. It has not been rigorously tested on older systems with slow
+#' read-write speeds to the hard drive, which may cause unknown problems. Please provide feedback if you encounter any issues.
 #'
+#' @section Screen display and playback considerations:
 #' The function creates a video at the frame rate (\code{anim_frame_rate}) specified in the \code{\link{constant_speed_model}}
 #' object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
 #' rate of 60 Hz, so videos at frame rates higher than this may not be displayed correctly. I recommend using either 30
@@ -40,38 +41,49 @@
 #' for instructions on its use. If creating different animations, the \code{correction} value will be the same for a particular
 #' screen as long as the display resolution remains the same.
 #'
+#' @section Animation options:
 #' The circle colour and background can be specified using \code{fill} and \code{background} with standard base-R colour
 #' syntax as used in graphics functions such as \code{plot()} etc.
 #'
 #' In your experiment you may want to identify the particular frame of the animation at which an event such as an escape
 #' response occurs. There are two ways of marking the animation so the frame can be identified in video recordings of the
 #' experiment. If \code{dots = TRUE}, a small dot is placed in the corner of the frame at the interval specified with
-#' \code{dots_interval} starting from the first frame. The colour, size, and corner of the screen to place the dot can be
-#' specified (see \code{Arguments}). Alternatively, the frame number can be placed in every frame using
-#' \code{frame_number = TRUE}. Again, colour, size and corner can be specified. In addition, the frame number orientation
-#' can be set with \code{frame_number_rotation}.
+#' \code{dots_interval} starting from the first frame, and in the last frame regardless the \code{dots_interval}. The
+#' colour, size, and corner of the screen to place the dot can be specified (see \code{Arguments}). Alternatively, the
+#' frame number can be placed in every frame using \code{frame_number = TRUE}. Again, colour, size and corner can be
+#' specified. In addition, the frame number orientation can be set with \code{frame_number_rotation}. Both dots and frame
+#' numbers are only added to animation frames, not to frames added for padding (see below).
 #'
-#' The animation can be extended to a required total duration using the \code{pad_start} option. This value is a duration in
-#' seconds added to the start of the animation before it starts playback. This duplicates the starting frame of the animation
-#' the required number of times to achieve the padding duration. Essentially, this makes the animation static for \code{pad_start}
-#' seconds before it starts to play. Depending on the \code{start_distance} set in \code{constant_speed_model}, this obviously
-#' means the video will potentially show a static circle until animation playback starts. If you do not want this, either modify
+#' @section Padding animations to a required duration:
+#' The video file can be extended to a required total duration using the \code{pad} option. This value is a duration in
+#' seconds added to the start of the animation before playback. It duplicates the starting frame of the animation
+#' the required number of times to achieve the padding duration. Essentially, this makes the animation static for \code{pad}
+#' seconds before it starts to play. Depending on the \code{start_distance} set in \code{constant_speed_model}, this
+#' means the video may show a static circle until the animation proper starts. If you do not want this, either modify
 #' the \code{start_distance} until the initial diameter is negligible, or use the \code{pad_blank = TRUE} option, in which case
-#' blank frames will be added rather than duplicating the starting frame. Under this option, after \code{pad_start} seconds of
-#' blank screen, the animation will suddenly appear and play. Again, how noticable this is depends on the starting diamater as
-#' determined with \code{start_distance} in \code{constant_speed_model}. Note that padding the video with extra frames will
-#' increase the time it takes for the function to run.
+#' blank frames will be added rather than duplicating the starting frame. Under this option, after \code{pad} seconds of
+#' blank screen, the animation will suddenly appear and play. Again, how noticable this is depends on the starting diameter as
+#' determined with \code{start_distance} in \code{constant_speed_model}. Note that frame tracking markers (i.e. dots or frame
+#' numbers) will only be added to animation frames, not to frames added for padding.
 #'
+#' NOTE: Be careful with padding options. Padding the video with extra frames will increase the time it takes for the function
+#' to run. Finalise your animation options and parameters before padding it. If you need a long duration video, be aware that
+#' every frame png file generated is around 40-50KB. Adding 10 minutes (600s) of padding to a video at 60 Hz will mean
+#' 600*60 = 36000 extra frames generated. At ~45KB each this would require ~1.6GB of hard drive space, and require considerable
+#' time to process! Due to compression, the resulting video file should however be only a few MB in size.
+#'
+#' @section Compatibility:
 #' The function should work with both Windows and macOS (Linux coming soon), however it requires \code{ffmpeg}
 #' (\url{http://ffmpeg.org}), an external, cross-platform, command line utility for encoding video, to be installed on your
 #' system. For installation instructions see \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need to
-#' restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
+#' restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
 #'
 #' On Windows, if you encounter an error after installation (e.g. \code{unable to start png() device}), try setting
 #' the working directory with \code{setwd()} to the current or desired folder. It has not been extensively tested on Windows,
 #' so please provide feedback on any other issues you encounter.
 #'
-#' For triggered playback of the animation I recommend Apple Quicktime Player. Others applications such as VLC
+#' @section Playback in experiments:
+#' For triggered playback of the animation on a Mac I recommend Apple Quicktime Player. Others applications such as VLC
 #' have quirks, for example automatically closing the window at the end of the video, however find the application that works
 #' best for your purposes. As a check, it's a good idea to ensure the application you use is correctly identifying the
 #' metadata of the video. Open the video, pause it, make it fullscreen and then:
@@ -85,6 +97,7 @@
 #' Check 'Frame Rate' matches the \code{anim_frame_rate} used to create the model in \code{\link{constant_speed_model}}.
 #' Make sure playback speed is at 'Normal' (Menu>Playback).
 #'
+#' @section Dependencies:
 #' The function requires the following packages: \code{plotrix}, \code{animation}, \code{glue}.
 #'
 #' @seealso \code{\link{constant_speed_model}}, \code{\link{looming_animation_calib}}
@@ -95,9 +108,9 @@
 #' @param x list. A list object of class \code{constant_speed_model}.
 #' @param correction numeric. Correction factor for the display used to play the animation. Default = 0.0285.
 #'  Typically falls between 0.02-0.03. Exact value can be determined using \code{\link{looming_animation_calib}}
-#' @param pad_start numeric. Duration in seconds to pad the start of the video. This replicates the first
+#' @param pad numeric. Duration in seconds to pad the start of the video. This replicates the first
 #'  frame of the animation the required number of times to create this duration. Essentially, it makes the
-#'  animation static for \code{pad_start} number of seconds before it starts playing (but see \code{pad_blank}).
+#'  animation static for \code{pad} number of seconds before it starts playing (but see \code{pad_blank}).
 #' @param pad_blank logical. Optionally pad with blank frames rather than the first animation frame.
 #' @param width numeric. Width resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
 #'  this is \code{width = 1080}. Note: this is NOT the native resolution, but the display resolution as set in the
@@ -143,28 +156,44 @@
 #'                    frame_number_position = "tr",
 #'                    frame_number_size = 2)
 #'
-#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
-#'
+#' # pad animation with 5 seconds of the starting frame before playback
+#' looming_animation(loom_model,
+#'                    correction = 0.0285,
+#'                    width = 1920,
+#'                    height = 1080,
+#'                    frame_number = TRUE,
+#'                    frame_number_position = "tr",
+#'                    frame_number_size = 2,
+#'                    pad = 5)
 #' @export
+#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
 
 ## To Do
 ## option to set position (i.e. distance from side) of dots and frame number
-## pad animation with frames before/after, or loop it. i.e. make very long video, or constant looping animation.
-  ## option to add dots/frame number to every frame or just when anim starts
+## constant looping animation.
+
 ## add time check = "video should be ...s long" = total frames/fps
 ## option to NOT convert images using ffmpeg
-## set package dependencies
+
+## optimisations
+# use apply instead of loop
+# faster way of padding? rather than looping for padded frames, duplicating that frame more quickly?
+# play with ffmpeg optiosn to reduce file size of pngs
+# add progress bar? - better a % indicator
+
+## test
+## really big padding on windows - that it works and deletes successfully
 
 looming_animation <-
 
   function(x,
            correction = 0.0285,
-           pad_start = NULL,
-           pad_blank = FALSE,
-           width=1280,
-           height=1024,
+           width = 1280,
+           height = 1024,
            fill = "black",
            background = "white",
+           pad = NULL,
+           pad_blank = FALSE,
            dots = FALSE,
            dots_interval = 20,
            dots_colour = "grey",
@@ -177,7 +206,7 @@ looming_animation <-
            frame_number_rotation = 0,
            save_data = FALSE){
 
-    ## check x class
+    ## check class
     if(class(x) != "constant_speed_model")
       stop("Input must be an object of class 'constant_speed_model'.")
 
@@ -186,29 +215,32 @@ looming_animation <-
     require("animation")
     require("glue")
 
-    ## check for mac or windows thne change this to...
+    ## check for mac or windows then change this...?
     #ani.options(convert = '/opt/local/bin/convert')
 
     ## extract data and parameters
     cs_model <- x$model
     frame_rate <- x$anim_frame_rate
 
+    ## get total frames of the animation - useful later for adding frame markers
+    total_frames_anim <- nrow(cs_model)
 
-              ## use pad_start to duplicate starting frame the required number of times
+
+              ## use pad to duplicate starting frame the required number of times
               ## this modifies the input 'constant_speed_model' cs_model and replaces it
-              if(!is.null(pad_start)){
+              if(!is.null(pad)){
 
               # If pad_blank is not TRUE
               # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
               if(!isTRUE(pad_blank)){
-                temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad_start*frame_rate), cs_model$diam_on_screen)
+                temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad*frame_rate), cs_model$diam_on_screen)
               # otherwise set the diamater to Zero for those frames to achieve a blank frame
               } else {
-                temp_diam_on_screen <- c(rep(0, pad_start*frame_rate), cs_model$diam_on_screen)
+                temp_diam_on_screen <- c(rep(0, pad*frame_rate), cs_model$diam_on_screen)
               }
 
 
-              temp_distance <- c(rep(cs_model$distance[1], pad_start*frame_rate), cs_model$distance)
+              temp_distance <- c(rep(cs_model$distance[1], pad*frame_rate), cs_model$distance)
               temp_frame <- seq(1, length(temp_diam_on_screen), 1)
               temp_time <- temp_frame/frame_rate
 
@@ -265,7 +297,15 @@ looming_animation <-
                   lty=1,lwd=1)
 
       ## add dots
-      if(dots == TRUE){
+      ## only to animation frames
+      ## - if i is greater than or equal to this, then it's the start of the animation
+
+      ## get animation start frame
+      asf <- total_frames - total_frames_anim +1
+      ## get animation frame for this iteration
+      af <- total_frames_anim - (total_frames - i)
+
+      if(dots == TRUE && i >= asf){
         ## set x and y coords from position
         dots_x_pos <- right(dots_position, 1)
         dots_y_pos <- left(dots_position, 1)
@@ -284,17 +324,17 @@ looming_animation <-
           dots_y_coord <- 0.95
         }
 
-        ## draw dot in corner of first frame
-        if(i == 1) {draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                r <- dots_size,
-                                nv=100,
-                                border=dots_colour,
-                                col=dots_colour,
-                                lty=1,
-                                lwd=1)}
+        ## draw dot in corner of first animation frame
+        if(i == asf){draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                 r <- dots_size,
+                                 nv=100,
+                                 border=dots_colour,
+                                 col=dots_colour,
+                                 lty=1,
+                                 lwd=1)}
 
-        # draw dot in corner every 25th frame
-        if(i %% dots_interval == 0) {draw.circle(x=dots_x_coord, y=dots_y_coord,
+        # draw dot in corner every nth animation frame
+        if(af %% dots_interval == 0) {draw.circle(x=dots_x_coord, y=dots_y_coord,
                                                  r <- dots_size,
                                                  nv=100,
                                                  border=dots_colour,
@@ -314,7 +354,7 @@ looming_animation <-
 
 
       ## add frame numbers
-      if(frame_number == TRUE){
+      if(frame_number == TRUE && i >= asf){
 
         ## set x and y coords from position
         fn_x_pos <- right(frame_number_position, 1)
@@ -333,10 +373,12 @@ looming_animation <-
         }
 
         ## make frame number label
-        text(paste(i),
+        ## NOTE - can't use 'i' alone since it include padded frames
+        ## must use this code to get actual animation frame
+        text(paste(total_frames_anim - (total_frames - i)),
              col = frame_number_colour,
-             x=fn_x_coord,
-             y=fn_y_coord,
+             x = fn_x_coord,
+             y = fn_y_coord,
              cex = frame_number_size,
              srt = frame_number_rotation)
       }
@@ -383,7 +425,10 @@ looming_animation <-
     if(os() == "mac"){
       instruction_string <-
         glue::glue(
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4; rm loom_img_*.png'
+          ## rm loom_img_*.png'
+          ## old remove command above - ran into Terminal "Argument list too long" error when there were huge numbers of files
+          ## this seems to work ok
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4; find . -maxdepth 1 -name "loom_img_*.png" -delete'
         )
       ## run the command
       system(instruction_string)

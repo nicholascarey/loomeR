@@ -12,12 +12,6 @@ looming_animation(x, ...)
 \item{correction}{numeric. Correction factor for the display used to play the animation. Default = 0.0285.
 Typically falls between 0.02-0.03. Exact value can be determined using \code{\link{looming_animation_calib}}}
 
-\item{pad_start}{numeric. Duration in seconds to pad the start of the video. This replicates the first
-frame of the animation the required number of times to create this duration. Essentially, it makes the
-animation static for \code{pad_start} number of seconds before it starts playing (but see \code{pad_blank}).}
-
-\item{pad_blank}{logical. Optionally pad with blank frames rather than the first animation frame.}
-
 \item{width}{numeric. Width resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
 this is \code{width = 1080}. Note: this is NOT the native resolution, but the display resolution as set in the
 operating system settings. Visit \url{https://whatismyscreenresolution.com} on the playback display to check.}
@@ -29,6 +23,12 @@ operating system settings. Visit \url{https://whatismyscreenresolution.com} on t
 \item{fill}{string. Colour of the circle.}
 
 \item{background}{string. Colour of the background.}
+
+\item{pad}{numeric. Duration in seconds to pad the start of the video. This replicates the first
+frame of the animation the required number of times to create this duration. Essentially, it makes the
+animation static for \code{pad} number of seconds before it starts playing (but see \code{pad_blank}).}
+
+\item{pad_blank}{logical. Optionally pad with blank frames rather than the first animation frame.}
 
 \item{dots}{logical. Controls if frame tracking dots are added to animation frames (see details).}
 
@@ -69,12 +69,14 @@ command line utility for encoding video, to be installed on your system.
 \details{
 NOTE - The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
 to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
-(saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
-\code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
-(i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
-function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
-It has not been rigorously tested on older systems with slow read-write speeds to the hard drive, which may cause
-unknown problems. Please provide feedback if you encounter any issues.
+(saved as \code{animation.mp4}). It then deletes (actually deleted, not just sent to the trash) the \code{.png} files from
+the working directory. It will overwrite any \code{.png} or \code{.mp4} file it encounters which has an identical name.
+It's recommended you create a new directory (i.e. folder) for each animation, and use \code{setwd()} to set this as the
+current working directory before running the function. If you want to save an animation, move it or rename it before
+running the function again or it will get overwritten. It has not been rigorously tested on older systems with slow
+read-write speeds to the hard drive, which may cause unknown problems. Please provide feedback if you encounter any issues.
+}
+\section{Screen display and playback considerations}{
 
 The function creates a video at the frame rate (\code{anim_frame_rate}) specified in the \code{\link{constant_speed_model}}
 object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
@@ -98,6 +100,9 @@ matches the diameters in the \code{$model$diam_on_screen} component of the \code
 value can be determined using the \code{\link{looming_animation_calib}} function. See the documentation for this function
 for instructions on its use. If creating different animations, the \code{correction} value will be the same for a particular
 screen as long as the display resolution remains the same.
+}
+
+\section{Animation options}{
 
 The circle colour and background can be specified using \code{fill} and \code{background} with standard base-R colour
 syntax as used in graphics functions such as \code{plot()} etc.
@@ -105,32 +110,48 @@ syntax as used in graphics functions such as \code{plot()} etc.
 In your experiment you may want to identify the particular frame of the animation at which an event such as an escape
 response occurs. There are two ways of marking the animation so the frame can be identified in video recordings of the
 experiment. If \code{dots = TRUE}, a small dot is placed in the corner of the frame at the interval specified with
-\code{dots_interval} starting from the first frame. The colour, size, and corner of the screen to place the dot can be
-specified (see \code{Arguments}). Alternatively, the frame number can be placed in every frame using
-\code{frame_number = TRUE}. Again, colour, size and corner can be specified. In addition, the frame number orientation
-can be set with \code{frame_number_rotation}.
+\code{dots_interval} starting from the first frame, and in the last frame regardless the \code{dots_interval}. The
+colour, size, and corner of the screen to place the dot can be specified (see \code{Arguments}). Alternatively, the
+frame number can be placed in every frame using \code{frame_number = TRUE}. Again, colour, size and corner can be
+specified. In addition, the frame number orientation can be set with \code{frame_number_rotation}. Both dots and frame
+numbers are only added to animation frames, not to frames added for padding (see below).
+}
 
-The animation can be extended to a required total duration using the \code{pad_start} option. This value is a duration in
-seconds added to the start of the animation before it starts playback. This duplicates the starting frame of the animation
-the required number of times to achieve the padding duration. Essentially, this makes the animation static for \code{pad_start}
-seconds before it starts to play. Depending on the \code{start_distance} set in \code{constant_speed_model}, this obviously
-means the video will potentially show a static circle until animation playback starts. If you do not want this, either modify
+\section{Padding animations to a required duration}{
+
+The video file can be extended to a required total duration using the \code{pad} option. This value is a duration in
+seconds added to the start of the animation before playback. It duplicates the starting frame of the animation
+the required number of times to achieve the padding duration. Essentially, this makes the animation static for \code{pad}
+seconds before it starts to play. Depending on the \code{start_distance} set in \code{constant_speed_model}, this
+means the video may show a static circle until the animation proper starts. If you do not want this, either modify
 the \code{start_distance} until the initial diameter is negligible, or use the \code{pad_blank = TRUE} option, in which case
-blank frames will be added rather than duplicating the starting frame. Under this option, after \code{pad_start} seconds of
-blank screen, the animation will suddenly appear and play. Again, how noticable this is depends on the starting diamater as
-determined with \code{start_distance} in \code{constant_speed_model}. Note that padding the video with extra frames will
-increase the time it takes for the function to run.
+blank frames will be added rather than duplicating the starting frame. Under this option, after \code{pad} seconds of
+blank screen, the animation will suddenly appear and play. Again, how noticable this is depends on the starting diameter as
+determined with \code{start_distance} in \code{constant_speed_model}. Note that frame tracking markers (i.e. dots or frame
+numbers) will only be added to animation frames, not to frames added for padding.
+
+NOTE: Be careful with padding options. Padding the video with extra frames will increase the time it takes for the function
+to run. Finalise your animation options and parameters before padding it. If you need a long duration video, be aware that
+every frame png file generated is around 40-50KB. Adding 10 minutes (600s) of padding to a video at 60 Hz will mean
+600*60 = 36000 extra frames generated. At ~45KB each this would require ~1.6GB of hard drive space, and require considerable
+time to process! Due to compression, the resulting video file should however be only a few MB in size.
+}
+
+\section{Compatibility}{
 
 The function should work with both Windows and macOS (Linux coming soon), however it requires \code{ffmpeg}
 (\url{http://ffmpeg.org}), an external, cross-platform, command line utility for encoding video, to be installed on your
 system. For installation instructions see \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need to
-restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
+restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
 
 On Windows, if you encounter an error after installation (e.g. \code{unable to start png() device}), try setting
 the working directory with \code{setwd()} to the current or desired folder. It has not been extensively tested on Windows,
 so please provide feedback on any other issues you encounter.
+}
 
-For triggered playback of the animation I recommend Apple Quicktime Player. Others applications such as VLC
+\section{Playback in experiments}{
+
+For triggered playback of the animation on a Mac I recommend Apple Quicktime Player. Others applications such as VLC
 have quirks, for example automatically closing the window at the end of the video, however find the application that works
 best for your purposes. As a check, it's a good idea to ensure the application you use is correctly identifying the
 metadata of the video. Open the video, pause it, make it fullscreen and then:
@@ -143,9 +164,13 @@ In VLC, Cmd-I or Window > Media Information, the 'Codec Details' tab. Check 'Res
 both match your entered screen resolution \code{width} and \code{height} (there may be small differences, which is ok).
 Check 'Frame Rate' matches the \code{anim_frame_rate} used to create the model in \code{\link{constant_speed_model}}.
 Make sure playback speed is at 'Normal' (Menu>Playback).
+}
+
+\section{Dependencies}{
 
 The function requires the following packages: \code{plotrix}, \code{animation}, \code{glue}.
 }
+
 \examples{
 # make a looming model
 loom_model <- constant_speed_model(
@@ -164,6 +189,15 @@ looming_animation(loom_model,
                    frame_number_position = "tr",
                    frame_number_size = 2)
 
+# pad animation with 5 seconds of the starting frame before playback
+looming_animation(loom_model,
+                   correction = 0.0285,
+                   width = 1920,
+                   height = 1080,
+                   frame_number = TRUE,
+                   frame_number_position = "tr",
+                   frame_number_size = 2,
+                   pad = 5)
 }
 \seealso{
 \code{\link{constant_speed_model}}, \code{\link{looming_animation_calib}}
