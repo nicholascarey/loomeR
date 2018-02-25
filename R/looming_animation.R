@@ -191,6 +191,9 @@
 #' @export
 
 ## To Do
+
+## accept vector of speeds not just constant speed model
+
 ## option to set position (i.e. distance from side) of dots and frame number
 
 ## constant looping animation.
