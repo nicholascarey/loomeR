@@ -30,9 +30,9 @@ animation static for \code{pad} number of seconds before it starts playing (but 
 
 \item{pad_blank}{logical. Optionally pad with blank frames rather than the first animation frame.}
 
-\item{dots}{logical. Controls if frame tracking dots are added to animation frames (see details).}
+\item{dots}{logical. Controls if frame tracking dots are added to animation frames (see Details).}
 
-\item{dots_interval}{numeric. Interval in frames from starting frame when dots are added.}
+\item{dots_interval}{numeric. Interval in frames from first animation frame when dots are added.}
 
 \item{dots_colour}{string. Colour of dots}
 
@@ -41,7 +41,7 @@ indicating top right, top left, bottom right, or bottom left.}
 
 \item{dots_size}{numeric. Size of added dots. Default = 0.005.}
 
-\item{frame_number}{logical. Controls if numbers are added to animation frames (see details).}
+\item{frame_number}{logical. Controls if frame numbers are added to animation frames (see Details).}
 
 \item{frame_number_colour}{string. Colour of frame numbers}
 
@@ -52,9 +52,10 @@ indicating top right, top left, bottom right, or bottom left.}
 
 \item{frame_number_rotation}{numeric. Value in degrees (0-360) to rotate frame numbers.}
 
-\item{save_data}{logical. If \code{=TRUE}, exports as a \code{.csv} the data used to make the animation, including
-the column of values scaled using the \code{correction} value.
-File name: \code{ANIM_from_**name of R object used**_**frame rate**_**display resolution**.csv}}
+\item{save_data}{logical. If \code{=TRUE}, exports to the current working directory a \code{.csv} file
+containing the data used to make the animation, including the column of values scaled using the
+\code{correction} value. File name:
+\code{ANIM_from_**name of R object used**_**frame rate**_**display resolution**.csv}}
 }
 \value{
 An \code{.mp4} video saved to the current working directory called \code{animation.mp4}
@@ -67,14 +68,22 @@ simulation are determined. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), 
 command line utility for encoding video, to be installed on your system.
 }
 \details{
-NOTE - The function works by saving an image (\code{loom_img_*******.png} file) for every frame of the animation
+IMPORTANT: The function works by saving an image file (\code{loom_img_*******.png}) for every frame of the animation
 to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
-(saved as \code{animation.mp4}). It then deletes (actually deleted, not just sent to the trash) the \code{.png} files from
+(saved as \code{animation.mp4}). It then deletes (actually deletes, not just sent to the trash) the \code{.png} files from
 the working directory. It will overwrite any \code{.png} or \code{.mp4} file it encounters which has an identical name.
 It's recommended you create a new directory (i.e. folder) for each animation, and use \code{setwd()} to set this as the
 current working directory before running the function. If you want to save an animation, move it or rename it before
 running the function again or it will get overwritten. It has not been rigorously tested on older systems with slow
 read-write speeds to the hard drive, which may cause unknown problems. Please provide feedback if you encounter any issues.
+
+The function is capable of controlling precise details of how the object is displayed on screen. For example the
+\code{correction} operator ensures the hypothesised size in the model is displayed at that exact size on a specific
+display at a specific resolution. These details are important in experiments where the time in the animation at which
+an escape response occurs (and hence the perceived distance and/or speed of the attacker) are of interest. If you
+simply want to generate an animation to elicit a response and are unconcerned with these details, you can ignore most
+of these options. Simply vary the inputs in \code{constant_speed_model}, and use that object to create an animation
+you are happy with.
 }
 \section{Screen display and playback considerations}{
 
@@ -82,24 +91,25 @@ The function creates a video at the frame rate (\code{anim_frame_rate}) specifie
 object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
 rate of 60 Hz, so videos at frame rates higher than this may not be displayed correctly. I recommend using either 30
 or 60 frames per second (Hz) which is a frame rate most video playback software should handle correctly. The output
-video is a circle increasing in diameter over time, as specified in the \code{$model$diam_on_screen} component of
+video is of a circle increasing in diameter over time, as specified in the \code{$model$diam_on_screen} component of
 the \code{\link{constant_speed_model}} object.
 
 The display resolution of the screen you will use to play the animation should be entered as \code{width} and
 \code{height}. NOTE - This is the current DISPLAY resolution, which is not necessarily the native resolution
 of the screen, but determined in the Displays preferences of your operating system. If you are unsure, visit
 \url{https://whatismyscreenresolution.com} on the device. These settings ensure the animation is in the
-correct aspect ratio and uses the full screen (although you can modify the aspect ratio if, for example,
+correct aspect ratio and uses the full screen (although you are free to modify the aspect ratio if, for example,
 you want your animation to be square). Incorrect resolution values *should* still produce the correct widths
-onscreen, however I cannot guarantee all playback software will honour this, so best to follow the above guidelines.
+onscreen, however I cannot guarantee all playback software will honour this, so best to follow the above guidelines
+if these details are important in your experiment.
 
-All screens are different, so an object of a hypothetical size may displayed at a different size on a different
-screen, due to differences in resolution or the physical size of the pixels that make up the screen. The \code{correction}
-operator is intended to be a display-specific correction factor to ensure the actual, physical size of the circle
-matches the diameters in the \code{$model$diam_on_screen} component of the \code{\link{constant_speed_model}} object. This
-value can be determined using the \code{\link{looming_animation_calib}} function. See the documentation for this function
-for instructions on its use. If creating different animations, the \code{correction} value will be the same for a particular
-screen as long as the display resolution remains the same.
+An object of a hypothetical size may displayed at a different size on a different screen, due to differences in
+resolution or the physical size of the pixels that make up the screen. The \code{correction} operator is intended
+to be a display-specific correction factor to ensure the actual, physical size of the circle matches the diameters
+in the \code{$model$diam_on_screen} component of the \code{\link{constant_speed_model}} object. This value can be
+determined using the \code{\link{looming_animation_calib}} function. See the documentation for this function
+for instructions on its use. If creating different animations, the \code{correction} value will be the same for a
+particular screen as long as the display resolution remains the same.
 }
 
 \section{Animation options}{
@@ -109,12 +119,20 @@ syntax as used in graphics functions such as \code{plot()} etc.
 
 In your experiment you may want to identify the particular frame of the animation at which an event such as an escape
 response occurs. There are two ways of marking the animation so the frame can be identified in video recordings of the
-experiment. If \code{dots = TRUE}, a small dot is placed in the corner of the frame at the interval specified with
-\code{dots_interval} starting from the first frame, and in the last frame regardless the \code{dots_interval}. The
-colour, size, and corner of the screen to place the dot can be specified (see \code{Arguments}). Alternatively, the
-frame number can be placed in every frame using \code{frame_number = TRUE}. Again, colour, size and corner can be
-specified. In addition, the frame number orientation can be set with \code{frame_number_rotation}. Both dots and frame
-numbers are only added to animation frames, not to frames added for padding (see below).
+experiment:
+
+\subsection{Frame numbers}{
+   The animation frame number can be placed in every frame using \code{frame_number = TRUE}. The colour, size, and
+   corner of the screen to place the number can be specified (see \code{Arguments}). In addition, the orientation
+   can be set with \code{frame_number_rotation}.
+}
+\subsection{Dots}{
+   If \code{dots = TRUE}, starting from the first animation frame a small dot is placed in the corner of the frame
+   at the frame interval specified with \code{dots_interval}. It is also placed in the last frame, regardless of the
+   \code{dots_interval}. Again, colour, size and corner can be specified (see \code{Arguments}).
+}
+
+These markers are only inserted into animation frames, not to frames added for padding (see next section).
 }
 
 \section{Padding animations to a required duration}{
@@ -151,10 +169,12 @@ so please provide feedback on any other issues you encounter.
 
 \section{Playback in experiments}{
 
-For triggered playback of the animation on a Mac I recommend Apple Quicktime Player. Others applications such as VLC
-have quirks, for example automatically closing the window at the end of the video, however find the application that works
-best for your purposes. As a check, it's a good idea to ensure the application you use is correctly identifying the
-metadata of the video. Open the video, pause it, make it fullscreen and then:
+For triggered playback of the animation on a Mac I recommend Apple Quicktime Player. Playback can be started with the
+spacebar, the arrow keys allow frame-by-frame movement thjrough the video, and Cmd-Left Arrow  the video to be rewound
+to the start. Others applications such as VLC have quirks, for example automatically playing the video on opening the file,
+and closing the window at the end of the video. However find the application that works best for your purposes. As a
+check, it's a good idea to ensure the application you use is correctly identifying the metadata of the video. Open the
+video, pause it, make it fullscreen and then:
 
 In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format' matches 'Current Size', and that both match
 your entered screen resolution \code{width} and \code{height}. Check 'FPS' matches the \code{anim_frame_rate} used
@@ -198,6 +218,7 @@ looming_animation(loom_model,
                    frame_number_position = "tr",
                    frame_number_size = 2,
                    pad = 5)
+
 }
 \seealso{
 \code{\link{constant_speed_model}}, \code{\link{looming_animation_calib}}
