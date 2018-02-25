@@ -375,7 +375,7 @@ looming_animation <-
         ## make frame number label
         ## NOTE - can't use 'i' alone since it include padded frames
         ## must use this code to get actual animation frame
-        text(paste(total_frames_anim - (total_frames - i)),
+        text(paste(af),
              col = frame_number_colour,
              x = fn_x_coord,
              y = fn_y_coord,
@@ -449,6 +449,11 @@ looming_animation <-
       shell("del loom_img_*.png")
     }
 
+    ## calculate and round duration for message
+    duration <- round(total_frames/frame_rate, 2)
+    ## make message (blank line first, to make it more noticable from ffmpeg output)
+    message("")
+    message(glue('Video conversion complete. Resulting video should be {duration}s in duration.'))
   }
 
 
