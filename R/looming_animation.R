@@ -192,14 +192,15 @@
 
 ## To Do
 ## option to set position (i.e. distance from side) of dots and frame number
+
 ## constant looping animation.
 
-## option to NOT convert images using ffmpeg
+## option to NOT convert images using ffmpeg, but save them
 
 ## optimisations
 # use apply instead of loop
 # faster way of padding? rather than looping for padded frames, duplicating that frame more quickly?
-# play with ffmpeg optiosn to reduce file size of pngs
+# play with ffmpeg options to reduce file size of pngs
 
 ## test
 ## really big padding on windows - that it works and deletes successfully

@@ -17,39 +17,32 @@
 #' value will be the same for a particular screen as long as the display resolution remains the same (see details).
 #'
 #' @details
-#' NOTE - The function works by saving an image (\code{loom_img_**.png} file) for every frame of the animation
+#' IMPORTANT: The function works by saving an image (\code{loom_img_**.png} file) for every frame of the animation
 #' to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
 #' (saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
-#' \code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
-#' (i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
-#' function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
-#' I have not tested this on old systems with slow read-write speeds to the hard drive. This may cause problems. Please
-#' provide feedback if you encounter any problems.
+#' \code{.png} or \code{.mp4} file it encounters which has an identical name.
 #'
 #' The function creates a short 60 frame video containing a static image of 10 horizontal bars along with the
 #' \code{correction} value used to create each. It is a video not an image file to ensure software rendering onscreen is
-#' consistent. Open the file in the software you intend to use to play back the final animation, make it fullscreen, pause it,
-#' and measure the bars physically on the screen with a ruler to identify the correct \code{correction} value. If the closest
-#' result to 10cm falls between two values, these can be entered as the \code{correction_range} and the function re-run to
-#' further refine the estimate. When a good \code{correction} value is determined, this should be used in the
-#' \code{looming_animation} function to produce the final animation.
+#' consistent. Open the file in the software you intend to use to play back the final animation, make it fullscreen,
+#' pause it, and physically measure the bars on the screen with a ruler to identify the correct \code{correction} value.
+#' If the closest result to 10cm falls between two values, these can be entered as the \code{correction_range} and the
+#' function re-run to further refine the estimate. When a good \code{correction} value is determined, this should be used
+#' in the \code{looming_animation} function to produce the final animation.
 #'
 #' The display resolution of the screen you will use to play the animation should be entered as \code{width} and
 #' \code{height}. NOTE - This is the current DISPLAY resolution, which is not necessarily the native resolution
 #' of the screen, but determined in the Displays preferences of your operating system. If you are unsure, visit
 #' \url{https://whatismyscreenresolution.com} on the device. These settings ensure the animation is in the
-#' correct aspect ratio and uses the full screen (although you can modify the aspect ratio if, for example,
-#' you want your animation to be square). Incorrect resolution values *should* still produce the correct widths onscreen,
-#' however I cannot guarantee all playback software will honour this, so best to follow the above guidelines.
+#' correct aspect ratio and uses the full screen (although you are free to modify the aspect ratio if, for example,
+#' you want your animation to be square). Incorrect resolution values *should* still produce the correct widths
+#' onscreen, however I cannot guarantee all playback software will honour this, so best to follow the above guidelines
+#' if these details are important in your experiment.
 #'
 #' The function should work with both Windows and macOS (Linux coming soon), however it requires \code{ffmpeg}
 #' (\url{http://ffmpeg.org}), an external, cross-platform, command line utility for encoding video, to be installed on your
 #' system. For installation instructions see \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need to
 #' restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
-#'
-#' On Windows after installation, if you encounter an error (e.g. \code{unable to start png() device}), try setting
-#' the working directory with \code{setwd()} to the current or desired folder. Please provide feedback on any other
-#' errors you encounter.
 #'
 #' The function requires the following packages: \code{plotrix}, \code{animation}, \code{glue}.
 #'
