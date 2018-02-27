@@ -2,78 +2,98 @@
 % Please edit documentation in R/looming_animation_calib.R
 \name{looming_animation_calib}
 \alias{looming_animation_calib}
-\title{Create a short animation for calibrating the looming animation function}
+\title{Create a short animation for calibrating the looming animation
+  function}
 \usage{
 looming_animation_calib(x, ...)
 }
 \arguments{
 \item{x}{A list object of class \code{constant_speed_model}}
 
-\item{correction_range}{numeric vector of length = 2. Upper and lower range of the correction factors to be tested}
+\item{correction_range}{numeric vector of length = 2. Upper and lower range
+of the correction factors to be tested}
 
-\item{width}{numeric. Width resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
-this is \code{width = 1080}. Note: this is NOT the native resolution, but the display resolution as set in the
-operating system settings. Visit \url{https://whatismyscreenresolution.com} on the playback display to check.}
+\item{width}{numeric. Width resolution of the display. E.g. for a display set
+at 1080p resolution (1920x1080), this is \code{width = 1080}. Note: this is
+NOT the native resolution, but the display resolution as set in the
+operating system settings. Visit \url{https://whatismyscreenresolution.com}
+on the playback display to check.}
 
-\item{height}{numeric. Height resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
-this is \code{width = 1920}. Note: this is NOT the native resolution, but the display resolution as set in the
-operating system settings. Visit \url{https://whatismyscreenresolution.com} on the playback display to check.}
+\item{height}{numeric. Height resolution of the display. E.g. for a display
+set at 1080p resolution (1920x1080), this is \code{width = 1920}. Note:
+this is NOT the native resolution, but the display resolution as set in the
+operating system settings. Visit \url{https://whatismyscreenresolution.com}
+on the playback display to check.}
 }
 \value{
-An \code{.mp4} video saved to the current working directory called \code{animation_calib.mp4}
+An \code{.mp4} video saved to the current working directory called
+  \code{animation_calib.mp4}
 }
 \description{
-All screens are different, so an object of a hypothetical size may displayed at a different size on a different
-screen, due to differences in resolution or the physical size of the pixels that make up the screen.
+All screens are different, so an object of a hypothetical size
+may displayed at a different size on a different screen, due to differences
+in resolution or the physical size of the pixels that make up the screen.
 
-\code{looming_animation_calib} is a utility to create a short animation from an object of class
-\code{\link{constant_speed_model}}. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform,
-command line utility for encoding video, to be installed on your system. The function allows the \code{correction}
-value (typically in the range 0.02 - 0.03) used in \code{looming_animation_calib} to be determined, and checks the
-desired screen diameter is correctly displayed. Requires access to the screen you intend to display the animation on,
-and a ruler or other method of physically measuring lengths on the screen. Output is a short 60 frame video containing
-a static image of 10 horizontal bars (it is not an image file to ensure software rendering onscreen is consistent).
-This video should be paused, made fullscreen and the bar closest in length to 10cm used to estimate the correct
-\code{correction} value. The function can be run again to further refine estimates of the \code{correction} value, if
-the 10cm distance falls between two \code{correction} values. If creating different animations, the \code{correction}
-value will be the same for a particular screen as long as the display resolution remains the same (see details).
+\code{looming_animation_calib} is a utility to create a short animation from
+an object of class \code{\link{constant_speed_model}}. It requires
+\code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform, command
+line utility for encoding video, to be installed on your system. The function
+allows the \code{correction} value (typically in the range 0.02 - 0.03) used
+in \code{looming_animation_calib} to be determined, and checks the desired
+screen diameter is correctly displayed. Requires access to the screen you
+intend to display the animation on, and a ruler or other method of physically
+measuring lengths on the screen. Output is a short 60 frame video containing
+a static image of 10 horizontal bars (it is not an image file to ensure
+software rendering onscreen is consistent). This video should be paused, made
+fullscreen and the bar closest in length to 10cm used to estimate the correct
+\code{correction} value. The function can be run again to further refine
+estimates of the \code{correction} value, if the 10cm distance falls between
+two \code{correction} values. If creating different animations, the
+\code{correction} value will be the same for a particular screen as long as
+the display resolution remains the same (see details).
 }
 \details{
-NOTE - The function works by saving an image (\code{loom_img_**.png} file) for every frame of the animation
-to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
-(saved as \code{animation.mp4}). It then deletes the \code{.png} files from the working directory. It will overwrite any
-\code{.png} or \code{.mp4} file it encounters which has an identical name. It's recommended you create a new directory
-(i.e. folder) for each animation, and use \code{setwd()} to set this as the current working directory before running the
-function. If you want to save an animation, move it or rename it before running the function again or it will get overwritten.
-I have not tested this on old systems with slow read-write speeds to the hard drive. This may cause problems. Please
-provide feedback if you encounter any problems.
+IMPORTANT: The function works by saving an image
+(\code{loom_img_**.png} file) for every frame of the animation to the current
+working directory. It then uses \code{ffmpeg} to encode these images to an
+\code{.mp4} file (saved as \code{animation.mp4}). It then deletes the
+\code{.png} files from the working directory. It will overwrite any
+\code{.png} or \code{.mp4} file it encounters which has an identical name.
 
-The function creates a short 60 frame video containing a static image of 10 horizontal bars along with the
-\code{correction} value used to create each. It is a video not an image file to ensure software rendering onscreen is
-consistent. Open the file in the software you intend to use to play back the final animation, make it fullscreen, pause it,
-and measure the bars physically on the screen with a ruler to identify the correct \code{correction} value. If the closest
-result to 10cm falls between two values, these can be entered as the \code{correction_range} and the function re-run to
-further refine the estimate. When a good \code{correction} value is determined, this should be used in the
-\code{looming_animation} function to produce the final animation.
+The function creates a short 60 frame video containing a static image of 10
+horizontal bars along with the \code{correction} value used to create each.
+It is a video not an image file to ensure software rendering onscreen is
+consistent. Open the file in the software you intend to use to play back the
+final animation, make it fullscreen, pause it, and physically measure the
+bars on the screen with a ruler to identify the correct \code{correction}
+value. If the closest result to 10cm falls between two values, these can be
+entered as the \code{correction_range} and the function re-run to further
+refine the estimate. When a good \code{correction} value is determined, this
+should be used in the \code{looming_animation} function to produce the final
+animation.
 
-The display resolution of the screen you will use to play the animation should be entered as \code{width} and
-\code{height}. NOTE - This is the current DISPLAY resolution, which is not necessarily the native resolution
-of the screen, but determined in the Displays preferences of your operating system. If you are unsure, visit
-\url{https://whatismyscreenresolution.com} on the device. These settings ensure the animation is in the
-correct aspect ratio and uses the full screen (although you can modify the aspect ratio if, for example,
-you want your animation to be square). Incorrect resolution values *should* still produce the correct widths onscreen,
-however I cannot guarantee all playback software will honour this, so best to follow the above guidelines.
+The display resolution of the screen you will use to play the animation
+should be entered as \code{width} and \code{height}. NOTE - This is the
+current DISPLAY resolution, which is not necessarily the native resolution of
+the screen, but determined in the Displays preferences of your operating
+system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
+on the device. These settings ensure the animation is in the correct aspect
+ratio and uses the full screen (although you are free to modify the aspect
+ratio if, for example, you want your animation to be square). Incorrect
+resolution values *should* still produce the correct widths onscreen, however
+I cannot guarantee all playback software will honour this, so best to follow
+the above guidelines if these details are important in your experiment.
 
-The function should work with both Windows and macOS (Linux coming soon), however it requires \code{ffmpeg}
-(\url{http://ffmpeg.org}), an external, cross-platform, command line utility for encoding video, to be installed on your
-system. For installation instructions see \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need to
-restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
+The function should work with both Windows and macOS (Linux coming soon),
+however it requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
+cross-platform, command line utility for encoding video, to be installed on
+your system. For installation instructions see
+\url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need
+to restart) or
+\url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
 
-On Windows after installation, if you encounter an error (e.g. \code{unable to start png() device}), try setting
-the working directory with \code{setwd()} to the current or desired folder. Please provide feedback on any other
-errors you encounter.
-
-The function requires the following packages: \code{plotrix}, \code{animation}, \code{glue}.
+The function requires the following packages: \code{plotrix},
+\code{animation}, \code{glue}.
 }
 \examples{
 # make a looming model
