@@ -59,7 +59,7 @@
 #'   to follow the above guidelines if these details are important in your
 #'   experiment.
 #'
-#'   An object of a hypothetical size may displayed at a different size on a
+#'   An object of a hypothetical size may be displayed at a different size on a
 #'   different screen, due to differences in resolution or the physical size of
 #'   the pixels that make up the screen. The \code{correction} operator is
 #'   intended to be a display-specific correction factor to ensure the actual,
@@ -130,6 +130,8 @@
 #'   need to restart) or
 #'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
 #'
+#'
+#'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
 #'   \code{setwd()} to the current or desired folder. It has not been
@@ -138,14 +140,15 @@
 #'
 #' @section Playback in experiments: For triggered playback of the animation on
 #'   a Mac I recommend Apple Quicktime Player. Playback can be started with the
-#'   spacebar, the arrow keys allow frame-by-frame movement thjrough the video,
+#'   spacebar, the arrow keys allow frame-by-frame movement through the video,
 #'   and Cmd-Left Arrow  the video to be rewound to the start. Others
 #'   applications such as VLC have quirks, for example automatically playing the
-#'   video on opening the file, and closing the window at the end of the video.
-#'   However find the application that works best for your purposes. As a check,
-#'   it's a good idea to ensure the application you use is correctly identifying
-#'   the metadata of the video. Open the video, pause it, make it fullscreen and
-#'   then:
+#'   video on opening the file, and closing it at the end of the video. However,
+#'   find the application that works best for your purposes. As a check, it's a
+#'   good idea to ensure the application you use is correctly identifying the
+#'   metadata of the video. This depends on the software, but in should be
+#'   similar to the following: open the video file, pause it, make it
+#'   fullscreen, and then:
 #'
 #'   In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format'
 #'   matches 'Current Size', and that both match your entered screen resolution
