@@ -5,9 +5,9 @@
 #'   constant speed. This allows a looming animation with precise parameters to
 #'   be created.
 #'
-#' @details Calculates the screen diameters for a modelled object of specified size
-#'   approaching at a constant speed, from a specified distance away. The output
-#'   list object can be used to create a looming animation in
+#' @details Calculates the screen diameters for a modelled object of specified
+#'   size approaching at a constant speed, from a specified distance away. The
+#'   output list object can be used to create a looming animation in
 #'   \code{\link{looming_animation}}. An object screen diameter is calculated
 #'   for each frame from the specified starting distance until the hypothetical
 #'   distance between the attacker and target is zero.
@@ -16,9 +16,9 @@
 #'   located, and the intended frame rate at which the subsequent animation will
 #'   be played. These details are important in experiments where you want to
 #'   precisely determine at what time, perceived speed, or perceived velocity of
-#'   an attack an escape response may occur at. Note: if the specimen is closer
-#'   or further away than the specified screen distance, the animation will be
-#'   perceived as a different distance and a different velocity.
+#'   an attack at which an escape response may occur. Note: if the specimen is
+#'   closer or further away than the specified screen distance, the animation
+#'   will be perceived as a different distance and a different velocity.
 #'
 #'   If you need to create a looming animation simply to elicit a response, and
 #'   are not concerned with the precise details, the function is more than
@@ -33,7 +33,6 @@
 #' @seealso \code{\link{looming_animation}},
 #'   \code{\link{looming_animation_calib}}
 #'
-#' @usage constant_speed_model(...)
 #'
 #' @param screen_distance numeric. Distance (cm) from the playback screen to
 #'   your specimen.
@@ -56,7 +55,7 @@
 #'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
 #'
-#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
+#' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
 #' @export
 
@@ -72,7 +71,8 @@ constant_speed_model <-
     total_time <- start_distance/speed
 
     ## get number of frames
-    total_frames <- total_time*anim_frame_rate
+    ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
+    total_frames <- ceiling(total_time*anim_frame_rate)
 
     ## calculate distance covered each frame at this speed and frame rate
     distance_per_frame <- speed/anim_frame_rate

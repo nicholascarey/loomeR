@@ -4,7 +4,8 @@
 \alias{constant_speed_model}
 \title{Constant Speed Model}
 \usage{
-constant_speed_model(...)
+constant_speed_model(screen_distance = 20, anim_frame_rate = 60,
+  speed = 500, attacker_diameter = 50, start_distance = 1000)
 }
 \arguments{
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to
@@ -32,9 +33,9 @@ Given a viewing distance, this function calculates the on-screen
   be created.
 }
 \details{
-Calculates the screen diameters for a modelled object of specified size
-  approaching at a constant speed, from a specified distance away. The output
-  list object can be used to create a looming animation in
+Calculates the screen diameters for a modelled object of specified
+  size approaching at a constant speed, from a specified distance away. The
+  output list object can be used to create a looming animation in
   \code{\link{looming_animation}}. An object screen diameter is calculated
   for each frame from the specified starting distance until the hypothetical
   distance between the attacker and target is zero.
@@ -43,9 +44,9 @@ Calculates the screen diameters for a modelled object of specified size
   located, and the intended frame rate at which the subsequent animation will
   be played. These details are important in experiments where you want to
   precisely determine at what time, perceived speed, or perceived velocity of
-  an attack an escape response may occur at. Note: if the specimen is closer
-  or further away than the specified screen distance, the animation will be
-  perceived as a different distance and a different velocity.
+  an attack at which an escape response may occur. Note: if the specimen is
+  closer or further away than the specified screen distance, the animation
+  will be perceived as a different distance and a different velocity.
 
   If you need to create a looming animation simply to elicit a response, and
   are not concerned with the precise details, the function is more than
@@ -71,5 +72,5 @@ loom_model <- constant_speed_model(
   \code{\link{looming_animation_calib}}
 }
 \author{
-Nicholas Carey - \link{nicholascarey@gmail.com}
+Nicholas Carey - \email{nicholascarey@gmail.com}
 }
