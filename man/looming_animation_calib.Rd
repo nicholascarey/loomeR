@@ -5,7 +5,8 @@
 \title{Create a short animation for calibrating the looming animation
   function}
 \usage{
-looming_animation_calib(x, ...)
+looming_animation_calib(x, correction_range = c(0.02, 0.03), width = 1920,
+  height = 1080)
 }
 \arguments{
 \item{x}{A list object of class \code{constant_speed_model}}
@@ -91,10 +92,12 @@ your system. For installation instructions see
 \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need
 to restart) or
 \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
-
-The function requires the following packages: \code{plotrix},
-\code{animation}, \code{glue}.
 }
+\section{Dependencies}{
+ The function requires the following packages:
+  \code{glue}.
+}
+
 \examples{
 # make a looming model
 loom_model <- constant_speed_model(
@@ -115,5 +118,5 @@ looming_animation_calib(loom_model,
 \code{\link{constant_speed_model}}, \code{\link{looming_animation}}
 }
 \author{
-Nicholas Carey - \link{nicholascarey@gmail.com}
+Nicholas Carey - \email{nicholascarey@gmail.com}
 }

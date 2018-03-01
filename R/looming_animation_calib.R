@@ -62,12 +62,10 @@
 #' to restart) or
 #' \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
 #'
-#' The function requires the following packages: \code{plotrix},
-#' \code{animation}, \code{glue}.
+#' @section Dependencies: The function requires the following packages:
+#'   \code{glue}.
 #'
 #' @seealso \code{\link{constant_speed_model}}, \code{\link{looming_animation}}
-#'
-#' @usage looming_animation_calib(x, ...)
 #'
 #' @param x A list object of class \code{constant_speed_model}
 #' @param correction_range numeric vector of length = 2. Upper and lower range
@@ -101,7 +99,9 @@
 #'                            width = 1920,
 #'                            height = 1080)
 #'
-#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
+#' @author Nicholas Carey - \email{nicholascarey@gmail.com}
+#'
+#' @importFrom glue glue
 #'
 #' @export
 
@@ -116,11 +116,6 @@ looming_animation_calib <-
     ## check x class
     if(class(x) != "constant_speed_model")
       stop("Input must be an object of class 'constant_speed_model'.")
-
-    ## load required packages
-    require("plotrix")
-    require("animation")
-    require("glue")
 
     ## extract data
     frame_rate <- x$anim_frame_rate

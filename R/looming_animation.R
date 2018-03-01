@@ -161,12 +161,10 @@
 #'   speed is at 'Normal' (Menu>Playback).
 #'
 #' @section Dependencies: The function requires the following packages:
-#'   \code{plotrix}, \code{animation}, \code{glue}.
+#'   \code{glue}.
 #'
 #' @seealso \code{\link{constant_speed_model}},
 #'   \code{\link{looming_animation_calib}}
-#'
-#' @usage looming_animation(x, ...)
 #'
 #' @param x list. A list object of class \code{constant_speed_model}.
 #' @param correction numeric. Correction factor for the display used to play the
@@ -247,7 +245,9 @@
 #'                    frame_number_size = 2,
 #'                    pad = 5)
 #'
-#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
+#' @author Nicholas Carey - \email{nicholascarey@gmail.com}
+#'
+#' @importFrom glue glue
 #'
 #' @export
 
@@ -294,11 +294,6 @@ looming_animation <-
     ## check class
     if(class(x) != "constant_speed_model")
       stop("Input must be an object of class 'constant_speed_model'.")
-
-    ## load required packages
-    require("plotrix")
-    require("animation")
-    require("glue")
 
     ## check for mac or windows then change this...?
     #ani.options(convert = '/opt/local/bin/convert')
@@ -539,7 +534,11 @@ looming_animation <-
     }
 
     ## calculate and round duration for message
-    duration <- round(total_frames/frame_rate, 2)
+    duration <- total_frames/frame_rate
+    ## this rounds it to 2 decimal places, even if they are zeros.
+    ## i.e. 2.001 gets displayed as "2.00s" not "2s"
+    duration <- sprintf('%.2f', duration)
+
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
     message(glue('Video conversion complete. Resulting video should be {duration}s in duration.'))
@@ -586,7 +585,7 @@ os <- function() {
 #'
 #' @details
 #' Displays an updating progress bar within the frame image generation loop. Modified from
-#' \link{https://github.com/klmr/rcane/blob/master/system.R}.
+#' \url{https://github.com/klmr/rcane/blob/master/system.R}.
 #'
 #' This is an internal function.
 #'
