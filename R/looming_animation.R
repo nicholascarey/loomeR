@@ -298,9 +298,6 @@ looming_animation <-
     if(class(x) != "constant_speed_model")
       stop("Input must be an object of class 'constant_speed_model'.")
 
-    ## check for mac or windows then change this...?
-    #ani.options(convert = '/opt/local/bin/convert')
-
     ## extract data and parameters
     cs_model <- x$model
     frame_rate <- x$anim_frame_rate
