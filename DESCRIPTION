@@ -6,7 +6,9 @@ Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
 Description: Creates a model of a object of specified size approaching at specified speed.
     Uses that model to then create a looming animation. 
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Imports: 
+    glue

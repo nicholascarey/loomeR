@@ -11,7 +11,7 @@ Display image generation progress bar
 }
 \details{
 Displays an updating progress bar within the frame image generation loop. Modified from
-\link{https://github.com/klmr/rcane/blob/master/system.R}.
+\url{https://github.com/klmr/rcane/blob/master/system.R}.
 
 This is an internal function.
 }

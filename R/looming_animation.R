@@ -1,162 +1,224 @@
 #' @title Create a looming animation
 #'
-#' @description
-#' \code{looming_animation} creates a movie file (\code{.mp4}) of a circle increasing in size to represent
-#' an object (e.g. an attacking predator) coming towards a target. The function input must be an object created in
-#' \code{\link{constant_speed_model}}, which is where the parameters determining the size and speed of the
-#' simulation are determined. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform,
-#' command line utility for encoding video, to be installed on your system.
+#' @description \code{looming_animation} creates a movie file (\code{.mp4}) of a
+#'   circle increasing in size to represent an object (e.g. an attacking
+#'   predator) coming towards a target. The function input must be an object
+#'   created in \code{\link{constant_speed_model}}, which is where the
+#'   parameters determining the size and speed of the simulation are determined.
+#'   It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
+#'   cross-platform, command line utility for encoding video, to be installed on
+#'   your system.
 #'
-#' @details
-#' IMPORTANT: The function works by saving an image file (\code{loom_img_*******.png}) for every frame of the animation
-#' to the current working directory. It then uses \code{ffmpeg} to encode these images to an \code{.mp4} file
-#' (saved as \code{animation.mp4}). It then deletes (actually deletes, not just sent to the trash) the \code{.png} files from
-#' the working directory. It will overwrite any \code{.png} or \code{.mp4} file it encounters which has an identical name.
-#' It's recommended you create a new directory (i.e. folder) for each animation, and use \code{setwd()} to set this as the
-#' current working directory before running the function. If you want to save an animation, move it or rename it before
-#' running the function again or it will get overwritten. It has not been rigorously tested on older systems with slow
-#' read-write speeds to the hard drive, which may cause unknown problems. Please provide feedback if you encounter any issues.
+#' @details IMPORTANT: The function works by saving an image file
+#'   (\code{loom_img_*******.png}) for every frame of the animation to the
+#'   current working directory. It then uses \code{ffmpeg} to encode these
+#'   images to an \code{.mp4} file (saved as \code{animation.mp4}). It then
+#'   deletes (actually deletes, not just sent to the trash) the \code{.png}
+#'   files from the working directory. It will overwrite any \code{.png} or
+#'   \code{.mp4} file it encounters which has an identical name. It's
+#'   recommended you create a new directory (i.e. folder) for each animation,
+#'   and use \code{setwd()} to set this as the current working directory before
+#'   running the function. If you want to save an animation, move it or rename
+#'   it before running the function again or it will get overwritten. It has not
+#'   been rigorously tested on older systems with slow read-write speeds to the
+#'   hard drive, which may cause unknown problems. Please provide feedback if
+#'   you encounter any issues.
 #'
-#' The function is capable of controlling precise details of how the object is displayed on screen. For example the
-#' \code{correction} operator ensures the hypothesised size in the model is displayed at that exact size on a specific
-#' display at a specific resolution. These details are important in experiments where the time in the animation at which
-#' an escape response occurs (and hence the perceived distance and/or speed of the attacker) are of interest. If you
-#' simply want to generate an animation to elicit a response and are unconcerned with these details, you can ignore most
-#' of these options. Simply vary the inputs in \code{constant_speed_model}, and use that object to create an animation
-#' you are happy with.
+#'   The function is capable of controlling precise details of how the object is
+#'   displayed on screen. For example the \code{correction} operator ensures the
+#'   hypothesised size in the model is displayed at that exact size on a
+#'   specific display at a specific resolution. These details are important in
+#'   experiments where the time in the animation at which an escape response
+#'   occurs (and hence the perceived distance and/or speed of the attacker) are
+#'   of interest. If you simply want to generate an animation to elicit a
+#'   response and are unconcerned with these details, you can ignore most of
+#'   these options. Simply vary the inputs in \code{constant_speed_model}, and
+#'   use that object to create an animation you are happy with.
 #'
-#' @section Screen display and playback considerations:
-#' The function creates a video at the frame rate (\code{anim_frame_rate}) specified in the \code{\link{constant_speed_model}}
-#' object. The frame rate should be one the playback software handles correctly. Most modern displays have a maximum refresh
-#' rate of 60 Hz, so videos at frame rates higher than this may not be displayed correctly. I recommend using either 30
-#' or 60 frames per second (Hz) which is a frame rate most video playback software should handle correctly. The output
-#' video is of a circle increasing in diameter over time, as specified in the \code{$model$diam_on_screen} component of
-#' the \code{\link{constant_speed_model}} object.
+#' @section Screen display and playback considerations: The function creates a
+#'   video at the frame rate (\code{anim_frame_rate}) specified in the
+#'   \code{\link{constant_speed_model}} object. The frame rate should be one the
+#'   playback software handles correctly. Most modern displays have a maximum
+#'   refresh rate of 60 Hz, so videos at frame rates higher than this may not be
+#'   displayed correctly. I recommend using either 30 or 60 frames per second
+#'   (Hz) which is a frame rate most video playback software should handle
+#'   correctly. The output video is of a circle increasing in diameter over
+#'   time, as specified in the \code{$model$diam_on_screen} component of the
+#'   \code{\link{constant_speed_model}} object.
 #'
-#' The display resolution of the screen you will use to play the animation should be entered as \code{width} and
-#' \code{height}. NOTE - This is the current DISPLAY resolution, which is not necessarily the native resolution
-#' of the screen, but determined in the Displays preferences of your operating system. If you are unsure, visit
-#' \url{https://whatismyscreenresolution.com} on the device. These settings ensure the animation is in the
-#' correct aspect ratio and uses the full screen (although you are free to modify the aspect ratio if, for example,
-#' you want your animation to be square). Incorrect resolution values *should* still produce the correct widths
-#' onscreen, however I cannot guarantee all playback software will honour this, so best to follow the above guidelines
-#' if these details are important in your experiment.
+#'   The display resolution of the screen you will use to play the animation
+#'   should be entered as \code{width} and \code{height}. NOTE - This is the
+#'   current DISPLAY resolution, which is not necessarily the native resolution
+#'   of the screen, but determined in the Displays preferences of your operating
+#'   system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
+#'   on the device. These settings ensure the animation is in the correct aspect
+#'   ratio and uses the full screen (although you are free to modify the aspect
+#'   ratio if, for example, you want your animation to be square). Incorrect
+#'   resolution values *should* still produce the correct widths onscreen,
+#'   however I cannot guarantee all playback software will honour this, so best
+#'   to follow the above guidelines if these details are important in your
+#'   experiment.
 #'
-#' An object of a hypothetical size may displayed at a different size on a different screen, due to differences in
-#' resolution or the physical size of the pixels that make up the screen. The \code{correction} operator is intended
-#' to be a display-specific correction factor to ensure the actual, physical size of the circle matches the diameters
-#' in the \code{$model$diam_on_screen} component of the \code{\link{constant_speed_model}} object. This value can be
-#' determined using the \code{\link{looming_animation_calib}} function. See the documentation for this function
-#' for instructions on its use. If creating different animations, the \code{correction} value will be the same for a
-#' particular screen as long as the display resolution remains the same.
+#'   An object of a hypothetical size may be displayed at a different size on a
+#'   different screen, due to differences in resolution or the physical size of
+#'   the pixels that make up the screen. The \code{correction} operator is
+#'   intended to be a display-specific correction factor to ensure the actual,
+#'   physical size of the circle matches the diameters in the
+#'   \code{$model$diam_on_screen} component of the
+#'   \code{\link{constant_speed_model}} object. This value can be determined
+#'   using the \code{\link{looming_animation_calib}} function. See the
+#'   documentation for this function for instructions on its use. If creating
+#'   different animations, the \code{correction} value will be the same for a
+#'   particular screen as long as the display resolution remains the same.
 #'
-#' @section Animation options:
-#' The circle colour and background can be specified using \code{fill} and \code{background} with standard base-R colour
-#' syntax as used in graphics functions such as \code{plot()} etc.
+#' @section Animation options: The circle colour and background can be specified
+#'   using \code{fill} and \code{background} with standard base-R colour syntax
+#'   as used in graphics functions such as \code{plot()} etc.
 #'
-#' In your experiment you may want to identify the particular frame of the animation at which an event such as an escape
-#' response occurs. There are two ways of marking the animation so the frame can be identified in video recordings of the
-#' experiment:
+#'   In your experiment you may want to identify the particular frame of the
+#'   animation at which an event such as an escape response occurs. There are
+#'   two ways of marking the animation so the frame can be identified in video
+#'   recordings of the experiment:
 #'
-#' \subsection{Frame numbers}{
-#'    The animation frame number can be placed in every frame using \code{frame_number = TRUE}. The colour, size, and
-#'    corner of the screen to place the number can be specified (see \code{Arguments}). In addition, the orientation
-#'    can be set with \code{frame_number_rotation}.
-#' }
-#' \subsection{Dots}{
-#'    If \code{dots = TRUE}, starting from the first animation frame a small dot is placed in the corner of the frame
-#'    at the frame interval specified with \code{dots_interval}. It is also placed in the last frame, regardless of the
-#'    \code{dots_interval}. Again, colour, size and corner can be specified (see \code{Arguments}).
-#' }
+#'   \subsection{Frame numbers}{ The animation frame number can be placed in
+#'   every frame using \code{frame_number = TRUE}. The colour, size, and corner
+#'   of the screen to place the number can be specified (see \code{Arguments}).
+#'   In addition, the orientation can be set with \code{frame_number_rotation}.
+#'   } \subsection{Dots}{ If \code{dots = TRUE}, starting from the first
+#'   animation frame a small dot is placed in the corner of the frame at the
+#'   frame interval specified with \code{dots_interval}. It is also placed in
+#'   the last frame, regardless of the \code{dots_interval}. Again, colour, size
+#'   and corner can be specified (see \code{Arguments}). }
 #'
-#' These markers are only inserted into animation frames, not to frames added for padding (see next section).
+#'   These markers are only inserted into animation frames, not to frames added
+#'   for padding (see next section).
 #'
-#' @section Padding animations to a required duration:
-#' The video file can be extended to a required total duration using the \code{pad} option. This value is a duration in
-#' seconds added to the start of the animation before playback. It duplicates the starting frame of the animation
-#' the required number of times to achieve the padding duration. Essentially, this makes the animation static for \code{pad}
-#' seconds before it starts to play. Depending on the \code{start_distance} set in \code{constant_speed_model}, this
-#' means the video may show a static circle until the animation proper starts. If you do not want this, either modify
-#' the \code{start_distance} until the initial diameter is negligible, or use the \code{pad_blank = TRUE} option, in which case
-#' blank frames will be added rather than duplicating the starting frame. Under this option, after \code{pad} seconds of
-#' blank screen, the animation will suddenly appear and play. Again, how noticable this is depends on the starting diameter as
-#' determined with \code{start_distance} in \code{constant_speed_model}. Note that frame tracking markers (i.e. dots or frame
-#' numbers) will only be added to animation frames, not to frames added for padding.
+#' @section Padding animations to a required duration: The video file can be
+#'   extended to a required total duration using the \code{pad} option. This
+#'   value is a duration in seconds added to the start of the animation before
+#'   playback. It duplicates the starting frame of the animation the required
+#'   number of times to achieve the padding duration. Essentially, this makes
+#'   the animation static for \code{pad} seconds before it starts to play.
+#'   Depending on the \code{start_distance} set in \code{constant_speed_model},
+#'   this means the video may show a static circle until the animation proper
+#'   starts. If you do not want this, either modify the \code{start_distance}
+#'   until the initial diameter is negligible, or use the \code{pad_blank =
+#'   TRUE} option, in which case blank frames will be added rather than
+#'   duplicating the starting frame. Under this option, after \code{pad} seconds
+#'   of blank screen, the animation will suddenly appear and play. Again, how
+#'   noticable this is depends on the starting diameter as determined with
+#'   \code{start_distance} in \code{constant_speed_model}. Note that frame
+#'   tracking markers (i.e. dots or frame numbers) will only be added to
+#'   animation frames, not to frames added for padding.
 #'
-#' NOTE: Be careful with padding options. Padding the video with extra frames will increase the time it takes for the function
-#' to run. Finalise your animation options and parameters before padding it. If you need a long duration video, be aware that
-#' every frame png file generated is around 40-50KB. Adding 10 minutes (600s) of padding to a video at 60 Hz will mean
-#' 600*60 = 36000 extra frames generated. At ~45KB each this would require ~1.6GB of hard drive space, and require considerable
-#' time to process! Due to compression, the resulting video file should however be only a few MB in size.
+#'   NOTE: Be careful with padding options. Padding the video with extra frames
+#'   will increase the time it takes for the function to run. Finalise your
+#'   animation options and parameters before padding it. If you need a long
+#'   duration video, be aware that every frame png file generated is around
+#'   40-50KB. Adding 10 minutes (600s) of padding to a video at 60 Hz will mean
+#'   600*60 = 36000 extra frames generated. At ~45KB each this would require
+#'   ~1.6GB of hard drive space, and require considerable time to process! Due
+#'   to compression, the resulting video file should however be only a few MB in
+#'   size.
 #'
-#' @section Compatibility:
-#' The function should work with both Windows and macOS (Linux coming soon), however it requires \code{ffmpeg}
-#' (\url{http://ffmpeg.org}), an external, cross-platform, command line utility for encoding video, to be installed on your
-#' system. For installation instructions see \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need to
-#' restart) or \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
+#' @section Compatibility: The function should work with both Windows and macOS
+#'   (Linux coming soon), however it requires \code{ffmpeg}
+#'   (\url{http://ffmpeg.org}), an external, cross-platform, command line
+#'   utility for encoding video, to be installed on your system. For
+#'   installation instructions see
+#'   \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may
+#'   need to restart) or
+#'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
 #'
-#' On Windows, if you encounter an error after installation (e.g. \code{unable to start png() device}), try setting
-#' the working directory with \code{setwd()} to the current or desired folder. It has not been extensively tested on Windows,
-#' so please provide feedback on any other issues you encounter.
 #'
-#' @section Playback in experiments:
-#' For triggered playback of the animation on a Mac I recommend Apple Quicktime Player. Playback can be started with the
-#' spacebar, the arrow keys allow frame-by-frame movement thjrough the video, and Cmd-Left Arrow  the video to be rewound
-#' to the start. Others applications such as VLC have quirks, for example automatically playing the video on opening the file,
-#' and closing the window at the end of the video. However find the application that works best for your purposes. As a
-#' check, it's a good idea to ensure the application you use is correctly identifying the metadata of the video. Open the
-#' video, pause it, make it fullscreen and then:
 #'
-#' In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format' matches 'Current Size', and that both match
-#' your entered screen resolution \code{width} and \code{height}. Check 'FPS' matches the \code{anim_frame_rate} used
-#' to create the model in \code{\link{constant_speed_model}}.
+#'   On Windows, if you encounter an error after installation (e.g. \code{unable
+#'   to start png() device}), try setting the working directory with
+#'   \code{setwd()} to the current or desired folder. It has not been
+#'   extensively tested on Windows, so please provide feedback on any other
+#'   issues you encounter.
 #'
-#' In VLC, Cmd-I or Window > Media Information, the 'Codec Details' tab. Check 'Resolution' and 'Display Resolution'
-#' both match your entered screen resolution \code{width} and \code{height} (there may be small differences, which is ok).
-#' Check 'Frame Rate' matches the \code{anim_frame_rate} used to create the model in \code{\link{constant_speed_model}}.
-#' Make sure playback speed is at 'Normal' (Menu>Playback).
+#' @section Playback in experiments: For triggered playback of the animation on
+#'   a Mac I recommend Apple Quicktime Player. Playback can be started with the
+#'   spacebar, the arrow keys allow frame-by-frame movement through the video,
+#'   and Cmd-Left Arrow  the video to be rewound to the start. Others
+#'   applications such as VLC have quirks, for example automatically playing the
+#'   video on opening the file, and closing it at the end of the video. However,
+#'   find the application that works best for your purposes. As a check, it's a
+#'   good idea to ensure the application you use is correctly identifying the
+#'   metadata of the video. This depends on the software, but in should be
+#'   similar to the following: open the video file, pause it, make it
+#'   fullscreen, and then:
 #'
-#' @section Dependencies:
-#' The function requires the following packages: \code{plotrix}, \code{animation}, \code{glue}.
+#'   In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format'
+#'   matches 'Current Size', and that both match your entered screen resolution
+#'   \code{width} and \code{height}. Check 'FPS' matches the
+#'   \code{anim_frame_rate} used to create the model in
+#'   \code{\link{constant_speed_model}}.
 #'
-#' @seealso \code{\link{constant_speed_model}}, \code{\link{looming_animation_calib}}
+#'   In VLC, Cmd-I or Window > Media Information, the 'Codec Details' tab. Check
+#'   'Resolution' and 'Display Resolution' both match your entered screen
+#'   resolution \code{width} and \code{height} (there may be small differences,
+#'   which is ok). Check 'Frame Rate' matches the \code{anim_frame_rate} used to
+#'   create the model in \code{\link{constant_speed_model}}. Make sure playback
+#'   speed is at 'Normal' (Menu>Playback).
 #'
-#' @usage
-#' looming_animation(x, ...)
+#' @section Dependencies: The function requires the following packages:
+#'   \code{glue}.
+#'
+#' @seealso \code{\link{constant_speed_model}},
+#'   \code{\link{looming_animation_calib}}
 #'
 #' @param x list. A list object of class \code{constant_speed_model}.
-#' @param correction numeric. Correction factor for the display used to play the animation. Default = 0.0285.
-#'  Typically falls between 0.02-0.03. Exact value can be determined using \code{\link{looming_animation_calib}}
-#' @param pad numeric. Duration in seconds to pad the start of the video. This replicates the first
-#'  frame of the animation the required number of times to create this duration. Essentially, it makes the
-#'  animation static for \code{pad} number of seconds before it starts playing (but see \code{pad_blank}).
-#' @param pad_blank logical. Optionally pad with blank frames rather than the first animation frame.
-#' @param width numeric. Width resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
-#'  this is \code{width = 1080}. Note: this is NOT the native resolution, but the display resolution as set in the
-#'  operating system settings. Visit \url{https://whatismyscreenresolution.com} on the playback display to check.
-#' @param height numeric. Height resolution of the display. E.g. for a display set at 1080p resolution (1920x1080),
-#'  this is \code{width = 1920}. Note: this is NOT the native resolution, but the display resolution as set in the
-#'  operating system settings. Visit \url{https://whatismyscreenresolution.com} on the playback display to check.
+#' @param correction numeric. Correction factor for the display used to play the
+#'   animation. Default = 0.0285. Typically falls between 0.02-0.03. Exact value
+#'   can be determined using \code{\link{looming_animation_calib}}
+#' @param pad numeric. Duration in seconds to pad the start of the video. This
+#'   replicates the first frame of the animation the required number of times to
+#'   create this duration. Essentially, it makes the animation static for
+#'   \code{pad} number of seconds before it starts playing (but see
+#'   \code{pad_blank}).
+#' @param pad_blank logical. Optionally pad with blank frames rather than the
+#'   first animation frame.
+#' @param width numeric. Width resolution of the display. E.g. for a display set
+#'   at 1080p resolution (1920x1080), this is \code{width = 1080}. Note: this is
+#'   NOT the native resolution, but the display resolution as set in the
+#'   operating system settings. Visit \url{https://whatismyscreenresolution.com}
+#'   on the playback display to check.
+#' @param height numeric. Height resolution of the display. E.g. for a display
+#'   set at 1080p resolution (1920x1080), this is \code{width = 1920}. Note:
+#'   this is NOT the native resolution, but the display resolution as set in the
+#'   operating system settings. Visit \url{https://whatismyscreenresolution.com}
+#'   on the playback display to check.
 #' @param fill string. Colour of the circle.
 #' @param background string. Colour of the background.
-#' @param dots logical. Controls if frame tracking dots are added to animation frames (see Details).
-#' @param dots_interval numeric. Interval in frames from first animation frame when dots are added.
+#' @param dots logical. Controls if frame tracking dots are added to animation
+#'   frames (see Details).
+#' @param dots_interval numeric. Interval in frames from first animation frame
+#'   when dots are added.
 #' @param dots_colour string. Colour of dots
-#' @param dots_position string. Corner in which to display dots: \code{tr}, \code{tl}, \code{br}, \code{bl},
-#'  indicating top right, top left, bottom right, or bottom left.
+#' @param dots_position string. Corner in which to display dots: \code{tr},
+#'   \code{tl}, \code{br}, \code{bl}, indicating top right, top left, bottom
+#'   right, or bottom left.
 #' @param dots_size numeric. Size of added dots. Default = 0.005.
-#' @param frame_number logical. Controls if frame numbers are added to animation frames (see Details).
+#' @param frame_number logical. Controls if frame numbers are added to animation
+#'   frames (see Details).
 #' @param frame_number_colour string. Colour of frame numbers
-#' @param frame_number_position string. Corner in which to display frame numbers: \code{tr}, \code{tl}, \code{br},
-#'  \code{bl}, indicating top right, top left, bottom right, or bottom left.
-#' @param frame_number_size numeric. Size of frame numbers as proportion of default plotting text size. Default = 2.
-#' @param frame_number_rotation numeric. Value in degrees (0-360) to rotate frame numbers.
-#' @param save_data logical. If \code{=TRUE}, exports to the current working directory a \code{.csv} file
-#'  containing the data used to make the animation, including the column of values scaled using the
-#'  \code{correction} value. File name:
-#'  \code{ANIM_from_**name of R object used**_**frame rate**_**display resolution**.csv}
+#' @param frame_number_position string. Corner in which to display frame
+#'   numbers: \code{tr}, \code{tl}, \code{br}, \code{bl}, indicating top right,
+#'   top left, bottom right, or bottom left.
+#' @param frame_number_size numeric. Size of frame numbers as proportion of
+#'   default plotting text size. Default = 2.
+#' @param frame_number_rotation numeric. Value in degrees (0-360) to rotate
+#'   frame numbers.
+#' @param save_data logical. If \code{=TRUE}, exports to the current working
+#'   directory a \code{.csv} file containing the data used to make the
+#'   animation, including the column of values scaled using the
+#'   \code{correction} value. File name: \code{ANIM_from_**name of R object
+#'   used**_**frame rate**_**display resolution**.csv}
 #'
-#' @return An \code{.mp4} video saved to the current working directory called \code{animation.mp4}
+#' @return An \code{.mp4} video saved to the current working directory called
+#'   \code{animation.mp4}
 #'
 #' @examples
 #' # make a looming model
@@ -186,11 +248,16 @@
 #'                    frame_number_size = 2,
 #'                    pad = 5)
 #'
-#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
+#' @author Nicholas Carey - \email{nicholascarey@gmail.com}
+#'
+#' @importFrom glue glue
 #'
 #' @export
 
 ## To Do
+
+## accept vector of speeds not just constant speed model
+
 ## option to set position (i.e. distance from side) of dots and frame number
 
 ## constant looping animation.
@@ -230,14 +297,6 @@ looming_animation <-
     ## check class
     if(class(x) != "constant_speed_model")
       stop("Input must be an object of class 'constant_speed_model'.")
-
-    ## load required packages
-    require("plotrix")
-    require("animation")
-    require("glue")
-
-    ## check for mac or windows then change this...?
-    #ani.options(convert = '/opt/local/bin/convert')
 
     ## extract data and parameters
     cs_model <- x$model
@@ -475,7 +534,11 @@ looming_animation <-
     }
 
     ## calculate and round duration for message
-    duration <- round(total_frames/frame_rate, 2)
+    duration <- total_frames/frame_rate
+    ## this rounds it to 2 decimal places, even if they are zeros.
+    ## i.e. 2.001 gets displayed as "2.00s" not "2s"
+    duration <- sprintf('%.2f', duration)
+
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
     message(glue('Video conversion complete. Resulting video should be {duration}s in duration.'))
@@ -522,7 +585,7 @@ os <- function() {
 #'
 #' @details
 #' Displays an updating progress bar within the frame image generation loop. Modified from
-#' \link{https://github.com/klmr/rcane/blob/master/system.R}.
+#' \url{https://github.com/klmr/rcane/blob/master/system.R}.
 #'
 #' This is an internal function.
 #'
