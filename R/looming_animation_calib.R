@@ -2,84 +2,95 @@
 #'   function
 #'
 #' @description All screens are different, so an object of a hypothetical size
-#' may displayed at a different size on a different screen, due to differences
-#' in resolution or the physical size of the pixels that make up the screen.
+#'   may displayed at a different size on a different screen, due to differences
+#'   in resolution or the physical size of the pixels that make up the screen.
 #'
-#' \code{looming_animation_calib} is a utility to create a short animation from
-#' an object of class \code{\link{constant_speed_model}}. It requires
-#' \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform, command
-#' line utility for encoding video, to be installed on your system. The function
-#' allows the \code{correction} value (typically in the range 0.02 - 0.03) used
-#' in \code{looming_animation_calib} to be determined, and checks the desired
-#' screen diameter is correctly displayed. Requires access to the screen you
-#' intend to display the animation on, and a ruler or other method of physically
-#' measuring lengths on the screen. Output is a short 60 frame video containing
-#' a static image of 10 horizontal bars (it is not an image file to ensure
-#' software rendering onscreen is consistent). This video should be paused, made
-#' fullscreen and the bar closest in length to 10cm used to estimate the correct
-#' \code{correction} value. The function can be run again to further refine
-#' estimates of the \code{correction} value, if the 10cm distance falls between
-#' two \code{correction} values. If creating different animations, the
-#' \code{correction} value will be the same for a particular screen as long as
-#' the display resolution remains the same (see details).
+#'   \code{looming_animation_calib} is a utility to create a short animation
+#'   from an object of class \code{\link{constant_speed_model}}. It requires
+#'   \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform,
+#'   command line utility for encoding video, to be installed on your system.
+#'   The function allows the \code{correction} value (typically in the range
+#'   0.01 - 0.06) used in \code{looming_animation} to be determined, and checks
+#'   the desired screen diameter is correctly displayed. Requires access to the
+#'   screen you intend to display the animation on, and a ruler or other method
+#'   of physically measuring lengths on the screen. Output is a short 60 frame
+#'   video containing a static image of 10 horizontal bars (it is not an image
+#'   file to ensure software rendering onscreen is consistent). This video
+#'   should be paused, made fullscreen and the bar closest in length to the
+#'   entered \code{ruler} value used to estimate the correct \code{correction}
+#'   value. The function can be run again to further refine estimates of the
+#'   \code{correction} value, if the \code{ruler} width falls between two
+#'   \code{correction} values. The \code{ruler} value should be less than the
+#'   physical horizontal width of the screen, or - obviously - it will be too
+#'   small to display it. If creating different animations, the
+#'   \code{correction} value will be the same for a particular screen as long as
+#'   the display resolution remains the same (see details).
 #'
 #' @details IMPORTANT: The function works by saving an image
-#' (\code{loom_img_**.png} file) for every frame of the animation to the current
-#' working directory. It then uses \code{ffmpeg} to encode these images to an
-#' \code{.mp4} file (saved as \code{animation.mp4}). It then deletes the
-#' \code{.png} files from the working directory. It will overwrite any
-#' \code{.png} or \code{.mp4} file it encounters which has an identical name.
+#'   (\code{loom_img_01.png} etc.) for every frame of the animation to the
+#'   current working directory. It then uses \code{ffmpeg} to encode these
+#'   images to an \code{.mp4} file (saved as \code{animation.mp4}). It then
+#'   deletes the \code{.png} files from the working directory. It will overwrite
+#'   any \code{.png} or \code{.mp4} file it encounters which has an identical
+#'   name.
 #'
-#' The function creates a short 60 frame video containing a static image of 10
-#' horizontal bars along with the \code{correction} value used to create each.
-#' It is a video not an image file to ensure software rendering onscreen is
-#' consistent. Open the file in the software you intend to use to play back the
-#' final animation, make it fullscreen, pause it, and physically measure the
-#' bars on the screen with a ruler to identify the correct \code{correction}
-#' value. If the closest result to 10cm falls between two values, these can be
-#' entered as the \code{correction_range} and the function re-run to further
-#' refine the estimate. When a good \code{correction} value is determined, this
-#' should be used in the \code{looming_animation} function to produce the final
-#' animation.
+#'   The function creates a 60 frame video containing a static image of 10
+#'   horizontal bars along with the \code{correction} value used to create each.
+#'   It is a video and not an image file to ensure software rendering onscreen
+#'   is consistent. Open the file in the software you intend to use to play back
+#'   the final animation, make it fullscreen, pause it, and physically measure
+#'   the bars on the screen with a ruler to identify the correct
+#'   \code{correction} value. If the closest result to the \code{ruler} width
+#'   falls between two values, these can be entered as the
+#'   \code{correction_range} and the function re-run to further refine the
+#'   estimate. When a good value is determined, this should be used as the
+#'   \code{correction} value in the \code{looming_animation} function to produce
+#'   the final animation.
 #'
-#' The display resolution of the screen you will use to play the animation
-#' should be entered as \code{width} and \code{height}. NOTE - This is the
-#' current DISPLAY resolution, which is not necessarily the native resolution of
-#' the screen, but determined in the Displays preferences of your operating
-#' system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
-#' on the device. These settings ensure the animation is in the correct aspect
-#' ratio and uses the full screen (although you are free to modify the aspect
-#' ratio if, for example, you want your animation to be square). Incorrect
-#' resolution values *should* still produce the correct widths onscreen, however
-#' I cannot guarantee all playback software will honour this, so best to follow
-#' the above guidelines if these details are important in your experiment.
+#'   The display resolution of the screen you will use to play the animation
+#'   should be entered as \code{width} and \code{height}. NOTE - This is the
+#'   current DISPLAY resolution, which is not necessarily the native resolution
+#'   of the screen, but determined in the Displays preferences of your operating
+#'   system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
+#'   on the device. These settings ensure the animation is in the correct aspect
+#'   ratio and uses the full screen (although you are free to modify the aspect
+#'   ratio if, for example, you want your animation to be square). Incorrect
+#'   resolution values *should* still produce the correct widths onscreen,
+#'   however I cannot guarantee all playback software will honour this, so best
+#'   to follow the above guidelines if these details are important in your
+#'   experiment.
 #'
-#' The function should work with both Windows and macOS (Linux coming soon),
-#' however it requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
-#' cross-platform, command line utility for encoding video, to be installed on
-#' your system. For installation instructions see
-#' \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need
-#' to restart) or
-#' \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
-#'
+#'   The function should work with both Windows and macOS (Linux coming soon),
+#'   however it requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
+#'   cross-platform, command line utility for encoding video, to be installed on
+#'   your system. For installation instructions see
+#'   \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may
+#'   need to restart) or
+#'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
+
 #' @section Dependencies: The function requires the following packages:
 #'   \code{glue}.
 #'
-#' @seealso \code{\link{constant_speed_model}}, \code{\link{looming_animation}}
+#' @seealso \code{\link{constant_speed_model}},
+#'   \code{\link{variable_speed_model}}, \code{\link{looming_animation}}
 #'
-#' @param x A list object of class \code{constant_speed_model}
+#' @param x A list object of class \code{constant_speed_model} or
+#'   \code{variable_speed_model}
 #' @param correction_range numeric vector of length = 2. Upper and lower range
 #'   of the correction factors to be tested
-#' @param width numeric. Width resolution of the display. E.g. for a display set
-#'   at 1080p resolution (1920x1080), this is \code{width = 1080}. Note: this is
+#' @param width integer. Width resolution of the display. E.g. for a display set
+#'   at 1080p resolution (1920x1080), this is \code{width = 1920}. Note: this is
 #'   NOT the native resolution, but the display resolution as set in the
 #'   operating system settings. Visit \url{https://whatismyscreenresolution.com}
 #'   on the playback display to check.
-#' @param height numeric. Height resolution of the display. E.g. for a display
-#'   set at 1080p resolution (1920x1080), this is \code{width = 1920}. Note:
+#' @param height integer. Height resolution of the display. E.g. for a display
+#'   set at 1080p resolution (1920x1080), this is \code{height = 1080}. Note:
 #'   this is NOT the native resolution, but the display resolution as set in the
 #'   operating system settings. Visit \url{https://whatismyscreenresolution.com}
 #'   on the playback display to check.
+#' @param ruler numeric. Width in cm to check onscreen with your ruler. Should
+#'   be less than the physical horizontal width of the screen, or - obviously -
+#'   it will be too small to display it.
 #'
 #' @return An \code{.mp4} video saved to the current working directory called
 #'   \code{animation_calib.mp4}
@@ -97,7 +108,8 @@
 #' looming_animation_calib(loom_model,
 #'                            correction_range = c(0.02, 0.03),
 #'                            width = 1920,
-#'                            height = 1080)
+#'                            height = 1080,
+#'                            ruler = 10)
 #'
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
@@ -105,17 +117,26 @@
 #'
 #' @export
 
-
 looming_animation_calib <-
 
   function(x,
            correction_range = c(0.02, 0.03),
-           width=1920,
-           height=1080){
+           width = 1920,
+           height = 1080,
+           ruler = 10){
 
-    ## check x class
-    if(class(x) != "constant_speed_model")
-      stop("Input must be an object of class 'constant_speed_model'.")
+    ## check class
+    if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model")))
+      stop("Input must be an object of class 'constant_speed_model' or 'variable_speed_model'")
+
+    ## check for odd numbered screen resolutions, and if so add a pixel
+    ## odd numbers cause "not divisible by 2" error in ffmpeg
+    if(width %% 2 != 0){
+      width <- width +1
+    }
+    if(height %% 2 != 0){
+      height <- height +1
+    }
 
     ## extract data
     frame_rate <- x$anim_frame_rate
@@ -126,24 +147,22 @@ looming_animation_calib <-
                        (max(correction_range)-min(correction_range))/9) # by
 
     ## make new 10cm lengths using different correction values
-    ten_cm_lengths <- corr_values * 10
+    ruler_lengths <- corr_values * ruler
 
-    ## make xy coords for rect() function
-    x_left <- c(0.05, 0.05, 0.05, 0.05, 0.05,
-                0.95 - ten_cm_lengths[6],
-                0.95 - ten_cm_lengths[7],
-                0.95 - ten_cm_lengths[8],
-                0.95 - ten_cm_lengths[9],
-                0.95 - ten_cm_lengths[10])
+    x_left <- 0.05
 
-    x_right <- c(0.05 + ten_cm_lengths[1],
-                 0.05 + ten_cm_lengths[2],
-                 0.05 + ten_cm_lengths[3],
-                 0.05 + ten_cm_lengths[4],
-                 0.05 + ten_cm_lengths[5],
-                 0.95, 0.95, 0.95, 0.95, 0.95)
+    x_right <- c(0.05 + ruler_lengths[1],
+                 0.05 + ruler_lengths[2],
+                 0.05 + ruler_lengths[3],
+                 0.05 + ruler_lengths[4],
+                 0.05 + ruler_lengths[5],
+                0.05 + ruler_lengths[6],
+                0.05 + ruler_lengths[7],
+                0.05 + ruler_lengths[8],
+                0.05 + ruler_lengths[9],
+                0.05 + ruler_lengths[10])
 
-    y_top <- c(0.9, 0.7, 0.5, 0.3, 0.1, 0.9, 0.7, 0.5, 0.3, 0.1)
+    y_top <- rev(seq(0.1, 0.82, 0.08))
 
     y_bottom <- y_top - 0.05
 
@@ -154,7 +173,9 @@ looming_animation_calib <-
       if (i < 100 && i >= 10) {name = paste('loom_img_',i,'.png', sep='')}
 
       # make png file
-      png(name, width=width, height=height, res=72)
+        # res= here is a bit of a hack to scale the text so that it's readable on
+        # different sized screens - results in low resoultion on smaller screens though
+      png(name, width=width, height=height, res=round(width*0.05))
 
       # create new plot
       par(mar=c(0,0,0,0), bg="white")
@@ -180,15 +201,15 @@ looming_animation_calib <-
            cex = 4)
 
       ## measurement arrow
-      arrows(x_left[1], y_top[1]-0.1, x_right[1], y_top[1]-0.1,
-             col = "black",
-             lwd = 2,
+      arrows(x_left[1], y_top[1]+0.02, x_right[1], y_top[1]+0.02,
+             col = "blue",
+             lwd = 3,
              code = 3,
              length = 0.1)
-      text("Which is closest to 10cm onscreen?",
-           x = (x_left[1] + x_right[1])/2,
-           y= y_top[1]-0.15,
-           cex = 2)
+      text(glue::glue('Vary values until one produces a bar {ruler}cm long on screen'),
+           x = 0.5,
+           y = 0.9,
+           cex = 3)
 
       ## clear plot before next loop
       dev.off()

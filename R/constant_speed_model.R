@@ -33,7 +33,7 @@
 #'   \code{Hz} or \code{Frames per Second}.
 #'
 #' @seealso \code{\link{looming_animation}},
-#'   \code{\link{looming_animation_calib}}
+#'   \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
 #'
 #' @param screen_distance numeric. Distance (cm) from the playback screen to
 #'   your specimen.
@@ -76,7 +76,8 @@ constant_speed_model <-
     total_frames <- ceiling(total_time*anim_frame_rate)
 
     ## calculate distance covered each frame at this speed and frame rate
-    distance_per_frame <- speed/anim_frame_rate
+    ## rounding it because of ridiculously long results in later calcs
+    distance_per_frame <- round(speed/anim_frame_rate, 3)
 
     ## build up data frame
     ## list of frames
@@ -86,7 +87,7 @@ constant_speed_model <-
     results_df$time <- results_df$frame/anim_frame_rate
 
     ## add hypothetical predator distance
-    results_df$distance <- start_distance-((results_df$frame-1) * distance_per_frame)
+    results_df$distance <- start_distance-((results_df$frame) * distance_per_frame)
 
     ## add screen diameter of model for each frame
     results_df$diam_on_screen <- (attacker_diameter*screen_distance)/results_df$distance

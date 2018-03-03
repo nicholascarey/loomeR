@@ -3,14 +3,14 @@
 #' @description \code{looming_animation} creates a movie file (\code{.mp4}) of a
 #'   circle increasing in size to represent an object (e.g. an attacking
 #'   predator) coming towards a target. The function input must be an object
-#'   created in \code{\link{constant_speed_model}}, which is where the
-#'   parameters determining the size and speed of the simulation are determined.
-#'   It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
-#'   cross-platform, command line utility for encoding video, to be installed on
-#'   your system.
+#'   created in either \code{\link{constant_speed_model}} or
+#'   \code{\link{variable_speed_model}}, which is where the parameters
+#'   determining the size and speed of the simulation are entered. It requires
+#'   \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform,
+#'   command line utility for encoding video, to be installed on your system.
 #'
 #' @details IMPORTANT: The function works by saving an image file
-#'   (\code{loom_img_*******.png}) for every frame of the animation to the
+#'   (\code{loom_img_0000001.png} etc.) for every frame of the animation to the
 #'   current working directory. It then uses \code{ffmpeg} to encode these
 #'   images to an \code{.mp4} file (saved as \code{animation.mp4}). It then
 #'   deletes (actually deletes, not just sent to the trash) the \code{.png}
@@ -35,16 +35,32 @@
 #'   these options. Simply vary the inputs in \code{constant_speed_model}, and
 #'   use that object to create an animation you are happy with.
 #'
+#'   Note all animations should end with a filled screen, because even small
+#'   objects at viewing distances approaching zero approach infinite perceived
+#'   size. However, the final animation may have several completely filled
+#'   frames at the end, depending on the \code{attacker_diameter} as set in
+#'   \code{constant_speed_model} or \code{variable_speed_model}. Obviously, an
+#'   object above a certain diameter cannot be displayed on a screen smaller
+#'   than that diameter. If your attacker is larger in diameter than the screen,
+#'   the final stages of the animation cannot physically display the actual
+#'   perceived size as it gets close to the subject. In these cases, the
+#'   animation essentially continues past the point where it can display the
+#'   entirety of the simulation, and shows a filled screen (of the chosen
+#'   \code{fill} colour) for however many frames are left in the simulation
+#'   beyond that point. In most cases, if using biologically realistic
+#'   parameters, this will be only a few frames.
+#'
 #' @section Screen display and playback considerations: The function creates a
 #'   video at the frame rate (\code{anim_frame_rate}) specified in the
-#'   \code{\link{constant_speed_model}} object. The frame rate should be one the
-#'   playback software handles correctly. Most modern displays have a maximum
-#'   refresh rate of 60 Hz, so videos at frame rates higher than this may not be
-#'   displayed correctly. I recommend using either 30 or 60 frames per second
-#'   (Hz) which is a frame rate most video playback software should handle
-#'   correctly. The output video is of a circle increasing in diameter over
-#'   time, as specified in the \code{$model$diam_on_screen} component of the
-#'   \code{\link{constant_speed_model}} object.
+#'   \code{\link{constant_speed_model}} or \code{variable_speed_model} object.
+#'   The frame rate should be one the playback software handles correctly. Most
+#'   modern displays have a maximum refresh rate of 60 Hz, so videos at frame
+#'   rates higher than this may not be displayed correctly. I recommend using
+#'   either 30 or 60 frames per second (Hz) which is a frame rate most video
+#'   playback software should honour without problems. The output video is of a
+#'   circle increasing in diameter over time, as specified in the
+#'   \code{$model$diam_on_screen} component of the
+#'   \code{\link{constant_speed_model}} or \code{variable_speed_model} object.
 #'
 #'   The display resolution of the screen you will use to play the animation
 #'   should be entered as \code{width} and \code{height}. NOTE - This is the
@@ -53,7 +69,7 @@
 #'   system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
 #'   on the device. These settings ensure the animation is in the correct aspect
 #'   ratio and uses the full screen (although you are free to modify the aspect
-#'   ratio if, for example, you want your animation to be square). Incorrect
+#'   ratio if, for example, you want your animation to be square). Other
 #'   resolution values *should* still produce the correct widths onscreen,
 #'   however I cannot guarantee all playback software will honour this, so best
 #'   to follow the above guidelines if these details are important in your
@@ -65,11 +81,12 @@
 #'   intended to be a display-specific correction factor to ensure the actual,
 #'   physical size of the circle matches the diameters in the
 #'   \code{$model$diam_on_screen} component of the
-#'   \code{\link{constant_speed_model}} object. This value can be determined
-#'   using the \code{\link{looming_animation_calib}} function. See the
-#'   documentation for this function for instructions on its use. If creating
-#'   different animations, the \code{correction} value will be the same for a
-#'   particular screen as long as the display resolution remains the same.
+#'   \code{\link{constant_speed_model}} or \code{variable_speed_model} object.
+#'   This value can be determined using the
+#'   \code{\link{looming_animation_calib}} function. See the documentation for
+#'   this function for instructions on its use. If creating different
+#'   animations, the \code{correction} value will be the same for a particular
+#'   screen as long as the display resolution remains the same.
 #'
 #' @section Animation options: The circle colour and background can be specified
 #'   using \code{fill} and \code{background} with standard base-R colour syntax
@@ -100,13 +117,13 @@
 #'   number of times to achieve the padding duration. Essentially, this makes
 #'   the animation static for \code{pad} seconds before it starts to play.
 #'   Depending on the \code{start_distance} set in \code{constant_speed_model},
-#'   this means the video may show a static circle until the animation proper
-#'   starts. If you do not want this, either modify the \code{start_distance}
-#'   until the initial diameter is negligible, or use the \code{pad_blank =
-#'   TRUE} option, in which case blank frames will be added rather than
-#'   duplicating the starting frame. Under this option, after \code{pad} seconds
-#'   of blank screen, the animation will suddenly appear and play. Again, how
-#'   noticable this is depends on the starting diameter as determined with
+#'   this means the video may show a static circle until the animation starts.
+#'   If you do not want this, either modify the \code{start_distance} until the
+#'   initial diameter is negligible, or use the \code{pad_blank = TRUE} option,
+#'   in which case blank frames will be added rather than duplicating the
+#'   starting frame. Under this option, after \code{pad} seconds of blank
+#'   screen, the animation will suddenly appear and play. Again, how noticable
+#'   this is depends on the starting diameter as determined with
 #'   \code{start_distance} in \code{constant_speed_model}. Note that frame
 #'   tracking markers (i.e. dots or frame numbers) will only be added to
 #'   animation frames, not to frames added for padding.
@@ -129,7 +146,6 @@
 #'   \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may
 #'   need to restart) or
 #'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
-#'
 #'
 #'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
@@ -164,14 +180,15 @@
 #'   speed is at 'Normal' (Menu>Playback).
 #'
 #' @section Dependencies: The function requires the following packages:
-#'   \code{glue}.
+#'   \code{glue}, \code{plotrix}
 #'
 #' @seealso \code{\link{constant_speed_model}},
-#'   \code{\link{looming_animation_calib}}
+#'   \code{\link{variable_speed_model}}, \code{\link{looming_animation_calib}}
 #'
-#' @param x list. A list object of class \code{constant_speed_model}.
+#' @param x list. A list object of class \code{constant_speed_model} or
+#'   \code{variable_speed_model}.
 #' @param correction numeric. Correction factor for the display used to play the
-#'   animation. Default = 0.0285. Typically falls between 0.02-0.03. Exact value
+#'   animation. Default = 0.0285. Typically falls between 0.01-0.06. Exact value
 #'   can be determined using \code{\link{looming_animation_calib}}
 #' @param pad numeric. Duration in seconds to pad the start of the video. This
 #'   replicates the first frame of the animation the required number of times to
@@ -180,13 +197,13 @@
 #'   \code{pad_blank}).
 #' @param pad_blank logical. Optionally pad with blank frames rather than the
 #'   first animation frame.
-#' @param width numeric. Width resolution of the display. E.g. for a display set
-#'   at 1080p resolution (1920x1080), this is \code{width = 1080}. Note: this is
+#' @param width integer. Width resolution of the display. E.g. for a display set
+#'   at 1080p resolution (1920x1080), this is \code{width = 1920}. Note: this is
 #'   NOT the native resolution, but the display resolution as set in the
 #'   operating system settings. Visit \url{https://whatismyscreenresolution.com}
 #'   on the playback display to check.
-#' @param height numeric. Height resolution of the display. E.g. for a display
-#'   set at 1080p resolution (1920x1080), this is \code{width = 1920}. Note:
+#' @param height integer. Height resolution of the display. E.g. for a display
+#'   set at 1080p resolution (1920x1080), this is \code{height = 1080}. Note:
 #'   this is NOT the native resolution, but the display resolution as set in the
 #'   operating system settings. Visit \url{https://whatismyscreenresolution.com}
 #'   on the playback display to check.
@@ -251,16 +268,15 @@
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
 #' @importFrom glue glue
+#' @importFrom plotrix draw.circle
 #'
 #' @export
 
 ## To Do
 
-## accept vector of speeds not just constant speed model
-
 ## option to set position (i.e. distance from side) of dots and frame number
 
-## constant looping animation.
+## constant looping animation?
 
 ## option to NOT convert images using ffmpeg, but save them
 
@@ -295,8 +311,17 @@ looming_animation <-
            save_data = FALSE){
 
     ## check class
-    if(class(x) != "constant_speed_model")
-      stop("Input must be an object of class 'constant_speed_model'.")
+    if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model")))
+      stop("Input must be an object of class 'constant_speed_model' or 'variable_speed_model'")
+
+    ## check for odd numbered screen resolutions, and if so add a pixel
+    ## odd numbers cause "not divisible by 2" error in ffmpeg
+    if(width %% 2 != 0){
+      width <- width +1
+    }
+    if(height %% 2 != 0){
+      height <- height +1
+    }
 
     ## extract data and parameters
     cs_model <- x$model
@@ -368,7 +393,7 @@ looming_animation <-
       plot.new()
 
       # make circle - centered
-      draw.circle(x=0.5, y=0.5,
+      plotrix::draw.circle(x=0.5, y=0.5,
                   ## NOTE - use corrected column
                   r <- cs_model$diam_on_screen_corrected[i]/2,
                   nv=100,
@@ -541,7 +566,7 @@ looming_animation <-
 
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
-    message(glue('Video conversion complete. Resulting video should be {duration}s in duration.'))
+    message(glue('Conversion complete. Resulting video should be {duration}s in duration, unless ffmpeg encountered errors. If so, these should be listed above'))
   }
 
 
