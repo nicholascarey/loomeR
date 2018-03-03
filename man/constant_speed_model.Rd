@@ -40,20 +40,22 @@ Calculates the screen diameters for a modelled object of specified
   for each frame from the specified starting distance until the hypothetical
   distance between the attacker and target is zero.
 
-  Requires distance from the screen at which the observing specimen will be
-  located, and the intended frame rate at which the subsequent animation will
-  be played. These details are important in experiments where you want to
-  precisely determine at what time, perceived speed, or perceived velocity of
-  an attack at which an escape response may occur. Note: if the specimen is
-  closer or further away than the specified screen distance, the animation
-  will be perceived as a different distance and a different velocity.
+  Requires the intended frame rate at which the subsequent animation will be
+  played, and distance from the screen at which the observing specimen will
+  be located. These details are important in experiments where you want to
+  precisely determine at what time, perceived distance, or perceived velocity
+  of an attack an escape response occurs. Note: if the specimen is closer or
+  further away than the specified screen distance, the animation will be
+  perceived as a different distance and a different velocity.
 
   If you need to create a looming animation simply to elicit a response, and
   are not concerned with the precise details, the function is more than
   capable of this. Simply enter some inputs, use
   \code{\link{looming_animation}} to create the animation, play it back and
   if it is not what you want, go back and vary the inputs until you are happy
-  with the result.
+  with the result. For instance, to change the starting diameter of the
+  animation (and hence its total duration), modify the \code{start_distance}
+  parameter until you get the starting diameter or total duration you want.
 
   Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
   \code{Hz} or \code{Frames per Second}.
@@ -69,7 +71,7 @@ loom_model <- constant_speed_model(
 }
 \seealso{
 \code{\link{looming_animation}},
-  \code{\link{looming_animation_calib}}
+  \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}
