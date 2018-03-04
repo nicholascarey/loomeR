@@ -91,6 +91,13 @@ constant_speed_model <-
 
     ## add screen diameter of model for each frame
     results_df$diam_on_screen <- (attacker_diameter*screen_distance)/results_df$distance
+    ## set last value to 1000 cm
+    ## this is because rounding of distance_per_frame above can cause small negative
+    ## or positive values as last entry when calculating distance. Therefore diameter
+    ## becomes ridiculously large (or negative) A zero distance also cause 'inf' values
+    ## when dividing above.
+    results_df$diam_on_screen[length(results_df$diam_on_screen)] <- 1000
+
 
     ## assemble output list object
     output <- list(
