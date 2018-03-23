@@ -597,7 +597,9 @@ looming_animation <-
 
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
-    message(glue('Conversion complete. Resulting video should be {duration}s in duration, unless ffmpeg encountered errors. If so, these should be listed above'))
+    message(glue('Conversion complete.
+                 Resulting video should be {duration}s in duration, unless ffmpeg encountered errors.
+                 If so, these should be listed above'))
   }
 
 
