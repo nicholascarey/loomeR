@@ -4,16 +4,11 @@
 \alias{looming_animation}
 \title{Create a looming animation}
 \usage{
-looming_animation(x, correction = 0.0285, width = 1280, height = 1024,
-  fill = "black", background = "white", pad = NULL, pad_blank = FALSE,
-  dots = FALSE, dots_interval = 20, dots_colour = "grey",
-  dots_position = "br", dots_size = 0.005, frame_number = FALSE,
-  frame_number_colour = "grey", frame_number_position = "tr",
-  frame_number_size = 2, frame_number_rotation = 0, save_data = FALSE)
+looming_animation(x, ...)
 }
 \arguments{
-\item{x}{list. A list object of class \code{constant_speed_model} or
-\code{variable_speed_model}.}
+\item{x}{list. A list object of class \code{constant_speed_model},
+\code{variable_speed_model}, or \code{diameter_model}.}
 
 \item{correction}{numeric. Correction factor for the display used to play the
 animation. Default = 0.0285. Typically falls between 0.01-0.06. Exact value
@@ -73,25 +68,31 @@ default plotting text size. Default = 2.}
 \item{frame_number_rotation}{numeric. Value in degrees (0-360) to rotate
 frame numbers.}
 
+\item{start_marker}{logical. Controls if a marker ("X") is added to the first
+frame. This is a visual aid: if it disappears it indicates the video is
+playing.}
+
+\item{start_marker_colour}{logical. Colour of the \code{start_marker}}
+
+\item{start_marker_size}{logical. Size of the \code{start_marker} as
+proportion of default plotting text size. Default = 2.}
+
 \item{save_data}{logical. If \code{=TRUE}, exports to the current working
 directory a \code{.csv} file containing the data used to make the
 animation, including the column of values scaled using the
 \code{correction} value. File name: \code{ANIM_from_**name of R object
 used**_**frame rate**_**display resolution**.csv}}
 }
-\value{
-An \code{.mp4} video saved to the current working directory called
-  \code{animation.mp4}
-}
 \description{
 \code{looming_animation} creates a movie file (\code{.mp4}) of a
-  circle increasing in size to represent an object (e.g. an attacking
+  circle increasing in size to simulate an object (e.g. an attacking
   predator) coming towards a target. The function input must be an object
-  created in either \code{\link{constant_speed_model}} or
-  \code{\link{variable_speed_model}}, which is where the parameters
-  determining the size and speed of the simulation are entered. It requires
-  \code{ffmpeg} (\url{http://ffmpeg.org}), an external, cross-platform,
-  command line utility for encoding video, to be installed on your system.
+  created in either \code{\link{constant_speed_model}},
+  \code{\link{variable_speed_model}}, or \code{\link{diameter_model}} which
+  is where the parameters determining the size and speed of the simulation
+  are entered. It requires \code{ffmpeg} (\url{http://ffmpeg.org}), an
+  external, cross-platform, command line utility for encoding video, to be
+  installed on your system.
 }
 \details{
 IMPORTANT: The function works by saving an image file
@@ -117,36 +118,37 @@ IMPORTANT: The function works by saving an image file
   occurs (and hence the perceived distance and/or speed of the attacker) are
   of interest. If you simply want to generate an animation to elicit a
   response and are unconcerned with these details, you can ignore most of
-  these options. Simply vary the inputs in \code{constant_speed_model}, and
-  use that object to create an animation you are happy with.
+  these options. For simple models where these details are unimportant see
+  \code{\link{diameter_model}}.
 
-  Note all animations should end with a filled screen, because even small
-  objects at viewing distances approaching zero approach infinite perceived
-  size. However, the final animation may have several completely filled
-  frames at the end, depending on the \code{attacker_diameter} as set in
-  \code{constant_speed_model} or \code{variable_speed_model}. Obviously, an
-  object above a certain diameter cannot be displayed on a screen smaller
-  than that diameter. If your attacker is larger in diameter than the screen,
-  the final stages of the animation cannot physically display the actual
-  perceived size as it gets close to the subject. In these cases, the
-  animation essentially continues past the point where it can display the
-  entirety of the simulation, and shows a filled screen (of the chosen
-  \code{fill} colour) for however many frames are left in the simulation
-  beyond that point. In most cases, if using biologically realistic
-  parameters, this will be only a few frames.
+  Note animations should end with a filled screen, because even small objects
+  at viewing distances approaching zero approach infinite perceived size (the
+  exception is if you have used \code{\link{diameter_model}} and set the end
+  diameter to less than the size of your screen). The final animation may
+  have several completely filled frames at the end, depending on the
+  \code{attacker_diameter} as set in \code{constant_speed_model} or
+  \code{variable_speed_model}. Obviously, an object above a certain diameter
+  cannot be displayed on a screen smaller than that diameter. If your
+  attacker is larger in diameter than the screen, the final stages of the
+  animation cannot physically display the actual perceived size as it gets
+  close to the subject. In these cases, the animation essentially continues
+  past the point where it can display the entirety of the simulation, and
+  shows a filled screen (of the chosen \code{fill} colour) for however many
+  frames are left in the simulation beyond that point. In most cases, if
+  using biologically realistic parameters, this will be only a few frames.
 }
 \section{Screen display and playback considerations}{
  The function creates a
   video at the frame rate (\code{anim_frame_rate}) specified in the
-  \code{\link{constant_speed_model}} or \code{variable_speed_model} object.
-  The frame rate should be one the playback software handles correctly. Most
-  modern displays have a maximum refresh rate of 60 Hz, so videos at frame
-  rates higher than this may not be displayed correctly. I recommend using
-  either 30 or 60 frames per second (Hz) which is a frame rate most video
-  playback software should honour without problems. The output video is of a
-  circle increasing in diameter over time, as specified in the
-  \code{$model$diam_on_screen} component of the
-  \code{\link{constant_speed_model}} or \code{variable_speed_model} object.
+  \code{\link{constant_speed_model}}, \code{\link{variable_speed_model}} or
+  \code{\link{diameter_model}} object. The frame rate should be one the
+  playback software handles correctly. Most modern displays have a maximum
+  refresh rate of 60 Hz, so videos at frame rates higher than this may not be
+  displayed correctly. I recommend using either 30 or 60 frames per second
+  (Hz) which is a frame rate most video playback software should honour
+  without problems. The output video is of a circle increasing in diameter
+  over time, as specified in the \code{$model$diam_on_screen} component of
+  the model.
 
   The display resolution of the screen you will use to play the animation
   should be entered as \code{width} and \code{height}. NOTE - This is the
@@ -166,13 +168,11 @@ IMPORTANT: The function works by saving an image file
   the pixels that make up the screen. The \code{correction} operator is
   intended to be a display-specific correction factor to ensure the actual,
   physical size of the circle matches the diameters in the
-  \code{$model$diam_on_screen} component of the
-  \code{\link{constant_speed_model}} or \code{variable_speed_model} object.
-  This value can be determined using the
-  \code{\link{looming_animation_calib}} function. See the documentation for
-  this function for instructions on its use. If creating different
-  animations, the \code{correction} value will be the same for a particular
-  screen as long as the display resolution remains the same.
+  \code{$model$diam_on_screen} component of the model. This value can be
+  determined using the \code{\link{looming_animation_calib}} function. See
+  the documentation for this function for instructions on its use. If
+  creating different animations, the \code{correction} value will be the same
+  for a particular screen as long as the display resolution remains the same.
 }
 
 \section{Animation options}{
@@ -197,6 +197,15 @@ IMPORTANT: The function works by saving an image file
 
   These markers are only inserted into animation frames, not to frames added
   for padding (see next section).
+
+  \subsection{Start Marker}{ By default (\code{start_marker = TRUE}), a
+  marker (an "X") is placed at the bottom centre of the screen in the first
+  frame of the video, regardless of padding. This is a visual aid to allow
+  you to see when the video has started to play: if it is not there, then the
+  video is playing. This is especially useful for videos that have been
+  padded, and those without frame markers, as there may be no other
+  indication the video is playing. The colour and size of the marker can be
+  specified with \code{start_marker_colour} and \code{start_marker_size}.}
 }
 
 \section{Padding animations to a required duration}{
@@ -240,6 +249,9 @@ IMPORTANT: The function works by saving an image file
   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
 
 
+
+
+
   On Windows, if you encounter an error after installation (e.g. \code{unable
   to start png() device}), try setting the working directory with
   \code{setwd()} to the current or desired folder. It has not been
@@ -254,10 +266,14 @@ IMPORTANT: The function works by saving an image file
   and Cmd-Left Arrow  the video to be rewound to the start. Others
   applications such as VLC have quirks, for example automatically playing the
   video on opening the file, and closing it at the end of the video. However,
-  find the application that works best for your purposes. As a check, it's a
-  good idea to ensure the application you use is correctly identifying the
-  metadata of the video. This depends on the software, but in should be
-  similar to the following: open the video file, pause it, make it
+  find the application that works best for your purposes. If you need to loop
+  the video, many video applications have an option for that. If there is
+  demand, an option may be added to create looping videos or gifs. Get in
+  touch if that's something you'd like to see implemented.
+
+  As a check, it's a good idea to ensure the application you use is correctly
+  identifying the metadata of the video. This depends on the software, but in
+  should be similar to the following: open the video file, pause it, make it
   fullscreen, and then:
 
   In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format'
@@ -310,7 +326,8 @@ looming_animation(loom_model,
 }
 \seealso{
 \code{\link{constant_speed_model}},
-  \code{\link{variable_speed_model}}, \code{\link{looming_animation_calib}}
+  \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
+  \code{\link{looming_animation_calib}}
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}
