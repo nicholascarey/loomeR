@@ -27,10 +27,10 @@
 #' @param end_diameter numeric. Diameter (cm) you want the animation to end at.
 #'   If you want the animation to fill the screen, this should be slightly
 #'   larger than the physical screen size.
-#' @param duration numeric. Total duraion (s) you want the animation to be.
+#' @param duration numeric. Total duration (s) you want the animation to be.
 #' @param anim_frame_rate numeric. Frames per second (Hz) you want the resulting
 #'   animation to be played at.
-#' @param expansion string. \code{constant_speed} or \code{= constant_diameter}.
+#' @param expansion string. \code{constant_speed} or \code{constant_diameter}.
 #'   Sets if the expansion of the simulation is modelled as a constant speed or
 #'   constant increase in diameter (see Details).
 #'
