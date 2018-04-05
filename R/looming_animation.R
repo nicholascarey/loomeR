@@ -125,15 +125,13 @@
 #'   playback. It duplicates the starting frame of the animation the required
 #'   number of times to achieve the padding duration. Essentially, this makes
 #'   the animation static for \code{pad} seconds before it starts to play.
-#'   Depending on the \code{start_distance} set in \code{constant_speed_model},
-#'   this means the video may show a static circle until the animation starts.
-#'   If you do not want this, either modify the \code{start_distance} until the
+#'   This means the video may show a static circle until the animation starts.
+#'   If you do not want this, either modify the model parameters until the
 #'   initial diameter is negligible, or use the \code{pad_blank = TRUE} option,
 #'   in which case blank frames will be added rather than duplicating the
 #'   starting frame. Under this option, after \code{pad} seconds of blank
 #'   screen, the animation will suddenly appear and play. Again, how noticable
-#'   this is depends on the starting diameter as determined with
-#'   \code{start_distance} in \code{constant_speed_model}. Note that frame
+#'   this is depends on the model parameters you have used. Note that frame
 #'   tracking markers (i.e. dots or frame numbers) will only be added to
 #'   animation frames, not to frames added for padding.
 #'
