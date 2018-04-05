@@ -32,7 +32,7 @@ library(loomeR) # load the package
 # 1. Create a model
 
 # Simple constant speed model
-# (all inputs are in cm, speed in cm/s, frame rate in Hz)
+# (speed in cm/s, frame rate in Hz, all other inputs in cm)
 
 x <- constant_speed_model(
   screen_distance = 20,    # How far from the screen is your observing specimen?
@@ -71,7 +71,7 @@ If you use `loomeR` in your work, a citation using this zenodo DOI would be much
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220)
 
-Even if you don't cite it, please [let me know](mailto:nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your study by tweeting about it! 
+If you don't have the space to cite it, please [let me know](mailto:nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your paper by tweeting about it! 
 
 ### References
 
