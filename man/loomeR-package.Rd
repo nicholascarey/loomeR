@@ -6,7 +6,6 @@
 \alias{loomeR-package}
 \title{loomeR: Create a looming animation}
 \description{
-Creates a model of a object of specified size approaching at specified speed.
-Uses that model to then create a looming animation.
+Create a looming animation for use in behavioural and neurological experiments
 }
 \keyword{internal}

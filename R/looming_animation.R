@@ -114,8 +114,8 @@
 #'   marker (an "X") is placed at the bottom centre of the screen in the first
 #'   frame of the video, regardless of padding. This is a visual aid to allow
 #'   you to see when the video has started to play: if it is not there, then the
-#'   video is playing. This is especially useful for videos that have been
-#'   padded, and those without frame markers, as there may be no other
+#'   video has started playing. This is especially useful for videos that have
+#'   been padded, and those without frame markers, as there may be no other
 #'   indication the video is playing. The colour and size of the marker can be
 #'   specified with \code{start_marker_colour} and \code{start_marker_size}.}
 #'
@@ -155,6 +155,7 @@
 #'   \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may
 #'   need to restart) or
 #'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
+#'
 #'
 #'
 #'
@@ -334,7 +335,7 @@ looming_animation <-
 
     ## check class
     if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
-      stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or diameter_model")
+      stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'")
 
     ## check for odd numbered screen resolutions, and if so add a pixel
     ## odd numbers cause "not divisible by 2" error in ffmpeg
@@ -361,7 +362,7 @@ looming_animation <-
               # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
               if(!isTRUE(pad_blank)){
                 temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad*frame_rate), cs_model$diam_on_screen)
-              # otherwise set the diamater to Zero for those frames to achieve a blank frame
+              # otherwise set the diameter to Zero for those frames to achieve a blank frame
               } else {
                 temp_diam_on_screen <- c(rep(0, pad*frame_rate), cs_model$diam_on_screen)
               }

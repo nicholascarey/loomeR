@@ -202,8 +202,8 @@ IMPORTANT: The function works by saving an image file
   marker (an "X") is placed at the bottom centre of the screen in the first
   frame of the video, regardless of padding. This is a visual aid to allow
   you to see when the video has started to play: if it is not there, then the
-  video is playing. This is especially useful for videos that have been
-  padded, and those without frame markers, as there may be no other
+  video has started playing. This is especially useful for videos that have
+  been padded, and those without frame markers, as there may be no other
   indication the video is playing. The colour and size of the marker can be
   specified with \code{start_marker_colour} and \code{start_marker_size}.}
 }
@@ -247,6 +247,7 @@ IMPORTANT: The function works by saving an image file
   \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may
   need to restart) or
   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
+
 
 
 

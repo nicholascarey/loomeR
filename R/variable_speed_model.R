@@ -38,13 +38,14 @@
 #'
 #'   If you need to create a looming animation simply to elicit a response, and
 #'   are not concerned with the precise details, see
-#'   \code{\link{constant_speed_model}}.
+#'   \code{\link{diameter_model}}.
 #'
 #'   Inputs should be in \code{cm}, speeds in \code{cm/s}, and frame rate in
 #'   \code{Hz} or \code{Frames per Second}.
 #'
 #' @seealso \code{\link{looming_animation}},
 #'   \code{\link{looming_animation_calib}}, \code{\link{constant_speed_model}}
+#'   \code{\link{diameter_model}}
 #'
 #' @param x numeric. Vector of speeds (cm/s) of the hypothetical approaching
 #'   attacker at the same frequency (Hz) as the \code{anim_frame_rate}. Length
@@ -62,10 +63,14 @@
 #'   diameter for each frame in the animation.
 #'
 #' @examples
-#' ## This creates a model of an attacker steadily accelerating in speed from
+#' ## Create a speeds vector
+#' ## Here we create a vector of speeds of an attacker steadily accelerating from
 #' ## nearly stationary (1 cm/s) to 500 cm/s by 1 cm/s per frame
+#' x <- seq(1, 500, 0.1)
+#'
+#' ## Use the variable speed vector to create the model
 #' loom_model <- variable_speed_model(
-#'                      seq(1, 500, 0.1),
+#'                      x,
 #'                      screen_distance = 20,
 #'                      anim_frame_rate = 60,
 #'                      attacker_diameter = 50)
