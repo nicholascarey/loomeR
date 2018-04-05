@@ -57,7 +57,7 @@ If you have any bugs or feedback, you can contact me via [email](nicholascarey@g
 Working with the following people inspired the creation of this package:
 
 - Paolo Domenici, CNR IAMC, Italy.  [Link](http://oristano.iamc.cnr.it/IAMC/staff/paolo-domenici/domenici-paolo?set_language=en)
-- Dave Cade, Hopkins Marine Station, Stanford University. [Link](http://goldbogen.stanford.edu)
+- Dave Cade & Jeremy Goldbogen, Hopkins Marine Station, Stanford University. [Link](http://goldbogen.stanford.edu)
 - Januar Harianto [Link](https://github.com/januarharianto)
 
 ### Cite
