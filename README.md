@@ -6,9 +6,9 @@ The package can create a simple animation of a desired duration with inputs for 
 
 Many other options are available, such as modifying the colour and background of the animation, padding the video to a desired total duration, marking frames to assist with identifying when escape responses occur, and more. 
 
-Note, `loomeR` currently only works on Mac and Windows, and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform command-line utility for encoding video, to be installed on your system. Linux support is planned: please [get in touch](nicholascarey@gmail.com) if you would like to help with implementing that. 
+Note, `loomeR` currently only works in R on macOS and Windows, and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line utility for encoding video to be installed on your system. Linux support is planned: please [get in touch](nicholascarey@gmail.com) if you would like to help with implementing that. 
 
-## Installation
+### Installation
 `loomeR` is not yet published on CRAN, but can be installed using the `devtools` package:
 
 ```r
@@ -16,7 +16,7 @@ install.packages("devtools")
 devtools::install_github("nicholascarey/loomeR")
 ```
 
-## Usage
+### Usage
 
 The included documentation is comprehensive, and a vignette explaining how to use the package is in preparation. For a quick evaluation try out the following code:
 
@@ -41,18 +41,18 @@ looming_animation(x)
 
 ```
 
-## Forthcoming features
+### Forthcoming features
 
 - [ ] Linux support
 - [ ] Add a receding option for animations (possibly this works by setting speed as a negative, or start/end diameters the other way round, but this has not been tested)
 - [ ] Function to extract model parameters at a particular frame, and optionally apply a latency correction, or correct the perceived speed and distance for a different viewing distance. 
-- [ ] Enhancements (e.g. better padding method) and alternatives to `ffmpeg`
+- [ ] Enhancements (e.g. quicker padding method) and alternatives to `ffmpeg`
 
-## Feedback
+### Feedback
 
 If you have any bugs or feedback, you can contact me via [email](nicholascarey@gmail.com), or by [opening an issue](https://github.com/nicholascarey/loomeR/issues). 
 
-# Acknowledgements
+### Acknowledgements
 
 Working with the following people inspired the creation of this package:
 
@@ -60,15 +60,20 @@ Working with the following people inspired the creation of this package:
 - Dave Cade, Hopkins Marine Station, Stanford University. [Link](http://goldbogen.stanford.edu)
 - Januar Harianto [Link](https://github.com/januarharianto)
 
-# Cite
+### Cite
 If you use `loomeR` in your work, a citation using this zenodo DOI would be much appreciated:
 
 [![DOI](https://zenodo.org/badge/121540168.svg)](https://zenodo.org/badge/latestdoi/121540168)
 
 Even if you don't cite it, please let me [know](nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your study by tweeting about it! 
 
-# References
+### References
 
-James J. Gibson, The Ecological Approach to Visual Perception: Classic Edition. Psychology Press. (2014).
+Gibson, J. J. (2014) The Ecological Approach to Visual Perception: Classic Edition. Psychology Press. (2014).
 
+Domenici, P. (2002). The visually mediated escape response in fish: predicting prey responsiveness and the locomotor behaviour of predators and prey. Marine and Freshwater Behaviour and Physiology, 35(1–2), 87–110. https://doi.org/10.1080/10236240290025635
+
+Muijres, F. T., Elzinga, M. J., Melis, J. M., & Dickinson, M. H. (2014). Flies evade looming targets by executing rapid visually directed banked turns. Science, 344(6180), 172–177. https://doi.org/10.1126/science.1248955
+
+Peron, S., & Gabbiani, F. (2009). Spike frequency adaptation mediates looming stimulus selectivity in a collision-detecting neuron. Nature Neuroscience, 12, 318. http://dx.doi.org/10.1038/nn.2259
 

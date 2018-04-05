@@ -12,7 +12,7 @@
 #'   for each frame from the specified starting distance until the hypothetical
 #'   distance between the attacker and target is zero.
 #'
-#'   Requires the intended frame rate at which the subsequent animation will be
+#'   Requires the frame rate at which the subsequent animation will be
 #'   played, and distance from the screen at which the observing specimen will
 #'   be located. These details are important in experiments where you want to
 #'   precisely determine at what time, perceived distance, or perceived velocity
@@ -21,19 +21,15 @@
 #'   perceived as a different distance and a different velocity.
 #'
 #'   If you need to create a looming animation simply to elicit a response, and
-#'   are not concerned with the precise details, the function is more than
-#'   capable of this. Simply enter some inputs, use
-#'   \code{\link{looming_animation}} to create the animation, play it back and
-#'   if it is not what you want, go back and vary the inputs until you are happy
-#'   with the result. For instance, to change the starting diameter of the
-#'   animation (and hence its total duration), modify the \code{start_distance}
-#'   parameter until you get the starting diameter or total duration you want.
+#'   are not concerned with the precise details, see
+#'   \code{\link{diameter_model}}.
 #'
 #'   Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
 #'   \code{Hz} or \code{Frames per Second}.
 #'
 #' @seealso \code{\link{looming_animation}},
 #'   \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
+#'   \code{\link{diameter_model}}
 #'
 #' @param screen_distance numeric. Distance (cm) from the playback screen to
 #'   your specimen.
