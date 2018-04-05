@@ -61,9 +61,9 @@ Working with the following people inspired the creation of this package:
 - Januar Harianto [Link](https://github.com/januarharianto)
 
 # Cite
-If you use `loomeR` in your work, it would be nice if you cite it using this zenodo DOI:
+If you use `loomeR` in your work, a citation using this zenodo DOI would be much appreciated:
 
-DOI
+[![DOI](https://zenodo.org/badge/121540168.svg)](https://zenodo.org/badge/latestdoi/121540168)
 
 Even if you don't cite it, please let me [know](nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your study by tweeting about it! 
 

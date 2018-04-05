@@ -15,12 +15,12 @@ at.}
 If you want the animation to fill the screen, this should be slightly
 larger than the physical screen size.}
 
-\item{duration}{numeric. Total duraion (s) you want the animation to be.}
+\item{duration}{numeric. Total duration (s) you want the animation to be.}
 
 \item{anim_frame_rate}{numeric. Frames per second (Hz) you want the resulting
 animation to be played at.}
 
-\item{expansion}{string. \code{constant_speed} or \code{= constant_diameter}.
+\item{expansion}{string. \code{constant_speed} or \code{constant_diameter}.
 Sets if the expansion of the simulation is modelled as a constant speed or
 constant increase in diameter (see Details).}
 }
