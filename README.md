@@ -1,3 +1,5 @@
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/respR)](https://cran.r-project.org/package=loomeR) [![DOI](https://zenodo.org/badge/121540168.svg)](https://zenodo.org/badge/latestdoi/121540168)
+
 # Welcome
 
 `loomeR` is an R package for creating looming animations for use in behavioural and neurological experiments. Looming animations are used in a range of physiological, psychological and behavioural sciences to simulate an approaching predator and to investigate phenomena such as perception, visual latency, predator responses, and neurological functioning. 
