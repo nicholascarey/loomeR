@@ -1,4 +1,4 @@
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/respR)](https://cran.r-project.org/package=loomeR) [![DOI](https://zenodo.org/badge/121540168.svg)](https://zenodo.org/badge/latestdoi/121540168)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/respR)](https://cran.r-project.org/package=loomeR) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220)
 
 # Welcome
 
@@ -32,7 +32,7 @@ library(loomeR) # load the package
 # 1. Create a model
 
 # Simple constant speed model
-# (all inputs are in cm, speed in cm/s, frame rate in Hz)
+# (speed in cm/s, frame rate in Hz, all other inputs in cm)
 
 x <- constant_speed_model(
   screen_distance = 20,    # How far from the screen is your observing specimen?
@@ -69,9 +69,9 @@ Working with the following people inspired the creation of this package:
 ### Cite
 If you use `loomeR` in your work, a citation using this zenodo DOI would be much appreciated:
 
-[![DOI](https://zenodo.org/badge/121540168.svg)](https://zenodo.org/badge/latestdoi/121540168)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220)
 
-Even if you don't cite it, please [let me know](mailto:nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your study by tweeting about it! 
+If you don't have the space to cite it, not a problem, but please do [let me know](mailto:nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your paper by tweeting about it! 
 
 ### References
 

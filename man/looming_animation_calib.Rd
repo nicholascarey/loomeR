@@ -32,9 +32,8 @@ will be too large to display.}
 All screens are different, so an object of a hypothetical size
  may be displayed at a different size on a different screen, due to
  differences in resolution or the physical size of the pixels that make up
- the screen. \code{looming_animation_calib} is a utility to create a short
- animation to calibrate the \code{\link{looming_animation}} function for a
- particular screen.
+ the screen. \code{looming_animation_calib} is a utility to help calibrate
+ the \code{\link{looming_animation}} function for a particular screen.
 }
 \details{
 IMPORTANT: The function works by saving an image
@@ -83,6 +82,7 @@ IMPORTANT: The function works by saving an image
 
 
 
+
  \subsection{Note on smaller screens}{If you are using the function to
  calibrate for a small screen, for example a phone or tablet, the resulting
  video might look strange: low resolution, blurry, bad spacing, etc. This is
@@ -98,11 +98,10 @@ IMPORTANT: The function works by saving an image
 
 \examples{
 # Create a calibration video for checking a 10cm width
-looming_animation_calib(loom_model,
-                           correction_range = c(0.02, 0.03),
-                           width = 1920,
-                           height = 1080,
-                           ruler = 10)
+looming_animation_calib(correction_range = c(0.02, 0.03),
+                        width = 1920,
+                        height = 1080,
+                        ruler = 10)
 
 }
 \seealso{
