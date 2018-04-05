@@ -69,7 +69,7 @@ If you use `loomeR` in your work, a citation using this zenodo DOI would be much
 
 [![DOI](https://zenodo.org/badge/121540168.svg)](https://zenodo.org/badge/latestdoi/121540168)
 
-Even if you don't cite it, please let me [know](mailto:nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your study by tweeting about it! 
+Even if you don't cite it, please [let me know](mailto:nicholascarey@gmail.com) if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your study by tweeting about it! 
 
 ### References
 
