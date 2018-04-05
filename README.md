@@ -6,11 +6,11 @@
   <img src=https://i.imgur.com/WKKt59E.gif>
 </p>
 
-The package can create a simple animation of a desired duration with inputs for starting and end screen diameters. However, it also allows the precise details of the animation to be controlled to simulate precise speeds or distances of the hypothetical oncoming predator. 
+The package can create a simple animation of a desired duration with inputs for starting and ending screen diameters. However, it also allows the details of the animation to be controlled to simulate precise size, speed and distances of the hypothetical oncoming predator. In addition, it can create animations based on variable speed profiles. 
 
 Many other options are available, such as modifying the colour and background of the animation, padding the video to a desired total duration, marking frames to assist with identifying when escape responses occur, and more. 
 
-Note, `loomeR` currently only works in R on macOS and Windows, and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line utility for encoding video to be installed on your system. Linux support is planned: please [get in touch](nicholascarey@gmail.com) if you would like to help with implementing that. 
+Note, `loomeR` currently only works in R on *macOS* and *Windows*, and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line utility for encoding video to be installed on your system. *Linux* support is planned: please [get in touch](mailto:nicholascarey@gmail.com) if you would like to help with implementing that. 
 
 ### Installation
 `loomeR` is not yet published on CRAN, but can be installed using the `devtools` package:
