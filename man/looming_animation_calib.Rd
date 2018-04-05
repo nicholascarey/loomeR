@@ -32,9 +32,8 @@ will be too large to display.}
 All screens are different, so an object of a hypothetical size
  may be displayed at a different size on a different screen, due to
  differences in resolution or the physical size of the pixels that make up
- the screen. \code{looming_animation_calib} is a utility to create a short
- animation to calibrate the \code{\link{looming_animation}} function for a
- particular screen.
+ the screen. \code{looming_animation_calib} is a utility to help calibrate
+ the \code{\link{looming_animation}} function for a particular screen.
 }
 \details{
 IMPORTANT: The function works by saving an image
@@ -80,6 +79,7 @@ IMPORTANT: The function works by saving an image
  \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need
  to restart) or
  \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
+
 
 
 
