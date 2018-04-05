@@ -58,7 +58,7 @@ Working with the following people inspired the creation of this package:
 
 - Paolo Domenici, CNR IAMC, Italy.  [Link](http://oristano.iamc.cnr.it/IAMC/staff/paolo-domenici/domenici-paolo?set_language=en)
 - Dave Cade & Jeremy Goldbogen, Hopkins Marine Station, Stanford University. [Link](http://goldbogen.stanford.edu)
-- Januar Harianto [Link](https://github.com/januarharianto)
+- Januar Harianto, University of Sydney [Link](https://github.com/januarharianto)
 
 ### Cite
 If you use `loomeR` in your work, a citation using this zenodo DOI would be much appreciated:
