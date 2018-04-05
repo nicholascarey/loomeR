@@ -86,11 +86,10 @@
 #'
 #' @examples
 #' # Create a calibration video for checking a 10cm width
-#' looming_animation_calib(loom_model,
-#'                            correction_range = c(0.02, 0.03),
-#'                            width = 1920,
-#'                            height = 1080,
-#'                            ruler = 10)
+#' looming_animation_calib(correction_range = c(0.02, 0.03),
+#'                         width = 1920,
+#'                         height = 1080,
+#'                         ruler = 10)
 #'
 #'@author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
