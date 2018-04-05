@@ -10,7 +10,7 @@ The package can create a simple animation of a desired duration with inputs for 
 
 Many other options are available, such as modifying the colour and background of the animation, padding the video to a desired total duration, marking frames to assist with identifying when escape responses occur, and more. 
 
-Note, `loomeR` currently only works in R on *macOS* and *Windows*, and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line utility for encoding video to be installed on your system. *Linux* support is planned: please [get in touch](mailto:nicholascarey@gmail.com) if you would like to help with implementing that. 
+Note, `loomeR` currently only works in R on **macOS** and **Windows**, and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line utility for encoding video to be installed on your system. **Linux** support is planned: please [get in touch](mailto:nicholascarey@gmail.com) if you would like to help with implementing that. 
 
 ### Installation
 `loomeR` is not yet published on CRAN, but can be installed using the `devtools` package:
