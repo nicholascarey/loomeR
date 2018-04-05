@@ -2,6 +2,10 @@
 
 `loomeR` is an R package for creating looming animations for use in behavioural and neurological experiments. Looming animations are used in a range of physiological, psychological and behavioural sciences to simulate an approaching predator and to investigate phenomena such as perception, visual latency, predator responses, and neurological functioning. 
 
+<p align="center">
+![Click to start.](/Users/sa05nc/Documents/Github repositories/loomeR/animation.gif)
+</p>
+
 The package can create a simple animation of a desired duration with inputs for starting and end screen diameters. However, it also allows the precise details of the animation to be controlled to simulate precise speeds or distances of the hypothetical oncoming predator. 
 
 Many other options are available, such as modifying the colour and background of the animation, padding the video to a desired total duration, marking frames to assist with identifying when escape responses occur, and more. 
