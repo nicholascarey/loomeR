@@ -63,10 +63,6 @@ diameter_model <-
     if(!any(expansion %in% c("constant_speed", "constant_diameter")))
       stop("expansion operator not set correctly: must be 'constant_speed' or 'constant_diameter'")
 
-      # ## check class
-      # if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
-      #   stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'")
-      #
     ## IF CONSTANT SPEED
     if(expansion == "constant_speed"){
     ## calculate total number of frames
