@@ -58,6 +58,15 @@ diameter_model <-
     anim_frame_rate = 60,
     expansion = "constant_speed"){
 
+    ## check expansion for typos
+    ## check class
+    if(!any(expansion %in% c("constant_speed", "constant_diameter")))
+      stop("expansion operator not set correctly: must be 'constant_speed' or 'constant_diameter'")
+
+      # ## check class
+      # if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
+      #   stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'")
+      #
     ## IF CONSTANT SPEED
     if(expansion == "constant_speed"){
     ## calculate total number of frames
@@ -112,7 +121,7 @@ diameter_model <-
       end_diameter = end_diameter,
       duration = duration,
       anim_frame_rate = anim_frame_rate,
-      expansion = "constant"
+      expansion = expansion
     )
 
     class(output) <- "diameter_model"
