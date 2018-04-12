@@ -49,6 +49,11 @@
 #'
 #' @export
 
+## to do
+## remove arbitrary attacker size and distance
+## constant_speed - start and end diams are one out
+## constant_speed - remove distance from results df
+
 diameter_model <-
 
   function(
