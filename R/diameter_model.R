@@ -49,11 +49,6 @@
 #'
 #' @export
 
-## to do
-## remove arbitrary attacker size and distance
-## constant_speed - start and end diams are one out
-## constant_speed - remove distance from results df
-
 diameter_model <-
 
   function(
@@ -74,19 +69,15 @@ diameter_model <-
     ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
     total_frames <- ceiling(duration*anim_frame_rate)
 
-    ## Arbitrary screen dist and attacker diam - helps with calcs
-    ## Values do not affect the final calculated diameters
-    screen_dist <- 20
-    att_diam <- 50
-
+    ## Distances - these are arbitrary/proportional
     ## start distance
-    start_dist <- (screen_dist*att_diam)/start_diameter
+    start_dist <- 1/start_diameter
     ## end distance
-    end_dist <- (screen_dist*att_diam)/end_diameter
+    end_dist <- 1/end_diameter
 
     ## calculate distance covered each frame
-    ## rounding it because of ridiculously long decimal results in later calcs
-    distance_per_frame <- round((start_dist-end_dist)/total_frames, 3)
+    ## -1 because we are interested in what happens between frames
+    distance_per_frame <- (start_dist-end_dist)/(total_frames-1)
 
     ## build up data frame
     ## list of frames
@@ -96,10 +87,16 @@ diameter_model <-
     results_df$time <- results_df$frame/anim_frame_rate
 
     ## add hypothetical predator distance
-    results_df$distance <- start_dist-((results_df$frame) * distance_per_frame)
+    ## start with start distance
+    ## then add distance per frame for each frame
+    ## minus 1 because we want first entry to be start_dist, so no need to add to it
+    results_df$distance <- start_dist-((results_df$frame-1) * distance_per_frame)
 
     ## add screen diameter of model for each frame
-    results_df$diam_on_screen <- (att_diam*screen_dist)/results_df$distance
+    results_df$diam_on_screen <- 1/results_df$distance
+
+    ## remove distance column
+    results_df <- results_df[,c(1,2,4)]
     }
 
 
@@ -129,3 +126,23 @@ diameter_model <-
 
     return(output)
   }
+
+
+
+#' Remove last n values from a vector
+#'
+#' @details
+#' Removes the specified nunmber of values/entries from the end of a vector
+#'
+#' This is an internal function.
+#'
+#' @keywords internal
+#' @export
+vect_rm_end <- function (x, n = 1) {
+
+  if(n >= length(x))
+    stop("Length of value is greater than or equal to length of vector")
+
+  x <- x[1:(length(x)-n)]
+  return(x)
+}
