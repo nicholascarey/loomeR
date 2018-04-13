@@ -17,7 +17,7 @@ other parameters.}
 \item{new_distance}{numeric. The distance in cm the specimen is from screen,
 if this is different to that used to create the model.}
 
-\item{latency}{numeric. Visual response latency in milliseconds.}
+\item{latency}{numeric. Visual response latency in seconds.}
 }
 \value{
 List object of class \code{get_alt}
@@ -43,6 +43,30 @@ Gets the ALT, perceived speed and perceived distance of a specimen
 
   Since da/dt is a derivative, its value lies between frames. The function
   uses the value between the response frame and the next.
+
+  Latency: Latency is applied internally by adjusting the response frame. The
+  frame rate multiplied by the latency gives the number of frames 'back' from
+  the entered \code{response_frame} the function goes to extract the
+  parameters. In the event the number of frames backwards is a decimal, this
+  is rounded to the nearest integer. For example, with 60 fps video and 0.06s
+  latency, the function would seek to go back 3.6 frames. Instead, this is
+  rounded to 4.
+
+  Diameter model: Note that for a diameter model, the dadt/ALT can be
+  extracted (if a viewing distance is supplied), but *not* perceived distance
+  and speed. This is because the size of the attacker was never specified in
+  creating the model. While the viewing angle (alpha) can be calculated, and
+  thus the da/dt, the perceived distance and/or speed cannot. A small object
+  on screen expanding rapidly could represent a very small object moving
+  slowly at a close distance, or a very large object moving rapidly at a far
+  distance. Both of these can produce an identical da/dt, but without a size
+  being specified the speed and distance cannot be determined. Expressing the
+  ALT as a da/dt value is designed to negate this issue, by focussing purely
+  on the rate of change of the viewing angle. If these parameters may be
+  important to your study however, the model should be created in
+  \code{\link{constant_speed_model}} or \code{\link{variable_speed_model}}.
+  Note, \code{\link{diameter_model}} is intended to produce simple animations
+  purely to induce response, where the precise parameters are not important.
 }
 \examples{
 get_alt(x, ...)

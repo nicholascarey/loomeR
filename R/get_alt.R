@@ -21,6 +21,30 @@
 #'   Since da/dt is a derivative, its value lies between frames. The function
 #'   uses the value between the response frame and the next.
 #'
+#'   Latency: Latency is applied internally by adjusting the response frame. The
+#'   frame rate multiplied by the latency gives the number of frames 'back' from
+#'   the entered \code{response_frame} the function goes to extract the
+#'   parameters. In the event the number of frames backwards is a decimal, this
+#'   is rounded to the nearest integer. For example, with 60 fps video and 0.06s
+#'   latency, the function would seek to go back 3.6 frames. Instead, this is
+#'   rounded to 4.
+#'
+#'   Diameter model: Note that for a diameter model, the dadt/ALT can be
+#'   extracted (if a viewing distance is supplied), but *not* perceived distance
+#'   and speed. This is because the size of the attacker was never specified in
+#'   creating the model. While the viewing angle (alpha) can be calculated, and
+#'   thus the da/dt, the perceived distance and/or speed cannot. A small object
+#'   on screen expanding rapidly could represent a very small object moving
+#'   slowly at a close distance, or a very large object moving rapidly at a far
+#'   distance. Both of these can produce an identical da/dt, but without a size
+#'   being specified the speed and distance cannot be determined. Expressing the
+#'   ALT as a da/dt value is designed to negate this issue, by focussing purely
+#'   on the rate of change of the viewing angle. If these parameters may be
+#'   important to your study however, the model should be created in
+#'   \code{\link{constant_speed_model}} or \code{\link{variable_speed_model}}.
+#'   Note, \code{\link{diameter_model}} is intended to produce simple animations
+#'   purely to induce response, where the precise parameters are not important.
+#'
 #'
 #'
 #' @seealso \code{\link{looming_animation}}, \code{\link{???}}
@@ -33,7 +57,7 @@
 #'   other parameters.
 #' @param new_distance numeric. The distance in cm the specimen is from screen,
 #'   if this is different to that used to create the model.
-#' @param latency numeric. Visual response latency in milliseconds.
+#' @param latency numeric. Visual response latency in seconds.
 #'
 #' @return List object of class \code{get_alt}
 #'
@@ -51,18 +75,29 @@ get_alt <-
            new_distance = NULL,
            latency = 0){
 
-    ## class check
 
-    ## CHECK - if diam model, require new_distance
+# Checks ------------------------------------------------------------------
 
-    ## CHECK - Require response frame
+    ## check class
+    if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
+      stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'.")
+
+    if(is.null(response_frame))
+      stop("A 'response_frame' is required to extract the ALT and associated data.")
+
+    if(response_frame > tail(x$model$frame, 1))
+      stop("The 'response_frame' is greater than the last frame of the animation model.")
 
 
-    #### DIAMETER MODEL ####
-    ## requires new_distance since not specified in original model,
-    ## plus can't calculate a dadt without a viewing distance
+
+# Diameter model ----------------------------------------------------------
 
     if(class(x) == "diameter_model"){
+
+      ## check screen_distance not empty
+      if(is.null(new_distance))
+        stop("Extracting data from 'diameter_model' objects requires a screen viewing distance.
+             This should be entered as 'new_distance'.")
 
       ## save inputs for inclusion in final output
       original_model <- x
@@ -72,6 +107,81 @@ get_alt <-
         response_frame = response_frame
       )
 
+      ## take out df with frames, animation diameters etc
+      adjusted_model <- x$model
+
+      ## set exp parameters
+      anim_frame_rate <- x$anim_frame_rate
+      screen_dist <- new_distance
+
+
+      ## latency correction
+      ## save original
+      ## modify response frame by frame rate*latency
+      response_frame_original <- response_frame
+      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
+
+      ## alpha column - visual angle of shape
+      adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
+      adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
+
+      ## da/dt column
+      adjusted_model$dadt <- c(0, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
+
+      ## EXTRACT ALT
+      ## from the ADJUSTED FOR LATENCY response frame
+      alt <- adjusted_model$dadt[response_frame_adjusted]
+      alt_deg <- rad2deg(alt)
+
+      ## organise adjusted model for output
+      temp_list <- original_model
+      temp_list$model <- adjusted_model
+      adjusted_model <- temp_list
+
+      #### OUTPUT
+
+      output <- list(
+        alt = alt,
+        alt_deg = alt_deg,
+
+        alt_perceived = alt,
+        distance_perceived = NULL,
+        speed_perceived = NULL,
+        alt_in_model = NULL,
+        distance_in_model = NULL,
+        speed_in_model = NULL,
+        new_distance_applied = inputs$new_distance,
+
+        response_frame = response_frame_original,
+        response_frame_adjusted = response_frame_adjusted,
+        latency_applied = latency,
+
+        adjusted_model = adjusted_model,
+        original_model = original_model,
+        inputs = inputs
+      )
+
+      ## Assign class
+      class(output) <- "get_alt"
+
+      ## Return output
+      return(output)
+      }
+
+
+# Constant speed model ----------------------------------------------------
+
+    #### CONSTANT SPEED MODELS ####
+    if(class(x) == "constant_speed_model"){
+
+      ## save inputs for inclusion in final output
+      original_model <- x
+      inputs <- list(
+        new_distance = new_distance,
+        latency = latency,
+        response_frame = response_frame
+      )
 
       ## take out df with frames, animation diameters etc
       adjusted_model <- x$model
@@ -80,12 +190,11 @@ get_alt <-
       attacker_diameter <- x$attacker_diameter
       anim_frame_rate <- x$anim_frame_rate
 
-
       ## latency correction
       ## save original
       ## modify response frame by frame rate*latency
       response_frame_original <- response_frame
-      response_frame_adjusted <- response_frame-(round(anim_frame_rate*(latency/1000)))
+      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
 
       #### RECREATE EXCEL FILE - i.e. ADJUSTMENT COLUMNS ####
       ## i.e. perceived parameters for new distance to screen
@@ -136,6 +245,7 @@ get_alt <-
         original_model = original_model,
         inputs = inputs
       )}
+
 
 
     #### VARIABLE SPEED MODELS ####
@@ -232,6 +342,31 @@ get_alt <-
   } #END
 
 
+#' @export
+print.get_alt <- function(x, ...) {
+  cat("Extraction complete. \n \n")
+  cat("Using inputs: \n")
+  cat(glue::glue("Response Frame: ",
+                 {x$response_frame}))
+  cat("\n")
+  cat(glue::glue("Response Frame Adjusted: ",
+                 {x$response_frame_adjusted}))
+  cat("\n")
+  cat(glue::glue("Latency: ",
+                 {x$latency_applied},
+                 "s"))
+  cat("\n")
+  cat(glue::glue("New Screen Distance: ",
+                 {x$inputs$new_distance},
+                 "cm"))
+  cat(" \n \n")
+  cat("The Apparent Looming Threshold is: \n")
+  cat(glue::glue("ALT: ",
+                 {round(x$alt, 4)},
+                 " radians/sec"))
+}
+
+
 #' Convert radians to degrees
 #'
 #' This is an internal function.
@@ -247,3 +382,6 @@ deg2rad <- function(deg) {(deg * pi) / (180)}
 #' @keywords internal
 #' @export
 rad2deg <- function(rad){(rad * 180) / (pi)}
+
+
+
