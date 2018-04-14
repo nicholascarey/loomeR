@@ -5,7 +5,7 @@
 \title{Determine the Apparent Looming Threshold (ALT) for a particular
   response frame}
 \usage{
-get_alt(...)
+get_alt(x, response_frame = NULL, new_distance = NULL, latency = 0)
 }
 \arguments{
 \item{x}{numeric. Object of class}
@@ -23,7 +23,7 @@ if this is different to that used to create the model.}
 List object of class \code{get_alt}
 }
 \description{
-\code{get_alt} gets the Apparent Looming Threshold (ALT) that is
+\code{get_alt} gets the Apparent Looming Threshold (ALT),
   the rate of change of the visual angle of the looming shape (da/dt in
   radians/s) at a particlar frame. Typically this is the frame a specimen
   responds to the stimulus, or the response taking into account a delay due

@@ -49,8 +49,6 @@
 #'
 #' @seealso \code{\link{looming_animation}}, \code{\link{???}}
 #'
-#' @usage get_alt(...)
-#'
 #' @param x numeric. Object of class
 #' @param response_frame integer. The frame of the animation at which the
 #'   subject responds, or the frame from which you want to extract the ALT and
@@ -116,8 +114,6 @@ get_alt <-
 
 
       ## latency correction
-      ## save original
-      ## modify response frame by frame rate*latency
       response_frame_original <- response_frame
       response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
 
@@ -182,6 +178,7 @@ get_alt <-
         response_frame = response_frame
       )
 
+
       ## take out df with frames, animation diameters etc
       adjusted_model <- x$model
 
@@ -189,21 +186,39 @@ get_alt <-
       attacker_diameter <- x$attacker_diameter
       anim_frame_rate <- x$anim_frame_rate
 
+      ## if new distance entered use it
+      ifelse(is.null(new_distance),
+             screen_dist <- x$screen_distance,
+             screen_dist <- new_distance)
+
       ## latency correction
-      ## save original
-      ## modify response frame by frame rate*latency
       response_frame_original <- response_frame
       response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
 
-      #### RECREATE EXCEL FILE - i.e. ADJUSTMENT COLUMNS ####
-      ## i.e. perceived parameters for new distance to screen
-      ## create new alfa_perceived column
-      adjusted_model$alfa_perceived <- 2*(rad2deg(atan((adjusted_model$diam_on_screen/2)/new_distance)))
+      ## alpha column - visual angle of shape
+      adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
+      adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
 
-      ## create new perceived distance column
-      adjusted_model$distance_perceived <- cos(
-        deg2rad(adjusted_model$alfa_perceived/2))*
-        (attacker_diameter/2)/(sin(deg2rad(adjusted_model$alfa_perceived/2)))
+          ## create new perceived distance column
+          adjusted_model$distance_perceived <-
+            cos(adjusted_model$alpha/2)*
+            (attacker_diameter/2)/(sin((adjusted_model$alpha/2)))
+
+                      ## da/dt column
+                      adjusted_model$dadt <- c(0, diff(adjusted_model$alpha)*anim_frame_rate)
+                      adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
+
+                      ## EXTRACT ALT
+                      ## from the ADJUSTED FOR LATENCY response frame
+                      alt <- adjusted_model$dadt[response_frame_adjusted]
+                      alt_deg <- rad2deg(alt)
+
+                      ## organise adjusted model for output
+                      temp_list <- original_model
+                      temp_list$model <- adjusted_model
+                      adjusted_model <- temp_list
+
+
 
       ## radians_perceived (of alfa_perceived) column
       adjusted_model$radians_perceived <- deg2rad(adjusted_model$alfa_perceived)
