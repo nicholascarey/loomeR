@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR) [![Travis build status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220) [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--14-yellowgreen.svg)](/commits/master)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR) [![Travis build status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR) [![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--14-yellowgreen.svg)](/commits/master) [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220)
 
 Welcome
 =======
