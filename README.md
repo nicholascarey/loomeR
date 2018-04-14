@@ -1,4 +1,4 @@
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/respR)](https://cran.r-project.org/package=loomeR) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/respR)](https://cran.r-project.org/package=loomeR) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220) [![Travis build status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR)
 
 # Welcome
 
