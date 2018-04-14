@@ -60,7 +60,7 @@
 #' @return List object of class \code{get_alt}
 #'
 #' @examples
-#' get_alt(x, ...)
+#' get_alt(x)
 #'
 #' @author Nicholas Carey - \link{nicholascarey@gmail.com}
 #'
