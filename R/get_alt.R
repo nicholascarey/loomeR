@@ -122,7 +122,7 @@ get_alt <-
       adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
 
       ## da/dt column
-      adjusted_model$dadt <- c(0, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*anim_frame_rate)
       adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
 
       ## EXTRACT ALT
@@ -157,12 +157,6 @@ get_alt <-
         original_model = original_model,
         inputs = inputs
       )
-
-      ## Assign class
-      class(output) <- "get_alt"
-
-      ## Return output
-      return(output)
       }
 
 
@@ -199,66 +193,66 @@ get_alt <-
       adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
       adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
 
-          ## create new perceived distance column
+      ## da/dt column
+      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
+
+          ## perceived distance
           adjusted_model$distance_perceived <-
             cos(adjusted_model$alpha/2)*
             (attacker_diameter/2)/(sin((adjusted_model$alpha/2)))
 
-                      ## da/dt column
-                      adjusted_model$dadt <- c(0, diff(adjusted_model$alpha)*anim_frame_rate)
-                      adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
+          ## perceived speed
+          ## = perceived distance change per s
+          adjusted_model$speed_perceived <-
+            -1*c(NA, diff(adjusted_model$distance_perceived)*anim_frame_rate)
 
-                      ## EXTRACT ALT
-                      ## from the ADJUSTED FOR LATENCY response frame
-                      alt <- adjusted_model$dadt[response_frame_adjusted]
-                      alt_deg <- rad2deg(alt)
+      ## EXTRACT ALT
+      ## from the ADJUSTED FOR LATENCY response frame
+      alt <- adjusted_model$dadt[response_frame_adjusted]
+      alt_deg <- rad2deg(alt)
 
-                      ## organise adjusted model for output
-                      temp_list <- original_model
-                      temp_list$model <- adjusted_model
-                      adjusted_model <- temp_list
-
-
-
-      ## radians_perceived (of alfa_perceived) column
-      adjusted_model$radians_perceived <- deg2rad(adjusted_model$alfa_perceived)
-
-      ## da/dt column
-      adjusted_model$dadt_perceived <- c(0, diff(adjusted_model$radians_perceived)*anim_frame_rate)
-
-      ## perceived speed
-      ## perceived distance change per s
-      adjusted_model$speed_perceived <- -1*c(0, diff(adjusted_model$distance_perceived)*anim_frame_rate)
-
-      ## RESULTS
       ## get three metrics at the ADJUSTED FOR LATENCY response frame
-      dadt_perceived <- adjusted_model$dadt_perceived[response_frame_adjusted]
+      alt_perceived <- alt
       distance_perceived <- adjusted_model$distance_perceived[response_frame_adjusted]
       speed_perceived <- adjusted_model$speed_perceived[response_frame_adjusted]
 
       ## get dist and speed of model at response frame
-      distance_model <- adjusted_model$distance[response_frame_adjusted]
-      speed_model <- original_model$speed
+      distance_in_model <- adjusted_model$distance[response_frame_adjusted]
+      speed_in_model <- original_model$speed
+
+
+      ## organise adjusted model for output
+      temp_list <- original_model
+      temp_list$model <- adjusted_model
+      adjusted_model <- temp_list
 
 
       #### OUTPUT
 
       output <- list(
-        dadt_perceived = dadt_perceived,
+        alt = alt,
+        alt_deg = alt_deg,
+
+        alt_perceived = alt,
         distance_perceived = distance_perceived,
         speed_perceived = speed_perceived,
+        distance_in_model = distance_in_model,
+        speed_in_model = speed_in_model,
+        new_distance_applied = inputs$new_distance,
 
+        response_frame = response_frame_original,
         response_frame_adjusted = response_frame_adjusted,
         latency_applied = latency,
-        response_frame_original = response_frame_original,
-
-        distance_model = distance_model,
-        speed_model = speed_model,
 
         adjusted_model = adjusted_model,
         original_model = original_model,
         inputs = inputs
-      )}
+      )
+      }
+
+
+# Variable speed model ----------------------------------------------------
 
 
 
@@ -349,8 +343,10 @@ get_alt <-
         inputs = inputs
       )}
 
+    ## Assign class
+    class(output) <- "get_alt"
 
-    ## Return results
+    ## Return output
     return(output)
 
   } #END
@@ -358,6 +354,7 @@ get_alt <-
 
 #' @export
 print.get_alt <- function(x, ...) {
+  cat("\n")
   cat("Extraction complete. \n \n")
   cat("Using inputs: \n")
   cat(glue::glue("Response Frame: ",
