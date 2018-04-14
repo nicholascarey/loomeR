@@ -93,6 +93,7 @@ constant_speed_model <-
     ## what values caused problems.
     ## Need to test further though.
     ##
+
     ## set last value to 1000 cm
     ## this is because rounding of distance_per_frame above can cause small negative
     ## or positive values as last entry when calculating distance. Therefore diameter
