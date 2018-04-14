@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![CRAN_Status_Badge](www.r-pkg.org/badges/version/loomeR)](cran.r-project.org/package=loomeR)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR)
 [![Travis build status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1213220.svg)](https://doi.org/10.5281/zenodo.1213220) 
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
