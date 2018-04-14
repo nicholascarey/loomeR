@@ -69,7 +69,7 @@ Gets the ALT, perceived speed and perceived distance of a specimen
   purely to induce response, where the precise parameters are not important.
 }
 \examples{
-get_alt(x, ...)
+get_alt(x)
 
 }
 \seealso{
