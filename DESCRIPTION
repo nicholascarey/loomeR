@@ -1,7 +1,7 @@
 Package: loomeR
 Type: Package
 Title: Create a looming animation
-Version: 0.1.2
+Version: 0.1.3
 Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
 Description: Create a looming animation for use in behavioural and neurological experiments.
