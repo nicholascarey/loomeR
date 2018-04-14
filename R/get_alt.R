@@ -1,7 +1,7 @@
 #' @title Determine the Apparent Looming Threshold (ALT) for a particular
 #'   response frame
 #'
-#' @description \code{get_alt} gets the Apparent Looming Threshold (ALT) that is
+#' @description \code{get_alt} gets the Apparent Looming Threshold (ALT),
 #'   the rate of change of the visual angle of the looming shape (da/dt in
 #'   radians/s) at a particlar frame. Typically this is the frame a specimen
 #'   responds to the stimulus, or the response taking into account a delay due
@@ -172,7 +172,6 @@ get_alt <-
 
 # Constant speed model ----------------------------------------------------
 
-    #### CONSTANT SPEED MODELS ####
     if(class(x) == "constant_speed_model"){
 
       ## save inputs for inclusion in final output
