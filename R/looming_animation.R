@@ -201,8 +201,6 @@
 #'   \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
 #'   \code{\link{looming_animation_calib}}
 #'
-#' @usage looming_animation(x, ...)
-#'
 #' @param x list. A list object of class \code{constant_speed_model},
 #'   \code{variable_speed_model}, or \code{diameter_model}.
 #' @param correction numeric. Correction factor for the display used to play the
