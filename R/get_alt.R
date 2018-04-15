@@ -242,8 +242,9 @@ get_alt <-
         speed_in_model = speed_in_model,
         new_distance_applied = inputs$new_distance,
 
-        adjusted_model = adjusted_model,
         original_model = original_model,
+        adjusted_model = adjusted_model,
+        comparison_model =
         inputs = inputs
       )
       }
