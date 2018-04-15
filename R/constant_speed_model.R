@@ -72,8 +72,7 @@ constant_speed_model <-
     total_frames <- ceiling(total_time*anim_frame_rate)
 
     ## calculate distance covered each frame at this speed and frame rate
-    ## rounding it because of ridiculously long results in later calcs
-    distance_per_frame <- round(speed/anim_frame_rate, 3)
+    distance_per_frame <- speed/anim_frame_rate
 
     ## build up data frame
     ## list of frames
@@ -83,16 +82,23 @@ constant_speed_model <-
     results_df$time <- results_df$frame/anim_frame_rate
 
     ## add hypothetical predator distance
-    results_df$distance <- start_distance-((results_df$frame) * distance_per_frame)
+    results_df$distance <- start_distance-((results_df$frame-1) * distance_per_frame)
 
     ## add screen diameter of model for each frame
     results_df$diam_on_screen <- (attacker_diameter*screen_distance)/results_df$distance
+
+    ## Have commented out the below for now. Should not be necessary.
+    ## Also removed the rounding of distance_per_frame above. It also should
+    ## not be necessary. Not really sure why i did it in the first place, or
+    ## what values caused problems.
+    ## Need to test further though.
+    ##
     ## set last value to 1000 cm
     ## this is because rounding of distance_per_frame above can cause small negative
     ## or positive values as last entry when calculating distance. Therefore diameter
     ## becomes ridiculously large (or negative) A zero distance also cause 'inf' values
     ## when dividing above.
-    results_df$diam_on_screen[length(results_df$diam_on_screen)] <- 1000
+    #results_df$diam_on_screen[length(results_df$diam_on_screen)] <- 1000
 
 
     ## assemble output list object
