@@ -141,17 +141,15 @@ get_alt <-
         alt = alt,
         alt_deg = alt_deg,
 
-        alt_perceived = alt,
-        distance_perceived = NULL,
-        speed_perceived = NULL,
-        alt_in_model = NULL,
-        distance_in_model = NULL,
-        speed_in_model = NULL,
-        new_distance_applied = inputs$new_distance,
-
         response_frame = response_frame_original,
         response_frame_adjusted = response_frame_adjusted,
         latency_applied = latency,
+
+        distance_perceived = NULL,
+        speed_perceived = NULL,
+        distance_in_model = NULL,
+        speed_in_model = NULL,
+        new_distance_applied = inputs$new_distance,
 
         adjusted_model = adjusted_model,
         original_model = original_model,
@@ -234,16 +232,15 @@ get_alt <-
         alt = alt,
         alt_deg = alt_deg,
 
-        alt_perceived = alt,
+        response_frame = response_frame_original,
+        latency_applied = latency,
+        response_frame_adjusted = response_frame_adjusted,
+
         distance_perceived = distance_perceived,
         speed_perceived = speed_perceived,
         distance_in_model = distance_in_model,
         speed_in_model = speed_in_model,
         new_distance_applied = inputs$new_distance,
-
-        response_frame = response_frame_original,
-        response_frame_adjusted = response_frame_adjusted,
-        latency_applied = latency,
 
         adjusted_model = adjusted_model,
         original_model = original_model,
@@ -357,17 +354,17 @@ print.get_alt <- function(x, ...) {
   cat("\n")
   cat("Extraction complete. \n \n")
   cat("Using inputs: \n")
-  cat(glue::glue("Response Frame: ",
+  cat(glue::glue("Response Frame:            ",
                  {x$response_frame}))
   cat("\n")
-  cat(glue::glue("Response Frame Adjusted: ",
+  cat(glue::glue("Response Frame Adjusted:   ",
                  {x$response_frame_adjusted}))
   cat("\n")
-  cat(glue::glue("Latency: ",
+  cat(glue::glue("Latency Applied:                   ",
                  {x$latency_applied},
                  "s"))
   cat("\n")
-  cat(glue::glue("New Screen Distance: ",
+  cat(glue::glue("New Screen Distance:       ",
                  {x$inputs$new_distance},
                  "cm"))
   cat(" \n \n")
