@@ -6,9 +6,12 @@
 status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR)
 [![Coverage
 status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg)](https://codecov.io/github/nicholascarey/loomeR?branch=master)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--16-yellowgreen.svg)](/commits/master)
+[![GitHub issue last
+update](https://img.shields.io/github/issues/detail/last-update/badges/shields/979.svg)](https://github.com/nicholascarey/loomeR)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
+[![Twitter
+Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](twitter.com/nickcarey)
 
 # Welcome
 
