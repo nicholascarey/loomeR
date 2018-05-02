@@ -12,35 +12,21 @@ status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg
 # Welcome
 
 `loomeR` is an R package for creating looming animations for use in
-behavioural and neurological experiments. Looming animations are used in
-a range of physiological, psychological and behavioural sciences to
-simulate an approaching threat and investigate phenomena such as
-perception, visual latency, predator responses, and neurological
-functioning.
+behavioural and neurological experiments, and analysing escape
+responses, for example the Apparent Looming Threshold (**ALT**) of an
+escape (Dill 1974, Webb 1982). Looming animations are used in a range of
+physiological, psychological and behavioural sciences to simulate an
+approaching threat and investigate phenomena such as perception, visual
+latency, escape responses, and neurological functioning. **ALT** is a
+metric which describes the threshold where a specimen may initiate an
+escape movement based on a combination of the perceived distance and/or
+speed of an oncoming threat.
 
 <p align="center">
 
 <img src=https://i.imgur.com/WKKt59E.gif>
 
 </p>
-
-The package can create a simple animation of a desired duration with
-inputs for starting and ending screen diameters. However, it also allows
-use of real-world parameters to simulate a precise size, speed and
-distance of the hypothetical oncoming predator. In addition, it can
-create animations based on variable speed profiles.
-
-Many other options are available, such as modifying the colour and
-background of the animation, padding the video to a desired total
-duration, marking frames to assist with identifying when escape
-responses occur, and more.
-
-Note, `loomeR` currently only works in R on **macOS** and **Windows**,
-and requires [ffmpeg](http://ffmpeg.org), a free, cross-platform,
-command-line utility for encoding video to be installed on your system.
-**Linux** support is planned: please [get in
-touch](mailto:nicholascarey@gmail.com) if you can help with testing on
-Linux systems.
 
 ### Installation
 
@@ -53,6 +39,62 @@ devtools::install_github("nicholascarey/loomeR")
 ```
 
 ### Usage
+
+Using the package is straightforward:
+
+##### 1\. Create an animation model
+
+``` r
+diameter_model(), constant_speed_model(), variable_speed_model()
+```
+
+The package can create simple or complex animations in three ways:
+
+  - Use of basic inputs for start and end screen diameters, and total
+    duration.
+  - Use of realistic parameters. The function will determine the correct
+    screen diameters for each animation frame using:
+      - **Constant speed**: specify a constant speed, size, and starting
+        distance of the hypothetical oncoming threat
+      - **Variable speed**: provide a profile of variable speeds, plus
+        size and starting distance of the oncoming threat <br> <br>
+
+##### 2\. Create an animation from the model
+
+``` r
+looming_animation()
+```
+
+To create the animation from the model, `loomeR` requires
+[ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line
+utility for encoding video to be installed on your system. This
+currently works in R on **macOS** and **Windows**. Support for **Linux**
+is planned: please [get in touch](mailto:nicholascarey@gmail.com) if you
+would like to help with testing on Linux systems.
+
+Many options are available to customise the animation, such as
+specifying a frame rate, modifying the colour and background, padding
+the video with blank frames to a desired total duration, marking frames
+to assist with identifying when escape responses occur, and more.
+
+##### 3\. Analyse escape responses
+
+``` r
+get_alt()
+```
+
+This function calculates the viewing angle, alpha (**α**), for each
+frame in the animation, and the change in this viewing angle per unit
+time (**dα/dt** in radians/second) (Dill 1974). Given a response frame
+the *Apparent Looming Threshold* (**ALT**, Webb 1982) can be determined.
+These metrics can all be corrected for different viewing distances if
+the specimen has moved to a different distance from the screen, which
+will affect the perceived **α** and thus **ALT**. The new perceived
+speed and distance for the different viewing distance are also returned.
+A visual response latency (i.e. to account for neurological lag in
+response time) can also be applied. <br> <br>
+
+### Example code
 
 The included documentation is comprehensive, and a vignette explaining
 how to use the package is in preparation. For a quick evaluation try out
@@ -76,19 +118,29 @@ x <- constant_speed_model(
 
 # 2. Use the model to create the animation
 looming_animation(x)
+
+# 3. Extract the ALT given a response frame of 100, but apply a response latency of 60 milliseconds
+get_alt(x, response_frame = 100, latency = 0.06)
 ```
 
-### Forthcoming features
+### Forthcoming and potential features
 
   - \[ \] Linux support
   - \[ \] Add a receding option for animations (possibly this works by
     setting speed as a negative, or start/end diameters the other way
     round, but this has not been tested)
-  - \[ \] Function to extract model parameters at a particular frame,
-    and optionally apply a latency correction, or correct the perceived
-    speed and distance for a different viewing distance.
-  - \[ \] Enhancements (e.g. quicker padding method) and alternatives to
+  - \[X\] Function to extract model parameters at a particular frame,
+    optionally apply a latency correction, and correct the perceived
+    speed and distance for a different viewing distance. **DONE** - see
+    `get_alt`
+  - \[ \] Enhancements (e.g. quicker padding method) and alternative to
     `ffmpeg`
+  - \[ \] Option to import images only, and not convert them
+  - \[ \] Option to subsample or interpolate variable speed profiles to
+    match a desired frame rate
+  - \[ \] Use of custom shapes (please [contact
+    me](mailto:nicholascarey@gmail.com) if you know of actual
+    applications for this… it would be a *lot* of work)
 
 ### Feedback
 
@@ -102,7 +154,7 @@ Working with the following people inspired the creation of this package:
 
   - Paolo Domenici, CNR IAMC, Italy.
     [Link](http://oristano.iamc.cnr.it/IAMC/staff/paolo-domenici/domenici-paolo?set_language=en)
-  - Dave Cade & Jeremy Goldbogen, Hopkins Marine Station, Stanford
+  - Jeremy Goldbogen & Dave Cade, Hopkins Marine Station, Stanford
     University. [Link](http://goldbogen.stanford.edu)
   - Januar Harianto, University of Sydney
     [Link](https://github.com/januarharianto)
@@ -122,6 +174,14 @@ made use of it, and I can help publicise your paper by tweeting about
 it\!
 
 ### References
+
+Dill, Lawrence M, 1974. The escape response of the zebra danio
+(Brachydanio rerio) I. The stimulus for escape. Animal Behaviour 22,
+711–722. <https://doi.org/10.1016/S0003-3472(74)80022-9>
+
+Webb, P.W., 1982. Avoidance responses of fathead minnow to strikes by
+four teleost predators. J. Comp. Physiol. 147, 371–378.
+<https://doi.org/10.1007/BF00609671>
 
 Gibson, J. J. (2014) The Ecological Approach to Visual Perception:
 Classic Edition. Psychology Press. (2014).
