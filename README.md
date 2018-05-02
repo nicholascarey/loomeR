@@ -14,8 +14,8 @@ status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg
 `loomeR` is an R package for creating looming animations for use in
 behavioural and neurological experiments, and analysing escape
 responses, for example the Apparent Looming Threshold (**ALT**) of an
-escape (Dill 1974, Webb 1982). Looming animations are used in a range of
-physiological, psychological and behavioural sciences to simulate an
+escape (*Dill 1974, Webb 1982*). Looming animations are used in a range
+of physiological, psychological and behavioural sciences to simulate an
 approaching threat and investigate phenomena such as perception, visual
 latency, escape responses, and neurological functioning. **ALT** is a
 metric which describes the threshold where a specimen may initiate an
@@ -85,14 +85,14 @@ get_alt()
 
 This function calculates the viewing angle, alpha (**α**), for each
 frame in the animation, and the change in this viewing angle per unit
-time (**dα/dt** in radians/second) (Dill 1974). Given a response frame
-the *Apparent Looming Threshold* (**ALT**, Webb 1982) can be determined.
-These metrics can all be corrected for different viewing distances if
-the specimen has moved to a different distance from the screen, which
-will affect the perceived **α** and thus **ALT**. The new perceived
-speed and distance for the different viewing distance are also returned.
-A visual response latency (i.e. to account for neurological lag in
-response time) can also be applied. <br> <br>
+time (**dα/dt** in radians/second) (*Dill 1974*). Given a response frame
+the *Apparent Looming Threshold* (**ALT**, *Webb 1982*) can be
+determined. These metrics can all be corrected for different viewing
+distances if the specimen has moved to a different distance from the
+screen, which will affect the perceived **α** and thus **ALT**. The new
+perceived speed and distance for the different viewing distance are also
+returned. A visual response latency (i.e. to account for neurological
+lag in response time) can also be applied. <br> <br>
 
 ### Example code
 
@@ -135,7 +135,7 @@ get_alt(x, response_frame = 100, latency = 0.06)
     `get_alt`
   - \[ \] Enhancements (e.g. quicker padding method) and alternative to
     `ffmpeg`
-  - \[ \] Option to import images only, and not convert them
+  - \[ \] Option to export images only, and not convert them
   - \[ \] Option to subsample or interpolate variable speed profiles to
     match a desired frame rate
   - \[ \] Use of custom shapes (please [contact
