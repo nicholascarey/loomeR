@@ -68,7 +68,7 @@ library(loomeR) # load the package
 
 x <- constant_speed_model(
   screen_distance = 20,    # How far from the screen is your observing specimen?
-  anim_frame_rate = 60,    # Frame rate you want the final animation to be 
+  frame_rate = 60,         # Frame rate you want the final animation to be 
   speed = 500,             # Speed of the simulated oncoming object
   attacker_diameter = 50,  # Diameter of the simulated oncoming object
   start_distance = 1000)   # Starting distance of the simulated oncoming object

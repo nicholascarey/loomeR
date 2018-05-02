@@ -33,7 +33,7 @@
 #'
 #' @param screen_distance numeric. Distance (cm) from the playback screen to
 #'   your specimen.
-#' @param anim_frame_rate numeric. Frames per second (Hz) you want the resulting
+#' @param frame_rate numeric. Frames per second (Hz) you want the resulting
 #'   animation to be.
 #' @param speed numeric. Speed (cm/s) of the hypothetical approaching attacker.
 #' @param attacker_diameter numeric. Diameter of the hypothetical approaching
@@ -47,7 +47,7 @@
 #' @examples
 #' loom_model <- constant_speed_model(
 #'                      screen_distance = 20,
-#'                      anim_frame_rate = 60,
+#'                      frame_rate = 60,
 #'                      speed = 500,
 #'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
@@ -59,7 +59,7 @@
 constant_speed_model <-
   function(
     screen_distance = 20,
-    anim_frame_rate = 60,
+    frame_rate = 60,
     speed = 500,
     attacker_diameter = 50,
     start_distance = 1000){
@@ -69,17 +69,17 @@ constant_speed_model <-
 
     ## get number of frames
     ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
-    total_frames <- ceiling(total_time*anim_frame_rate)
+    total_frames <- ceiling(total_time*frame_rate)
 
     ## calculate distance covered each frame at this speed and frame rate
-    distance_per_frame <- speed/anim_frame_rate
+    distance_per_frame <- speed/frame_rate
 
     ## build up data frame
     ## list of frames
     results_df <- data.frame(frame = seq(1,total_frames,1))
 
     ## add time
-    results_df$time <- results_df$frame/anim_frame_rate
+    results_df$time <- results_df$frame/frame_rate
 
     ## add hypothetical predator distance
     results_df$distance <- start_distance-((results_df$frame-1) * distance_per_frame)
@@ -105,7 +105,7 @@ constant_speed_model <-
     output <- list(
       model = results_df,
       screen_distance = screen_distance,
-      anim_frame_rate = anim_frame_rate,
+      frame_rate = frame_rate,
       speed = speed,
       attacker_diameter = attacker_diameter,
       start_distance = start_distance

@@ -4,14 +4,14 @@
 \alias{constant_speed_model}
 \title{Constant Speed Model}
 \usage{
-constant_speed_model(screen_distance = 20, anim_frame_rate = 60,
-  speed = 500, attacker_diameter = 50, start_distance = 1000)
+constant_speed_model(screen_distance = 20, frame_rate = 60, speed = 500,
+  attacker_diameter = 50, start_distance = 1000)
 }
 \arguments{
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to
 your specimen.}
 
-\item{anim_frame_rate}{numeric. Frames per second (Hz) you want the resulting
+\item{frame_rate}{numeric. Frames per second (Hz) you want the resulting
 animation to be.}
 
 \item{speed}{numeric. Speed (cm/s) of the hypothetical approaching attacker.}
@@ -58,7 +58,7 @@ Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
 \examples{
 loom_model <- constant_speed_model(
                      screen_distance = 20,
-                     anim_frame_rate = 60,
+                     frame_rate = 60,
                      speed = 500,
                      attacker_diameter = 50,
                      start_distance = 1000)

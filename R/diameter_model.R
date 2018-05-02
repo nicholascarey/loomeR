@@ -28,7 +28,7 @@
 #'   If you want the animation to fill the screen, this should be slightly
 #'   larger than the physical screen size.
 #' @param duration numeric. Total duration (s) you want the animation to be.
-#' @param anim_frame_rate numeric. Frames per second (Hz) you want the resulting
+#' @param frame_rate numeric. Frames per second (Hz) you want the resulting
 #'   animation to be played at.
 #' @param expansion string. \code{constant_speed} or \code{constant_diameter}.
 #'   Sets if the expansion of the simulation is modelled as a constant speed or
@@ -42,7 +42,7 @@
 #'                      start_diameter = 2,
 #'                      end_diameter = 50,
 #'                      duration = 3,
-#'                      anim_frame_rate = 60,
+#'                      frame_rate = 60,
 #'                      expansion = "constant_speed")
 #'
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
@@ -55,7 +55,7 @@ diameter_model <-
     start_diameter = 3,
     end_diameter = 50,
     duration = 3,
-    anim_frame_rate = 60,
+    frame_rate = 60,
     expansion = "constant_speed"){
 
     ## check expansion for typos
@@ -67,7 +67,7 @@ diameter_model <-
     if(expansion == "constant_speed"){
     ## calculate total number of frames
     ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
-    total_frames <- ceiling(duration*anim_frame_rate)
+    total_frames <- ceiling(duration*frame_rate)
 
     ## Distances - these are arbitrary/proportional
     ## start distance
@@ -84,7 +84,7 @@ diameter_model <-
     results_df <- data.frame(frame = seq(1,total_frames,1))
 
     ## add time
-    results_df$time <- results_df$frame/anim_frame_rate
+    results_df$time <- results_df$frame/frame_rate
 
     ## add hypothetical predator distance
     ## start with start distance
@@ -102,10 +102,10 @@ diameter_model <-
 
   ## IF CONSTANT DIAMETER
   if(expansion == "constant_diameter"){
-  total_frames <- ceiling(duration*anim_frame_rate)
+  total_frames <- ceiling(duration*frame_rate)
   diam_per_frame <- (end_diameter - start_diameter)/(total_frames-1)
   results_df <- data.frame(frame = seq(1,total_frames,1))
-  results_df$time <- results_df$frame/anim_frame_rate
+  results_df$time <- results_df$frame/frame_rate
   ## add diameter change to start distance for each row
   results_df$diam_on_screen <-
     apply(results_df, 1, function(x) start_diameter + (x[1]-1)*diam_per_frame)
@@ -118,7 +118,7 @@ diameter_model <-
       start_diameter = start_diameter,
       end_diameter = end_diameter,
       duration = duration,
-      anim_frame_rate = anim_frame_rate,
+      frame_rate = frame_rate,
       expansion = expansion
     )
 
