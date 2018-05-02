@@ -294,6 +294,95 @@ get_alt <-
 
 # Variable speed model ----------------------------------------------------
 
+    if(class(x) == "variable_speed_model"){
+
+      ## save inputs for inclusion in final output
+      original_model <- x
+      inputs <- list(
+        new_distance = new_distance,
+        latency = latency,
+        response_frame = response_frame
+      )
+
+
+      ## take out df with frames, animation diameters etc
+      adjusted_model <- x$model
+
+      ## take out exp parameters
+      attacker_diameter <- x$attacker_diameter
+      anim_frame_rate <- x$anim_frame_rate
+
+      ## if new distance entered use it
+      ifelse(is.null(new_distance),
+             screen_dist <- x$screen_distance,
+             screen_dist <- new_distance)
+
+      ## latency correction
+      response_frame_original <- response_frame
+      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
+
+      ## alpha column - visual angle of shape
+      adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
+      adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
+
+      ## da/dt column
+      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
+
+      ## perceived distance
+      adjusted_model$distance_perceived <-
+        cos(adjusted_model$alpha/2)*
+        (attacker_diameter/2)/(sin((adjusted_model$alpha/2)))
+
+      ## perceived speed
+      ## = perceived distance change per s
+      adjusted_model$speed_perceived <-
+        -1*c(NA, diff(adjusted_model$distance_perceived)*anim_frame_rate)
+
+      ## EXTRACT ALT
+      ## from the ADJUSTED FOR LATENCY response frame
+      alt <- adjusted_model$dadt[response_frame_adjusted]
+      alt_deg <- rad2deg(alt)
+
+      ## get three metrics at the ADJUSTED FOR LATENCY response frame
+      alt_perceived <- alt
+      distance_perceived <- adjusted_model$distance_perceived[response_frame_adjusted]
+      speed_perceived <- adjusted_model$speed_perceived[response_frame_adjusted]
+
+      ## get dist and speed of model at response frame
+      distance_in_model <- adjusted_model$distance[response_frame_adjusted]
+      speed_in_model <- original_model$speed
+
+
+      ## organise adjusted model for output
+      temp_list <- original_model
+      temp_list$model <- adjusted_model
+      adjusted_model <- temp_list
+
+
+      #### OUTPUT
+
+      output <- list(
+        alt = alt,
+        alt_deg = alt_deg,
+
+        response_frame = response_frame_original,
+        latency_applied = latency,
+        response_frame_adjusted = response_frame_adjusted,
+
+        distance_perceived = distance_perceived,
+        speed_perceived = speed_perceived,
+        distance_in_model = distance_in_model,
+        speed_in_model = speed_in_model,
+        new_distance_applied = inputs$new_distance,
+
+        original_model = original_model,
+        adjusted_model = adjusted_model,
+        #comparison_model =
+        inputs = inputs
+      )
+    }
+
 
 
     #### VARIABLE SPEED MODELS ####
