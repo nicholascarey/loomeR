@@ -1,89 +1,99 @@
-#' @title Determine the Apparent Looming Threshold (ALT) for a particular
-#'   response frame
+#' @title Determine the Apparent Looming Threshold (ALT) for a given response
+#'   frame
 #'
-#' @description \code{get_alt} returns the Apparent Looming Threshold (ALT), the
-#'   rate of change of the visual angle of a looming shape (da/dt in radians/s),
-#'   at a specified frame. Typically this is the 'response frame' - the frame at
-#'   which a specimen responds to the stimulus.
+#' @description `get_alt` returns the Apparent Looming Threshold (ALT), the rate
+#'   of change of the visual angle (alpha, or **a**) of a looming shape
+#'   (**da/dt** in radians/s), at a specified frame of the animation. Typically
+#'   this is the 'response frame' - the frame at which a specimen responds to
+#'   the stimulus.
 #'
-#'   The model used to create the looming animation must be supplied, along with
-#'   a specified \code{response_frame}. The function returns the ALT at this
-#'   frame. It also returns the perceived speed and perceived distance of the
-#'   looming shape at this frame, as specified by the original model.
+#'   The model originally used to create the looming animation must be supplied,
+#'   along with a specified `response_frame`. The function returns the ALT at
+#'   this frame. It also returns the perceived speed and perceived distance of
+#'   the looming shape at this frame, as specified by the original model.
 #'
-#'   The function allows the results to be 'corrected' in two ways:
+#'   The function also allows the results to be 'corrected' in two ways:
 #'
-#'   Different viewing distance: If the observing specimen has moved, and so is
-#'   at a different distance from the screen as that specified in the original
-#'   model, this will affect the perceived ALT, as well as perceived distance
-#'   and speed. To account for this, a \code{new_distance} can be specified, and
-#'   the function will calculate the new perceived parameters at the
-#'   \code{response_frame} for this new viewing distance.
+#'   - Different viewing distance: If the observing specimen has moved, or is
+#'   otherwise at a different distance from the screen as that specified in the
+#'   original model, this will affect the perceived ALT, as well as perceived
+#'   distance and speed. To account for this, a `new_distance` can be specified,
+#'   and the function will correct the ALT for the new viewing distance, as well
+#'   as calculate the new perceived speed and distance.
 #'
-#'   Visual response latency: The function also allows a visual response latency
-#'   to be applied (\code{latency}). Typically, there is a lag between an animal
-#'   responding or "deciding" to respond to a stimulus, and this signal reaching
-#'   their musculature. If this value is known or has been quantified, it can be
-#'   entered as \code{latency} in seconds and the results will be returned from
-#'   the closest matching frame to the \code{response_frame} minus this duration
-#'   (see Details).
+#'   - Visual response latency: The function also allows a visual response
+#'   latency to be applied (`latency`, in s). Typically, there is a lag between
+#'   an animal responding (voluntarily or involuntarily) to a stimulus, and the
+#'   signal to move reaching their musculature. If this latency value is known
+#'   or has been quantified, it can be entered as `latency` in seconds and the
+#'   results will be returned from the closest matching frame to the
+#'   `response_frame` minus this duration (see Details).
 #'
 #'
-#' @details Note, that since da/dt is a derivative, its value lies *between*
-#'   frames. The function returns the da/dt value between the given
-#'   \code{response_frame} and the next. If, for whatever reason, you want the
-#'   da/dt between the \code{response_frame} and the previous frame, simply
-#'   subtract one from the response frame.
+#' @details Note, that since **da/dt** is a derivative, its value lies *between*
+#'   frames. The function returns the **da/dt** value (rate of change in the
+#'   viewing angle) between the given `response_frame` and the previous frame.
+#'   If, for whatever reason, you want the **da/dt** between the
+#'   `response_frame` and the next frame, simply add 1 to the response frame.
 #'
 #'   Latency: Latency is applied internally by adjusting the response frame. The
 #'   frame rate multiplied by the latency gives the number of frames 'backwards'
-#'   from the entered \code{response_frame} the function goes to extract the
-#'   results. In the event the number of frames backwards is not an integer,
-#'   this is rounded. For example, with a 60 fps animation and 0.06s latency,
-#'   the function would look to go back 3.6 frame; this is rounded to 4.
+#'   from the entered `response_frame` the function goes to extract the results.
+#'   In the event the number of frames backwards is not an integer, this is
+#'   rounded. For example, with a 60 fps animation and 0.06s latency, the
+#'   function would look to go back 3.6 frames; this is rounded to 4.
 #'
-#'   Diameter model: Note that for a \code{\link{diameter_model}}, the ALT (i.e.
-#'   da/dt at a particular frame) can be extracted if a viewing distance is
-#'   supplied, but *not* a perceived distance and speed. This is because the
-#'   hypothetical size of the attacker was never specified in creating the
-#'   model. While the viewing angle (a) and its derivative (da/dt) can be
-#'   calculated, the perceived distance and/or speed cannot; a small object on
-#'   screen expanding rapidly could represent a very small object moving slowly
-#'   at a close distance, or a very large object moving rapidly at a far
-#'   distance. Both of these can produce an identical da/dt, but without a size
-#'   being specified the speed and distance cannot be determined. Of course,
-#'   expressing the ALT as a da/dt value is designed to negate this precise
+#'   Diameter model: Note that for a [diameter_model()], the ALT (i.e. **da/dt**
+#'   at a particular frame) can be extracted given a viewing distance, but *not*
+#'   a perceived distance and speed. This is because the hypothetical size of
+#'   the attacker was never specified in creating the model. While the viewing
+#'   angle (**a**) and its derivative (**da/dt**) can be calculated, the
+#'   perceived distance and/or speed cannot; a small object on screen expanding
+#'   rapidly could represent a very small object moving slowly at a close
+#'   distance, or a very large object moving rapidly at a far distance. Both of
+#'   these can produce an identical **da/dt**, but without a size being
+#'   specified the speed and distance cannot be determined. Of course,
+#'   expressing the ALT as a **da/dt** value is designed to negate this exact
 #'   issue, by focussing purely on the rate of change of the viewing angle. If
 #'   these perceived speed and distance parameters may be important to your
-#'   study however, the model should be created in
-#'   \code{\link{constant_speed_model}} or \code{\link{variable_speed_model}}.
-#'   Note, \code{\link{diameter_model}} is intended to produce simple animations
-#'   purely to induce a response where the precise parameters are not that
-#'   important.
+#'   study however, the model should be created in [constant_speed_model()] or
+#'   [variable_speed_model()]. Note, [diameter_model()] is intended to produce
+#'   simple animations purely to induce a response where the precise parameters
+#'   are not that important.
 #'
 #'
 #'
-#' @seealso \code{\link{looming_animation}}, \code{\link{???}}
+#' @seealso [constant_speed_model()], [variable_speed_model()],
+#'   [diameter_model()], [looming_animation()]
 #'
-#' @param x numeric. Object of class \code{constant_speed_model},
-#'   \code{variable_speed_model}, or \code{diameter_model}.
-#' @param response_frame integer. The frame at which you want to extract the
+#' @param x numeric. Object of class `constant_speed_model`,
+#'   `variable_speed_model`, or `diameter_model`.
+#' @param response_frame integer. The frame at which you want to determine the
 #'   ALT.
 #' @param new_distance numeric. Distance in cm the specimen is from the screen,
-#'   if this is different fram that used to create the model.
+#'   if this is different from that used to create the model.
 #' @param latency numeric. Visual response latency in seconds.
 #'
-#' @return Returns a \code{list} object of class \code{get_alt}. The first value
-#'   in the output object is the ALT in rad/s (\code{alt}) at the response frame
-#'   (with latency correction if entered). It also includes the original looming
-#'   animation model, an adjusted model for a \code{new_distance}. It also
-#'   returns perceived speed and distance (\code{speed_perceived},
-#'   \code{distance_perceived}) at the response frame (with latency correction)
-#'   adjusted for a new viewing distance, and also the original speed and
-#'   distance in the model at that same frame without this correction. All
-#'   angular and da/dt results are returned in radians, as is typically used in
-#'   the literature. However the output also includes these in degrees as a
-#'   \code{_deg} suffix (e.g. \code{alt} and \code{alt_deg}).
+#' @return The function returns a `list` object of class `get_alt`. The first
+#'   value in the output object (`$alt`) is the ALT in rad/s at the response
+#'   frame (with latency correction if entered). It also includes the original
+#'   looming animation model (`$original_model`), and an adjusted model for any
+#'   `new_distance`  (`$adjusted_model`). It also returns perceived speed and
+#'   distance (`$speed_perceived`, `$distance_perceived`) at the response frame
+#'   (with latency correction) adjusted for a new viewing distance, and also the
+#'   original speed and distance in the model at that same frame without this
+#'   correction (`$speed_in_model`, `$distance_in_model`). All angular and
+#'   **da/dt** results are returned in radians, as is typically used in the
+#'   literature. However the output also includes these in degrees with a `_deg`
+#'   suffix (e.g. `$alt` vs. `$alt_deg`). All calculated (**a** & **da/dt**) and
+#'   adjusted (perceived speed and distance) parameters are available for every
+#'   frame in the `$adjusted_model$model` component. Note, that because
+#'   **da/dt** is a derivative, the **da/dt** vector returned in
+#'   `adjusted_model$model` will be one value shorter than the total number of
+#'   frames, and therefore starts with a blank value (i.e. `NA`). During
+#'   processing, values of **da/dt** are determined from the previous frame to
+#'   the current frame. Therefore a **da/dt** value for a particular frame is
+#'   how the angle changed from the previous frame to that frame.
 #'
 #' @examples
 #' ## create looming animation model
@@ -104,7 +114,7 @@
 #'         new_distance = 25,
 #'         latency = 0.06)
 #'
-#' @author Nicholas Carey - \link{nicholascarey@gmail.com}
+#' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
 #' @export
 
@@ -120,10 +130,15 @@ get_alt <-
 
     ## check class
     if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
-      stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'.")
+      stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model',
+           or 'diameter_model'.")
 
     if(is.null(response_frame))
       stop("A 'response_frame' is required to extract the ALT and associated data.")
+
+    if(response_frame == 1)
+      stop("ALT cannot be extracted from the first frame because it is a derivative and is calculated
+           between the response_frame and the previous frame.")
 
     if(response_frame > tail(x$model$frame, 1))
       stop("The 'response_frame' is greater than the last frame of the animation model.")
@@ -286,7 +301,6 @@ get_alt <-
 
         original_model = original_model,
         adjusted_model = adjusted_model,
-        #comparison_model =
         inputs = inputs
       )
       }
@@ -351,7 +365,9 @@ get_alt <-
 
       ## get dist and speed of model at response frame
       distance_in_model <- adjusted_model$distance[response_frame_adjusted]
-      speed_in_model <- original_model$speed
+      ## this is basically only difference to constant speed model - getting
+      ## speed at frame rather than the constant speed in model
+      speed_in_model <- original_model$speed[response_frame_adjusted]
 
 
       ## organise adjusted model for output
@@ -378,99 +394,10 @@ get_alt <-
 
         original_model = original_model,
         adjusted_model = adjusted_model,
-        #comparison_model =
         inputs = inputs
       )
     }
 
-
-
-    #### VARIABLE SPEED MODELS ####
-    ## note here we use the anim_model
-
-    else if(class(x) == "variable_speed_model"){
-
-      # variable_speed_model <-
-      #     x, #speed profile - single vector of speeds in same Hz as anim_frame_rate
-      #     y, #mouth open profile - 4 column dataframe of upper and lowwer jaw X and Z
-      #     screen_distance = 16,
-      #     anim_frame_rate = 60,
-      #     attacker_diameter = 250.6690354,
-      #     start_distance = 2443.4985,
-      #     max_girth = 441, #distance behind mouth of max girth
-      #     mouth_open = 622) #what frame in SAME Hz as frame rate does the mouth open occur?
-      #   {
-
-      ## save inputs for inclusion in final output
-      original_model <- x
-      inputs <- list(
-        new_distance = new_distance,
-        latency = latency,
-        response_frame = response_frame
-      )
-
-      ## take out df with frames, animation diameters etc
-      adjusted_model <- x$anim_model
-
-      ## take out exp parameters
-      attacker_diameter <- x$inputs$attacker_diameter
-      anim_frame_rate <- x$inputs$anim_frame_rate
-
-      ## latency correction
-      ## save original
-      ## modify response frame by frame rate*latency
-      response_frame_original <- response_frame
-      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
-
-      #### RECREATE EXCEL FILE - i.e. ADJUSTMENT COLUMNS ####
-      ## i.e. perceived parameters for new distance to screen
-      ## create new alfa_perceived column
-      adjusted_model$alfa_perceived <- 2*(rad2deg(atan((adjusted_model$diam_on_screen/2)/new_distance)))
-
-      ## create new perceived distance column
-      adjusted_model$distance_perceived <- cos(
-        deg2rad(adjusted_model$alfa_perceived/2))*
-        (attacker_diameter/2)/(sin(deg2rad(adjusted_model$alfa_perceived/2)))
-
-      ## radians_perceived (of alfa_perceived) column
-      adjusted_model$radians_perceived <- deg2rad(adjusted_model$alfa_perceived)
-
-      ## da/dt column
-      adjusted_model$dadt_perceived <- c(0, diff(adjusted_model$radians_perceived)*anim_frame_rate)
-
-      ## perceived speed
-      ## perceived distance change per s
-      adjusted_model$speed_perceived <- -1*c(0, diff(adjusted_model$distance_perceived)*anim_frame_rate)
-
-      ## RESULTS
-      ## get three metrics at the ADJUSTED FOR LATENCY response frame
-      dadt_perceived <- adjusted_model$dadt_perceived[response_frame_adjusted]
-      distance_perceived <- adjusted_model$distance_perceived[response_frame_adjusted]
-      speed_perceived <- adjusted_model$speed_perceived[response_frame_adjusted]
-
-      ## get dist and speed of model at response frame
-      distance_model_max_girth <- adjusted_model$distance_max_girth[response_frame_adjusted]
-      speed_model <- adjusted_model$speed[response_frame_adjusted]
-
-
-      #### OUTPUT
-
-      output <- list(
-        dadt_perceived = dadt_perceived,
-        distance_perceived = distance_perceived,
-        speed_perceived = speed_perceived,
-
-        response_frame_adjusted = response_frame_adjusted,
-        latency_applied = latency,
-        response_frame_original = response_frame_original,
-
-        distance_model_max_girth = distance_model_max_girth,
-        speed_model = speed_model,
-
-        adjusted_model = adjusted_model,
-        original_model = original_model,
-        inputs = inputs
-      )}
 
     ## Assign class
     class(output) <- "get_alt"
@@ -481,6 +408,13 @@ get_alt <-
   } #END
 
 
+# Internal Functions ------------------------------------------------------
+
+#' Print get_alt result
+#'
+#' This is an internal function.
+#'
+#' @keywords internal
 #' @export
 print.get_alt <- function(x, ...) {
   cat("\n")

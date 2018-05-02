@@ -2,8 +2,8 @@
 % Please edit documentation in R/get_alt.R
 \name{get_alt}
 \alias{get_alt}
-\title{Determine the Apparent Looming Threshold (ALT) for a particular
-  response frame}
+\title{Determine the Apparent Looming Threshold (ALT) for a given response
+frame}
 \usage{
 get_alt(x, response_frame = NULL, new_distance = NULL, latency = 0)
 }
@@ -11,87 +11,96 @@ get_alt(x, response_frame = NULL, new_distance = NULL, latency = 0)
 \item{x}{numeric. Object of class \code{constant_speed_model},
 \code{variable_speed_model}, or \code{diameter_model}.}
 
-\item{response_frame}{integer. The frame at which you want to extract the
+\item{response_frame}{integer. The frame at which you want to determine the
 ALT.}
 
 \item{new_distance}{numeric. Distance in cm the specimen is from the screen,
-if this is different fram that used to create the model.}
+if this is different from that used to create the model.}
 
 \item{latency}{numeric. Visual response latency in seconds.}
 }
 \value{
-Returns a \code{list} object of class \code{get_alt}. The first value
-  in the output object is the ALT in rad/s (\code{alt}) at the response frame
-  (with latency correction if entered). It also includes the original looming
-  animation model, an adjusted model for a \code{new_distance}. It also
-  returns perceived speed and distance (\code{speed_perceived},
-  \code{distance_perceived}) at the response frame (with latency correction)
-  adjusted for a new viewing distance, and also the original speed and
-  distance in the model at that same frame without this correction. All
-  angular and da/dt results are returned in radians, as is typically used in
-  the literature. However the output also includes these in degrees as a
-  \code{_deg} suffix (e.g. \code{alt} and \code{alt_deg}).
+The function returns a \code{list} object of class \code{get_alt}. The first
+value in the output object (\code{$alt}) is the ALT in rad/s at the response
+frame (with latency correction if entered). It also includes the original
+looming animation model (\code{$original_model}), and an adjusted model for any
+\code{new_distance}  (\code{$adjusted_model}). It also returns perceived speed and
+distance (\code{$speed_perceived}, \code{$distance_perceived}) at the response frame
+(with latency correction) adjusted for a new viewing distance, and also the
+original speed and distance in the model at that same frame without this
+correction (\code{$speed_in_model}, \code{$distance_in_model}). All angular and
+\strong{da/dt} results are returned in radians, as is typically used in the
+literature. However the output also includes these in degrees with a \code{_deg}
+suffix (e.g. \code{$alt} vs. \code{$alt_deg}). All calculated (\strong{a} & \strong{da/dt}) and
+adjusted (perceived speed and distance) parameters are available for every
+frame in the \code{$adjusted_model$model} component. Note, that because
+\strong{da/dt} is a derivative, the \strong{da/dt} vector returned in
+\code{adjusted_model$model} will be one value shorter than the total number of
+frames, and therefore starts with a blank value (i.e. \code{NA}). During
+processing, values of \strong{da/dt} are determined from the previous frame to
+the current frame. Therefore a \strong{da/dt} value for a particular frame is
+how the angle changed from the previous frame to that frame.
 }
 \description{
-\code{get_alt} returns the Apparent Looming Threshold (ALT), the
-  rate of change of the visual angle of a looming shape (da/dt in radians/s),
-  at a specified frame. Typically this is the 'response frame' - the frame at
-  which a specimen responds to the stimulus.
+\code{get_alt} returns the Apparent Looming Threshold (ALT), the rate
+of change of the visual angle (alpha, or \strong{a}) of a looming shape
+(\strong{da/dt} in radians/s), at a specified frame of the animation. Typically
+this is the 'response frame' - the frame at which a specimen responds to
+the stimulus.
 
-  The model used to create the looming animation must be supplied, along with
-  a specified \code{response_frame}. The function returns the ALT at this
-  frame. It also returns the perceived speed and perceived distance of the
-  looming shape at this frame, as specified by the original model.
+The model originally used to create the looming animation must be supplied,
+along with a specified \code{response_frame}. The function returns the ALT at
+this frame. It also returns the perceived speed and perceived distance of
+the looming shape at this frame, as specified by the original model.
 
-  The function allows the results to be 'corrected' in two ways:
-
-  Different viewing distance: If the observing specimen has moved, and so is
-  at a different distance from the screen as that specified in the original
-  model, this will affect the perceived ALT, as well as perceived distance
-  and speed. To account for this, a \code{new_distance} can be specified, and
-  the function will calculate the new perceived parameters at the
-  \code{response_frame} for this new viewing distance.
-
-  Visual response latency: The function also allows a visual response latency
-  to be applied (\code{latency}). Typically, there is a lag between an animal
-  responding or "deciding" to respond to a stimulus, and this signal reaching
-  their musculature. If this value is known or has been quantified, it can be
-  entered as \code{latency} in seconds and the results will be returned from
-  the closest matching frame to the \code{response_frame} minus this duration
-  (see Details).
+The function also allows the results to be 'corrected' in two ways:
+\itemize{
+\item Different viewing distance: If the observing specimen has moved, or is
+otherwise at a different distance from the screen as that specified in the
+original model, this will affect the perceived ALT, as well as perceived
+distance and speed. To account for this, a \code{new_distance} can be specified,
+and the function will correct the ALT for the new viewing distance, as well
+as calculate the new perceived speed and distance.
+\item Visual response latency: The function also allows a visual response
+latency to be applied (\code{latency}, in s). Typically, there is a lag between
+an animal responding (voluntarily or involuntarily) to a stimulus, and the
+signal to move reaching their musculature. If this latency value is known
+or has been quantified, it can be entered as \code{latency} in seconds and the
+results will be returned from the closest matching frame to the
+\code{response_frame} minus this duration (see Details).
+}
 }
 \details{
-Note, that since da/dt is a derivative, its value lies *between*
-  frames. The function returns the da/dt value between the given
-  \code{response_frame} and the next. If, for whatever reason, you want the
-  da/dt between the \code{response_frame} and the previous frame, simply
-  subtract one from the response frame.
+Note, that since \strong{da/dt} is a derivative, its value lies \emph{between}
+frames. The function returns the \strong{da/dt} value (rate of change in the
+viewing angle) between the given \code{response_frame} and the previous frame.
+If, for whatever reason, you want the \strong{da/dt} between the
+\code{response_frame} and the next frame, simply add 1 to the response frame.
 
-  Latency: Latency is applied internally by adjusting the response frame. The
-  frame rate multiplied by the latency gives the number of frames 'backwards'
-  from the entered \code{response_frame} the function goes to extract the
-  results. In the event the number of frames backwards is not an integer,
-  this is rounded. For example, with a 60 fps animation and 0.06s latency,
-  the function would look to go back 3.6 frame; this is rounded to 4.
+Latency: Latency is applied internally by adjusting the response frame. The
+frame rate multiplied by the latency gives the number of frames 'backwards'
+from the entered \code{response_frame} the function goes to extract the results.
+In the event the number of frames backwards is not an integer, this is
+rounded. For example, with a 60 fps animation and 0.06s latency, the
+function would look to go back 3.6 frames; this is rounded to 4.
 
-  Diameter model: Note that for a \code{\link{diameter_model}}, the ALT (i.e.
-  da/dt at a particular frame) can be extracted if a viewing distance is
-  supplied, but *not* a perceived distance and speed. This is because the
-  hypothetical size of the attacker was never specified in creating the
-  model. While the viewing angle (a) and its derivative (da/dt) can be
-  calculated, the perceived distance and/or speed cannot; a small object on
-  screen expanding rapidly could represent a very small object moving slowly
-  at a close distance, or a very large object moving rapidly at a far
-  distance. Both of these can produce an identical da/dt, but without a size
-  being specified the speed and distance cannot be determined. Of course,
-  expressing the ALT as a da/dt value is designed to negate this precise
-  issue, by focussing purely on the rate of change of the viewing angle. If
-  these perceived speed and distance parameters may be important to your
-  study however, the model should be created in
-  \code{\link{constant_speed_model}} or \code{\link{variable_speed_model}}.
-  Note, \code{\link{diameter_model}} is intended to produce simple animations
-  purely to induce a response where the precise parameters are not that
-  important.
+Diameter model: Note that for a \code{\link[=diameter_model]{diameter_model()}}, the ALT (i.e. \strong{da/dt}
+at a particular frame) can be extracted given a viewing distance, but \emph{not}
+a perceived distance and speed. This is because the hypothetical size of
+the attacker was never specified in creating the model. While the viewing
+angle (\strong{a}) and its derivative (\strong{da/dt}) can be calculated, the
+perceived distance and/or speed cannot; a small object on screen expanding
+rapidly could represent a very small object moving slowly at a close
+distance, or a very large object moving rapidly at a far distance. Both of
+these can produce an identical \strong{da/dt}, but without a size being
+specified the speed and distance cannot be determined. Of course,
+expressing the ALT as a \strong{da/dt} value is designed to negate this exact
+issue, by focussing purely on the rate of change of the viewing angle. If
+these perceived speed and distance parameters may be important to your
+study however, the model should be created in \code{\link[=constant_speed_model]{constant_speed_model()}} or
+\code{\link[=variable_speed_model]{variable_speed_model()}}. Note, \code{\link[=diameter_model]{diameter_model()}} is intended to produce
+simple animations purely to induce a response where the precise parameters
+are not that important.
 }
 \examples{
 ## create looming animation model
@@ -114,8 +123,9 @@ get_alt(loom_model,
 
 }
 \seealso{
-\code{\link{looming_animation}}, \code{\link{???}}
+\code{\link[=constant_speed_model]{constant_speed_model()}}, \code{\link[=variable_speed_model]{variable_speed_model()}},
+\code{\link[=diameter_model]{diameter_model()}}, \code{\link[=looming_animation]{looming_animation()}}
 }
 \author{
-Nicholas Carey - \link{nicholascarey@gmail.com}
+Nicholas Carey - \email{nicholascarey@gmail.com}
 }
