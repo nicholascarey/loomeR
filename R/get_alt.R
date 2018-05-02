@@ -99,7 +99,7 @@
 #' ## create looming animation model
 #' loom_model <- constant_speed_model(
 #'                      screen_distance = 20,
-#'                      anim_frame_rate = 60,
+#'                      frame_rate = 60,
 #'                      speed = 500,
 #'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
@@ -166,20 +166,20 @@ get_alt <-
       adjusted_model <- x$model
 
       ## set exp parameters
-      anim_frame_rate <- x$anim_frame_rate
+      frame_rate <- x$frame_rate
       screen_dist <- new_distance
 
 
       ## latency correction
       response_frame_original <- response_frame
-      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
+      response_frame_adjusted <- response_frame-(round(frame_rate*latency))
 
       ## alpha column - visual angle of shape
       adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
       adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
 
       ## da/dt column
-      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*frame_rate)
       adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
 
       ## EXTRACT ALT
@@ -233,7 +233,7 @@ get_alt <-
 
       ## take out exp parameters
       attacker_diameter <- x$attacker_diameter
-      anim_frame_rate <- x$anim_frame_rate
+      frame_rate <- x$frame_rate
 
       ## if new distance entered use it
       ifelse(is.null(new_distance),
@@ -242,14 +242,14 @@ get_alt <-
 
       ## latency correction
       response_frame_original <- response_frame
-      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
+      response_frame_adjusted <- response_frame-(round(frame_rate*latency))
 
       ## alpha column - visual angle of shape
       adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
       adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
 
       ## da/dt column
-      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*frame_rate)
       adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
 
           ## perceived distance
@@ -260,7 +260,7 @@ get_alt <-
           ## perceived speed
           ## = perceived distance change per s
           adjusted_model$speed_perceived <-
-            -1*c(NA, diff(adjusted_model$distance_perceived)*anim_frame_rate)
+            -1*c(NA, diff(adjusted_model$distance_perceived)*frame_rate)
 
       ## EXTRACT ALT
       ## from the ADJUSTED FOR LATENCY response frame
@@ -324,7 +324,7 @@ get_alt <-
 
       ## take out exp parameters
       attacker_diameter <- x$attacker_diameter
-      anim_frame_rate <- x$anim_frame_rate
+      frame_rate <- x$frame_rate
 
       ## if new distance entered use it
       ifelse(is.null(new_distance),
@@ -333,14 +333,14 @@ get_alt <-
 
       ## latency correction
       response_frame_original <- response_frame
-      response_frame_adjusted <- response_frame-(round(anim_frame_rate*latency))
+      response_frame_adjusted <- response_frame-(round(frame_rate*latency))
 
       ## alpha column - visual angle of shape
       adjusted_model$alpha <- 2*(atan((adjusted_model$diam_on_screen/2)/screen_dist))
       adjusted_model$alpha_deg <- rad2deg(adjusted_model$alpha)
 
       ## da/dt column
-      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*anim_frame_rate)
+      adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*frame_rate)
       adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
 
       ## perceived distance
@@ -351,7 +351,7 @@ get_alt <-
       ## perceived speed
       ## = perceived distance change per s
       adjusted_model$speed_perceived <-
-        -1*c(NA, diff(adjusted_model$distance_perceived)*anim_frame_rate)
+        -1*c(NA, diff(adjusted_model$distance_perceived)*frame_rate)
 
       ## EXTRACT ALT
       ## from the ADJUSTED FOR LATENCY response frame

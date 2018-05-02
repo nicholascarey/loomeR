@@ -106,7 +106,7 @@ are not that important.
 ## create looming animation model
 loom_model <- constant_speed_model(
                      screen_distance = 20,
-                     anim_frame_rate = 60,
+                     frame_rate = 60,
                      speed = 500,
                      attacker_diameter = 50,
                      start_distance = 1000)

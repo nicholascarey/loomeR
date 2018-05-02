@@ -53,7 +53,7 @@
 #'   using biologically realistic parameters, this will be only a few frames.
 #'
 #' @section Screen display and playback considerations: The function creates a
-#'   video at the frame rate (\code{anim_frame_rate}) specified in the
+#'   video at the frame rate (\code{frame_rate}) specified in the
 #'   \code{\link{constant_speed_model}}, \code{\link{variable_speed_model}} or
 #'   \code{\link{diameter_model}} object. The frame rate should be one the
 #'   playback software handles correctly. Most modern displays have a maximum
@@ -184,13 +184,13 @@
 #'   In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format'
 #'   matches 'Current Size', and that both match your entered screen resolution
 #'   \code{width} and \code{height}. Check 'FPS' matches the
-#'   \code{anim_frame_rate} used to create the model in
+#'   \code{frame_rate} used to create the model in
 #'   \code{\link{constant_speed_model}}.
 #'
 #'   In VLC, Cmd-I or Window > Media Information, the 'Codec Details' tab. Check
 #'   'Resolution' and 'Display Resolution' both match your entered screen
 #'   resolution \code{width} and \code{height} (there may be small differences,
-#'   which is ok). Check 'Frame Rate' matches the \code{anim_frame_rate} used to
+#'   which is ok). Check 'Frame Rate' matches the \code{frame_rate} used to
 #'   create the model in \code{\link{constant_speed_model}}. Make sure playback
 #'   speed is at 'Normal' (Menu>Playback).
 #'
@@ -260,7 +260,7 @@
 #' # make a looming model
 #' loom_model <- constant_speed_model(
 #'                      screen_distance = 20,
-#'                      anim_frame_rate = 60,
+#'                      frame_rate = 60,
 #'                      speed = 500,
 #'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
@@ -344,7 +344,7 @@ looming_animation <-
 
     ## extract data and parameters
     cs_model <- x$model
-    frame_rate <- x$anim_frame_rate
+    frame_rate <- x$frame_rate
 
     ## get total frames of the animation - useful later for adding frame markers
     total_frames_anim <- nrow(cs_model)

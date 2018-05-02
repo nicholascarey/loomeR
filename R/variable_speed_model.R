@@ -8,7 +8,7 @@
 #' @details Calculates the screen diameters for a modelled object of specified
 #'   size approaching at a variable speed. The variable speed must be supplied
 #'   as a vector of speeds (operator \code{x}) in cm/s at the same frequency
-#'   (i.e. same Hz) as the entered \code{anim_frame_rate}, which is the frame
+#'   (i.e. same Hz) as the entered \code{frame_rate}, which is the frame
 #'   rate the resulting animation created from this model will be played back
 #'   at. If the speed profile is in a different frequency than common video
 #'   frame rates (e.g, 24, 30, 60 fps) it is recommended to interpolate or
@@ -48,12 +48,12 @@
 #'   \code{\link{diameter_model}}
 #'
 #' @param x numeric. Vector of speeds (cm/s) of the hypothetical approaching
-#'   attacker at the same frequency (Hz) as the \code{anim_frame_rate}. Length
+#'   attacker at the same frequency (Hz) as the \code{frame_rate}. Length
 #'   of the vector will thus determine total duration of the resulting
 #'   animation.
 #' @param screen_distance numeric. Distance (cm) from the playback screen to
 #'   your specimen.
-#' @param anim_frame_rate numeric. Frames per second (Hz) you want the resulting
+#' @param frame_rate numeric. Frames per second (Hz) you want the resulting
 #'   animation to be played back at.
 #' @param attacker_diameter numeric. Diameter of the hypothetical approaching
 #'   attacker. This affects the size of the simulation in the final frame of the
@@ -72,7 +72,7 @@
 #' loom_model <- variable_speed_model(
 #'                      x,
 #'                      screen_distance = 20,
-#'                      anim_frame_rate = 60,
+#'                      frame_rate = 60,
 #'                      attacker_diameter = 50)
 #'
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
@@ -83,7 +83,7 @@ variable_speed_model <-
   function(
     x,
     screen_distance = 20,
-    anim_frame_rate = 60,
+    frame_rate = 60,
     attacker_diameter = 50){
 
     ## check x is a vector
@@ -93,18 +93,18 @@ variable_speed_model <-
 
     ## calculate parameters
     total_frames <- length(x)
-    total_time <- total_frames/anim_frame_rate
-    start_distance <- sum((x/anim_frame_rate))
+    total_time <- total_frames/frame_rate
+    start_distance <- sum((x/frame_rate))
 
     ## calculate distance covered each frame at this speed and frame rate
-    distance_per_frame <- x/anim_frame_rate
+    distance_per_frame <- x/frame_rate
 
     ## build up data frame
     ## list of frames
     results_df <- data.frame(frame = seq(1,total_frames,1))
 
     ## add time
-    results_df$time <- results_df$frame/anim_frame_rate
+    results_df$time <- results_df$frame/frame_rate
 
     ## add hypothetical predator distance
     results_df$distance <- start_distance-cumsum(distance_per_frame)
@@ -127,7 +127,7 @@ variable_speed_model <-
     output <- list(
       model = results_df,
       screen_distance = screen_distance,
-      anim_frame_rate = anim_frame_rate,
+      frame_rate = frame_rate,
       speeds = x,
       attacker_diameter = attacker_diameter,
       start_distance = start_distance

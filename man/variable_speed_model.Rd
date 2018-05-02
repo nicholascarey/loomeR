@@ -4,19 +4,19 @@
 \alias{variable_speed_model}
 \title{Variable Speed Model}
 \usage{
-variable_speed_model(x, screen_distance = 20, anim_frame_rate = 60,
+variable_speed_model(x, screen_distance = 20, frame_rate = 60,
   attacker_diameter = 50)
 }
 \arguments{
 \item{x}{numeric. Vector of speeds (cm/s) of the hypothetical approaching
-attacker at the same frequency (Hz) as the \code{anim_frame_rate}. Length
+attacker at the same frequency (Hz) as the \code{frame_rate}. Length
 of the vector will thus determine total duration of the resulting
 animation.}
 
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to
 your specimen.}
 
-\item{anim_frame_rate}{numeric. Frames per second (Hz) you want the resulting
+\item{frame_rate}{numeric. Frames per second (Hz) you want the resulting
 animation to be played back at.}
 
 \item{attacker_diameter}{numeric. Diameter of the hypothetical approaching
@@ -37,7 +37,7 @@ precise parameters to be created.
 Calculates the screen diameters for a modelled object of specified
 size approaching at a variable speed. The variable speed must be supplied
 as a vector of speeds (operator \code{x}) in cm/s at the same frequency
-(i.e. same Hz) as the entered \code{anim_frame_rate}, which is the frame
+(i.e. same Hz) as the entered \code{frame_rate}, which is the frame
 rate the resulting animation created from this model will be played back
 at. If the speed profile is in a different frequency than common video
 frame rates (e.g, 24, 30, 60 fps) it is recommended to interpolate or
@@ -82,7 +82,7 @@ x <- seq(1, 500, 1)
 loom_model <- variable_speed_model(
                      x,
                      screen_distance = 20,
-                     anim_frame_rate = 60,
+                     frame_rate = 60,
                      attacker_diameter = 50)
 
 }

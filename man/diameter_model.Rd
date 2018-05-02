@@ -5,7 +5,7 @@
 \title{Diameter Model}
 \usage{
 diameter_model(start_diameter = 3, end_diameter = 50, duration = 3,
-  anim_frame_rate = 60, expansion = "constant_speed")
+  frame_rate = 60, expansion = "constant_speed")
 }
 \arguments{
 \item{start_diameter}{numeric. Diameter (cm) you want the animation to start
@@ -17,7 +17,7 @@ larger than the physical screen size.}
 
 \item{duration}{numeric. Total duration (s) you want the animation to be.}
 
-\item{anim_frame_rate}{numeric. Frames per second (Hz) you want the resulting
+\item{frame_rate}{numeric. Frames per second (Hz) you want the resulting
 animation to be played at.}
 
 \item{expansion}{string. \code{constant_speed} or \code{constant_diameter}.
@@ -53,7 +53,7 @@ loom_model <- diameter_model(
                      start_diameter = 2,
                      end_diameter = 50,
                      duration = 3,
-                     anim_frame_rate = 60,
+                     frame_rate = 60,
                      expansion = "constant_speed")
 
 }
