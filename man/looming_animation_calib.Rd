@@ -30,70 +30,67 @@ will be too large to display.}
 }
 \description{
 All screens are different, so an object of a hypothetical size
- may be displayed at a different size on a different screen, due to
- differences in resolution or the physical size of the pixels that make up
- the screen. \code{looming_animation_calib} is a utility to help calibrate
- the \code{\link{looming_animation}} function for a particular screen.
+may be displayed at a different size on a different screen, due to
+differences in resolution or the physical size of the pixels that make up
+the screen. \code{looming_animation_calib} is a utility to help calibrate
+the \code{\link{looming_animation}} function for a particular screen.
 }
 \details{
 IMPORTANT: The function works by saving an image
- (\code{loom_img_01.png} etc.) for every frame of the animation to the
- current working directory. It then uses \code{ffmpeg} to encode these images
- to an \code{.mp4} file (saved as \code{animation_calib.mp4}). It then
- deletes the \code{.png} files from the working directory. It will overwrite
- any \code{.png} or \code{.mp4} file it encounters which has an identical
- name.
+(\code{loom_img_01.png} etc.) for every frame of the animation to the
+current working directory. It then uses \code{ffmpeg} to encode these images
+to an \code{.mp4} file (saved as \code{animation_calib.mp4}). It then
+deletes the \code{.png} files from the working directory. It will overwrite
+any \code{.png} or \code{.mp4} file it encounters which has an identical
+name.
 
- The function helps determine the \code{correction} value used in
- \code{\link{looming_animation}} to ensure screen diameters are correctly
- displayed. Typically this is in the range 0.01 - 0.06, with the larger the
- screen the lower the value. It requires access to the screen you intend to
- display the animation on, and a ruler or other method of physically
- measuring lengths on the screen. The output is a short 2 second, 60 frame
- video containing a static image of 10 horizontal bars (it is not an image
- file to ensure software rendering onscreen is consistent). This video should
- be opened in the playback application, paused, made fullscreen and the bar
- closest in length to the entered \code{ruler} value used to estimate an
- appropriate \code{correction} value. If the \code{ruler} width falls between
- two values, these can be entered as the \code{correction_range}, and the
- function run again to further refine estimates of the \code{correction}
- value. The \code{ruler} value should be less than the physical horizontal
- width of the screen, or - obviously - the bars will be too wide to display.
+The function helps determine the \code{correction} value used in
+\code{\link{looming_animation}} to ensure screen diameters are correctly
+displayed. Typically this is in the range 0.01 - 0.06, with the larger the
+screen the lower the value. It requires access to the screen you intend to
+display the animation on, and a ruler or other method of physically
+measuring lengths on the screen. The output is a short 2 second, 60 frame
+video containing a static image of 10 horizontal bars (it is not an image
+file to ensure software rendering onscreen is consistent). This video should
+be opened in the playback application, paused, made fullscreen and the bar
+closest in length to the entered \code{ruler} value used to estimate an
+appropriate \code{correction} value. If the \code{ruler} width falls between
+two values, these can be entered as the \code{correction_range}, and the
+function run again to further refine estimates of the \code{correction}
+value. The \code{ruler} value should be less than the physical horizontal
+width of the screen, or - obviously - the bars will be too wide to display.
 
- The display resolution of the screen you will use to play the animation
- should be entered as \code{width} and \code{height}. NOTE - This is the
- current DISPLAY resolution, which is not necessarily the native resolution
- of the screen, but determined in the Displays preferences of your operating
- system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
- on the device. These settings ensure the animation is in the correct aspect
- ratio and uses the full screen.
+The display resolution of the screen you will use to play the animation
+should be entered as \code{width} and \code{height}. NOTE - This is the
+current DISPLAY resolution, which is not necessarily the native resolution
+of the screen, but determined in the Displays preferences of your operating
+system. If you are unsure, visit \url{https://whatismyscreenresolution.com}
+on the device. These settings ensure the animation is in the correct aspect
+ratio and uses the full screen.
 
- Note that if you are creating multiple animations, the \code{correction}
- value used in \code{\link{looming_animation}} will be the same for a
- particular screen as long as the display resolution remains the same.
+Note that if you are creating multiple animations, the \code{correction}
+value used in \code{\link{looming_animation}} will be the same for a
+particular screen as long as the display resolution remains the same.
 
- The function should work with both Windows and macOS (Linux coming soon),
- however it requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
- cross-platform, command line utility for encoding video, to be installed on
- your system. For installation instructions see
- \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need
- to restart) or
- \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
+The function should work with both Windows and macOS (Linux coming soon),
+however it requires \code{ffmpeg} (\url{http://ffmpeg.org}), an external,
+cross-platform, command line utility for encoding video, to be installed on
+your system. For installation instructions see
+\url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may need
+to restart) or
+\url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-X}
 
-
-
-
- \subsection{Note on smaller screens}{If you are using the function to
- calibrate for a small screen, for example a phone or tablet, the resulting
- video might look strange: low resolution, blurry, bad spacing, etc. This is
- normal, and a result of having to scale the text size to display properly.
- It should not affect the estimation of the \code{calibration} value, or the
- animation you eventually create in \code{\link{looming_animation}}. Please
- do let me know if you have any issues however.}
+\subsection{Note on smaller screens}{If you are using the function to
+calibrate for a small screen, for example a phone or tablet, the resulting
+video might look strange: low resolution, blurry, bad spacing, etc. This is
+normal, and a result of having to scale the text size to display properly.
+It should not affect the estimation of the \code{calibration} value, or the
+animation you eventually create in \code{\link{looming_animation}}. Please
+do let me know if you have any issues however.}
 }
 \section{Dependencies}{
  The function requires the following packages:
- \code{glue}.
+\code{glue}.
 }
 
 \examples{

@@ -26,27 +26,27 @@ constant increase in diameter (see Details).}
 }
 \value{
 List object containing the input parameters and a model with the
-  resulting diameter for each frame in the animation.
+resulting diameter for each frame in the animation.
 }
 \description{
 Creates a simple model for making a looming animation by setting
-  start and end screen diameters and total duration
+start and end screen diameters and total duration
 }
 \details{
 Creates a simple expansion model for use in
-  \code{looming_animation}, from a start and end diameter, and a total
-  duration. Expansion of the simulation can be set in two ways. In the
-  default, \code{constant_speed}, the function models the expansion of the
-  simulated oncoming object as if it were approaching at a constant speed.
-  Because of visual foreshortening, this results in a simulation that expands
-  progressively more rapidly as the animation progresses. If \code{=
+\code{looming_animation}, from a start and end diameter, and a total
+duration. Expansion of the simulation can be set in two ways. In the
+default, \code{constant_speed}, the function models the expansion of the
+simulated oncoming object as if it were approaching at a constant speed.
+Because of visual foreshortening, this results in a simulation that expands
+progressively more rapidly as the animation progresses. If \code{=
   constant_diameter}, the function instead imposes a constant increase in
-  diameter, i.e. a simulation that expands by the same amount in diameter in
-  each frame. This simulation represents an oncoming object that is starting
-  off at high speed, but slowing down as it gets closer to the target.
+diameter, i.e. a simulation that expands by the same amount in diameter in
+each frame. This simulation represents an oncoming object that is starting
+off at high speed, but slowing down as it gets closer to the target.
 
-  Inputs should be in \code{cm}, duration in seconds (s), and frame rate in
-  \code{Hz} or \code{Frames per Second}.
+Inputs should be in \code{cm}, duration in seconds (s), and frame rate in
+\code{Hz} or \code{Frames per Second}.
 }
 \examples{
 loom_model <- diameter_model(
@@ -59,8 +59,8 @@ loom_model <- diameter_model(
 }
 \seealso{
 \code{\link{looming_animation}},
-  \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
-  \code{\link{constant_speed_model}},
+\code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
+\code{\link{constant_speed_model}},
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}
