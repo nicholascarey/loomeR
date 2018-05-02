@@ -76,7 +76,7 @@ Calculates the screen diameters for a modelled object of specified
 ## Create a speeds vector
 ## Here we create a vector of speeds of an attacker steadily accelerating from
 ## nearly stationary (1 cm/s) to 500 cm/s by 1 cm/s per frame
-x <- seq(1, 500, 0.1)
+x <- seq(1, 500, 1)
 
 ## Use the variable speed vector to create the model
 loom_model <- variable_speed_model(
