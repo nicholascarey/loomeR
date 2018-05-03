@@ -23,7 +23,13 @@ escape movement based on a combination of the perceived distance and/or
 speed of an oncoming
 threat.
 
-\(\color{white}{<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/uqI__qq1CPw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>}\)
+<p align="center">
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uqI__qq1CPw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+
+</iframe>
+
+</p>
 
 ### Installation
 
