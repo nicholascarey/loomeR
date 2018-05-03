@@ -20,13 +20,22 @@ approaching threat and investigate phenomena such as perception, visual
 latency, escape responses, and neurological functioning. **ALT** is a
 metric which describes the threshold where a specimen may initiate an
 escape movement based on a combination of the perceived distance and/or
-speed of an oncoming threat.
+speed of an oncoming
+threat.
 
 <p align="center">
 
 <img src=https://i.imgur.com/WKKt59E.gif>
 
 </p>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/EKoxLxzWNOk" frameborder="0" allowfullscreen="allowfullscreen">
+
+</iframe>
+
+<iframe width="854" height="480" src="https://www.youtube.com/embed/uqI__qq1CPw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+
+</iframe>
 
 ### Installation
 
