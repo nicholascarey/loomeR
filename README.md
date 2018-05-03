@@ -55,7 +55,7 @@ The package can create simple or complex animations in three ways:
 
   - Use of basic inputs for start and end screen diameters, and total
     duration.
-  - Use of realistic parameters. The function will determine the correct
+  - Use of realistic parameters; the function will determine the correct
     screen diameters for each animation frame using:
       - **Constant speed**: specify a constant speed, size, and starting
         distance of the hypothetical oncoming threat
@@ -123,20 +123,21 @@ x <- constant_speed_model(
 # 2. Use the model to create the animation
 looming_animation(x)
 
-# 3. Extract the ALT given a response frame of 100, but apply a response latency of 60 milliseconds
+# 3. Extract the ALT 
+# E.g. from response frame 100, and applying a response latency of 60 milliseconds
 get_alt(x, response_frame = 100, latency = 0.06)
 ```
 
 ### Forthcoming and potential features
 
-  - \[ \] Linux support
-  - \[ \] Add a receding option for animations (possibly this works by
-    setting speed as a negative, or start/end diameters the other way
-    round, but this has not been tested)
   - \[X\] Function to extract model parameters at a particular frame,
     optionally apply a latency correction, and correct the perceived
     speed and distance for a different viewing distance. **DONE** - see
     `get_alt`
+  - \[ \] Linux support
+  - \[ \] Add a receding option for animations (possibly works by
+    setting speed as a negative, or start/end diameters the other way
+    round, but this has not been tested)
   - \[ \] Enhancements (e.g. quicker padding method) and alternative to
     `ffmpeg`
   - \[ \] Option to export images only, and not convert them
