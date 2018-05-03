@@ -4,19 +4,19 @@
 \alias{variable_speed_model}
 \title{Variable Speed Model}
 \usage{
-variable_speed_model(x, screen_distance = 20, anim_frame_rate = 60,
+variable_speed_model(x, screen_distance = 20, frame_rate = 60,
   attacker_diameter = 50)
 }
 \arguments{
 \item{x}{numeric. Vector of speeds (cm/s) of the hypothetical approaching
-attacker at the same frequency (Hz) as the \code{anim_frame_rate}. Length
+attacker at the same frequency (Hz) as the \code{frame_rate}. Length
 of the vector will thus determine total duration of the resulting
 animation.}
 
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to
 your specimen.}
 
-\item{anim_frame_rate}{numeric. Frames per second (Hz) you want the resulting
+\item{frame_rate}{numeric. Frames per second (Hz) you want the resulting
 animation to be played back at.}
 
 \item{attacker_diameter}{numeric. Diameter of the hypothetical approaching
@@ -25,71 +25,71 @@ animation.}
 }
 \value{
 List object containing the input parameters and the resulting
-  diameter for each frame in the animation.
+diameter for each frame in the animation.
 }
 \description{
 Given a viewing distance, this function calculates the on-screen
-  diameters of a hypothetical object of defined size approaching at a
-  user-supplied variable speed profile. This allows a looming animation with
-  precise parameters to be created.
+diameters of a hypothetical object of defined size approaching at a
+user-supplied variable speed profile. This allows a looming animation with
+precise parameters to be created.
 }
 \details{
 Calculates the screen diameters for a modelled object of specified
-  size approaching at a variable speed. The variable speed must be supplied
-  as a vector of speeds (operator \code{x}) in cm/s at the same frequency
-  (i.e. same Hz) as the entered \code{anim_frame_rate}, which is the frame
-  rate the resulting animation created from this model will be played back
-  at. If the speed profile is in a different frequency than common video
-  frame rates (e.g, 24, 30, 60 fps) it is recommended to interpolate or
-  subsample it to be so. I can't guarantee all playback software will
-  correctly play videos encoded at odd frame rates, though you are free to
-  try.
+size approaching at a variable speed. The variable speed must be supplied
+as a vector of speeds (operator \code{x}) in cm/s at the same frequency
+(i.e. same Hz) as the entered \code{frame_rate}, which is the frame
+rate the resulting animation created from this model will be played back
+at. If the speed profile is in a different frequency than common video
+frame rates (e.g, 24, 30, 60 fps) it is recommended to interpolate or
+subsample it to be so. I can't guarantee all playback software will
+correctly play videos encoded at odd frame rates, though you are free to
+try.
 
-  The output list object can be used to create a looming animation in
-  \code{\link{looming_animation}}. Unlike \code{constant_speed_model}, no
-  \code{starting_distance} operator is required: it is assumed the final
-  value in the \code{speeds} vector occurs at the point of zero distance
-  between the attacker and observing target. The function uses the
-  \code{speeds} to back-calculate distances from this point to the starting
-  entry in \code{speeds}. These distances and the \code{attacker_diameter}
-  are used to calculate a screen diameter for the simulation in each frame.
-  Obviously, the length of \code{speeds} and the frequency determines the
-  total length of the resulting animation.
+The output list object can be used to create a looming animation in
+\code{\link{looming_animation}}. Unlike \code{constant_speed_model}, no
+\code{starting_distance} operator is required: it is assumed the final
+value in the \code{speeds} vector occurs at the point of zero distance
+between the attacker and observing target. The function uses the
+\code{speeds} to back-calculate distances from this point to the starting
+entry in \code{speeds}. These distances and the \code{attacker_diameter}
+are used to calculate a screen diameter for the simulation in each frame.
+Obviously, the length of \code{speeds} and the frequency determines the
+total length of the resulting animation.
 
-  Required inputs include the intended frame rate at which the subsequent
-  animation will be played, and distance from the screen at which the
-  observing specimen will be located. These details are important in
-  experiments where you want to precisely determine at what time, perceived
-  distance, or perceived velocity of an attack an escape response occurs.
-  Note: if the specimen is closer or further away than the specified screen
-  distance, the animation will be perceived as a different distance and a
-  different velocity.
+Required inputs include the intended frame rate at which the subsequent
+animation will be played, and distance from the screen at which the
+observing specimen will be located. These details are important in
+experiments where you want to precisely determine at what time, perceived
+distance, or perceived velocity of an attack an escape response occurs.
+Note: if the specimen is closer or further away than the specified screen
+distance, the animation will be perceived as a different distance and a
+different velocity.
 
-  If you need to create a looming animation simply to elicit a response, and
-  are not concerned with the precise details, see
-  \code{\link{diameter_model}}.
+If you need to create a looming animation simply to elicit a response, and
+are not concerned with the precise details, see
+\code{\link{diameter_model}}.
 
-  Inputs should be in \code{cm}, speeds in \code{cm/s}, and frame rate in
-  \code{Hz} or \code{Frames per Second}.
+Inputs should be in \code{cm}, speeds in \code{cm/s}, and frame rate in
+\code{Hz} or \code{Frames per Second}.
 }
 \examples{
 ## Create a speeds vector
 ## Here we create a vector of speeds of an attacker steadily accelerating from
 ## nearly stationary (1 cm/s) to 500 cm/s by 1 cm/s per frame
-x <- seq(1, 500, 0.1)
+x <- seq(1, 500, 1)
 
 ## Use the variable speed vector to create the model
 loom_model <- variable_speed_model(
                      x,
                      screen_distance = 20,
-                     anim_frame_rate = 60,
+                     frame_rate = 60,
                      attacker_diameter = 50)
 
 }
 \seealso{
 \code{\link{looming_animation}},
-  \code{\link{looming_animation_calib}}, \code{\link{constant_speed_model}}
-  \code{\link{diameter_model}}
+\code{\link{looming_animation_calib}}, \code{\link{constant_speed_model}}
+\code{\link{diameter_model}}
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}

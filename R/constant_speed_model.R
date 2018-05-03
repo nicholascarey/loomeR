@@ -33,7 +33,7 @@
 #'
 #' @param screen_distance numeric. Distance (cm) from the playback screen to
 #'   your specimen.
-#' @param anim_frame_rate numeric. Frames per second (Hz) you want the resulting
+#' @param frame_rate numeric. Frames per second (Hz) you want the resulting
 #'   animation to be.
 #' @param speed numeric. Speed (cm/s) of the hypothetical approaching attacker.
 #' @param attacker_diameter numeric. Diameter of the hypothetical approaching
@@ -47,7 +47,7 @@
 #' @examples
 #' loom_model <- constant_speed_model(
 #'                      screen_distance = 20,
-#'                      anim_frame_rate = 60,
+#'                      frame_rate = 60,
 #'                      speed = 500,
 #'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
@@ -59,7 +59,7 @@
 constant_speed_model <-
   function(
     screen_distance = 20,
-    anim_frame_rate = 60,
+    frame_rate = 60,
     speed = 500,
     attacker_diameter = 50,
     start_distance = 1000){
@@ -69,37 +69,43 @@ constant_speed_model <-
 
     ## get number of frames
     ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
-    total_frames <- ceiling(total_time*anim_frame_rate)
+    total_frames <- ceiling(total_time*frame_rate)
 
     ## calculate distance covered each frame at this speed and frame rate
-    ## rounding it because of ridiculously long results in later calcs
-    distance_per_frame <- round(speed/anim_frame_rate, 3)
+    distance_per_frame <- speed/frame_rate
 
     ## build up data frame
     ## list of frames
     results_df <- data.frame(frame = seq(1,total_frames,1))
 
     ## add time
-    results_df$time <- results_df$frame/anim_frame_rate
+    results_df$time <- results_df$frame/frame_rate
 
     ## add hypothetical predator distance
-    results_df$distance <- start_distance-((results_df$frame) * distance_per_frame)
+    results_df$distance <- start_distance-((results_df$frame-1) * distance_per_frame)
 
     ## add screen diameter of model for each frame
     results_df$diam_on_screen <- (attacker_diameter*screen_distance)/results_df$distance
+
+    ## Have commented out the below for now. Should not be necessary.
+    ## Also removed the rounding of distance_per_frame above. It also should
+    ## not be necessary. Not really sure why i did it in the first place, or
+    ## what values caused problems.
+    ## Need to test further though.
+    ##
     ## set last value to 1000 cm
     ## this is because rounding of distance_per_frame above can cause small negative
     ## or positive values as last entry when calculating distance. Therefore diameter
     ## becomes ridiculously large (or negative) A zero distance also cause 'inf' values
     ## when dividing above.
-    results_df$diam_on_screen[length(results_df$diam_on_screen)] <- 1000
+    #results_df$diam_on_screen[length(results_df$diam_on_screen)] <- 1000
 
 
     ## assemble output list object
     output <- list(
       model = results_df,
       screen_distance = screen_distance,
-      anim_frame_rate = anim_frame_rate,
+      frame_rate = frame_rate,
       speed = speed,
       attacker_diameter = attacker_diameter,
       start_distance = start_distance

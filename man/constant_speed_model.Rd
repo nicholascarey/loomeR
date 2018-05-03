@@ -4,14 +4,14 @@
 \alias{constant_speed_model}
 \title{Constant Speed Model}
 \usage{
-constant_speed_model(screen_distance = 20, anim_frame_rate = 60,
-  speed = 500, attacker_diameter = 50, start_distance = 1000)
+constant_speed_model(screen_distance = 20, frame_rate = 60, speed = 500,
+  attacker_diameter = 50, start_distance = 1000)
 }
 \arguments{
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to
 your specimen.}
 
-\item{anim_frame_rate}{numeric. Frames per second (Hz) you want the resulting
+\item{frame_rate}{numeric. Frames per second (Hz) you want the resulting
 animation to be.}
 
 \item{speed}{numeric. Speed (cm/s) of the hypothetical approaching attacker.}
@@ -24,41 +24,41 @@ approaching attacker}
 }
 \value{
 List object containing the input parameters and the resulting
-  diameter for each frame in the animation.
+diameter for each frame in the animation.
 }
 \description{
 Given a viewing distance, this function calculates the on-screen
-  diameters of a hypothetical object of defined size approaching at a
-  constant speed. This allows a looming animation with precise parameters to
-  be created.
+diameters of a hypothetical object of defined size approaching at a
+constant speed. This allows a looming animation with precise parameters to
+be created.
 }
 \details{
 Calculates the screen diameters for a modelled object of specified
-  size approaching at a constant speed, from a specified distance away. The
-  output list object can be used to create a looming animation in
-  \code{\link{looming_animation}}. An object screen diameter is calculated
-  for each frame from the specified starting distance until the hypothetical
-  distance between the attacker and target is zero.
+size approaching at a constant speed, from a specified distance away. The
+output list object can be used to create a looming animation in
+\code{\link{looming_animation}}. An object screen diameter is calculated
+for each frame from the specified starting distance until the hypothetical
+distance between the attacker and target is zero.
 
-  Requires the frame rate at which the subsequent animation will be
-  played, and distance from the screen at which the observing specimen will
-  be located. These details are important in experiments where you want to
-  precisely determine at what time, perceived distance, or perceived velocity
-  of an attack an escape response occurs. Note: if the specimen is closer or
-  further away than the specified screen distance, the animation will be
-  perceived as a different distance and a different velocity.
+Requires the frame rate at which the subsequent animation will be
+played, and distance from the screen at which the observing specimen will
+be located. These details are important in experiments where you want to
+precisely determine at what time, perceived distance, or perceived velocity
+of an attack an escape response occurs. Note: if the specimen is closer or
+further away than the specified screen distance, the animation will be
+perceived as a different distance and a different velocity.
 
-  If you need to create a looming animation simply to elicit a response, and
-  are not concerned with the precise details, see
-  \code{\link{diameter_model}}.
+If you need to create a looming animation simply to elicit a response, and
+are not concerned with the precise details, see
+\code{\link{diameter_model}}.
 
-  Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
-  \code{Hz} or \code{Frames per Second}.
+Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
+\code{Hz} or \code{Frames per Second}.
 }
 \examples{
 loom_model <- constant_speed_model(
                      screen_distance = 20,
-                     anim_frame_rate = 60,
+                     frame_rate = 60,
                      speed = 500,
                      attacker_diameter = 50,
                      start_distance = 1000)
@@ -66,8 +66,8 @@ loom_model <- constant_speed_model(
 }
 \seealso{
 \code{\link{looming_animation}},
-  \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
-  \code{\link{diameter_model}}
+\code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
+\code{\link{diameter_model}}
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}
