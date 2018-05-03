@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 `loomeR` is an R package for creating looming animations for use in behavioural and neurological experiments, and analysing escape responses, for example the Apparent Looming Threshold (**ALT**) of an escape (*Dill 1974, Webb 1982*). Looming animations are used in a range of physiological, psychological and behavioural sciences to simulate an approaching threat and investigate phenomena such as perception, visual latency, escape responses, and neurological functioning. **ALT** is a metric which describes the threshold where a specimen may initiate an escape movement based on a combination of the perceived distance and/or speed of an oncoming threat. 
 
-<span style="color:white"><p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/uqI__qq1CPw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p></span>
+$\color{white}{<p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/uqI__qq1CPw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>}$
 
 ### Installation
 `loomeR` is not yet published on CRAN, but can be installed using the `devtools` package:
