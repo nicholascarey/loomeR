@@ -11,7 +11,7 @@ status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg
 
 # Welcome
 
-`loomeR` is an R package for creating looming animations for use in
+`loomeR` is an `R` package for creating looming animations for use in
 behavioural and neurological experiments, and analysing escape
 responses, for example the Apparent Looming Threshold (**ALT**) of an
 escape (*Dill 1974, Webb 1982*). Looming animations are used in a range
@@ -53,10 +53,10 @@ diameter_model(), constant_speed_model(), variable_speed_model()
 
 The package can create simple or complex animations in three ways:
 
-  - Use of basic inputs for start and end screen diameters, and total
+  - Use of basic inputs: enter start and end screen diameters, and total
     duration.
-  - Use of realistic parameters; the function will determine the correct
-    screen diameters for each animation frame using:
+  - Use of realistic parameters: the function will determine the correct
+    screen diameters for each animation frame using…
       - **Constant speed**: specify a constant speed, size, and starting
         distance of the hypothetical oncoming threat
       - **Variable speed**: provide a profile of variable speeds, plus
@@ -71,15 +71,15 @@ looming_animation()
 To create the animation from the model, `loomeR` requires
 [ffmpeg](http://ffmpeg.org), a free, cross-platform, command-line
 utility for encoding video to be installed on your system. This
-currently works in R on **macOS** and **Windows**. Support for **Linux**
-is planned: please [get in touch](mailto:nicholascarey@gmail.com) if you
-would like to help with testing on Linux systems.
+currently works in `R` on **macOS** and **Windows**. Support for
+**Linux** is planned: please [get in
+touch](mailto:nicholascarey@gmail.com) if you would like to help with
+testing on Linux systems.
 
-Many options are available to customise the animation, such as
-specifying a frame rate, modifying the colour and background, padding
-the video with blank frames to a desired total duration, marking frames
-to assist with identifying when escape responses occur, and more. <br>
-<br>
+Many options are available to customise the animation; specifying a
+frame rate, modifying the colour and background, padding the video with
+blank frames to a desired total duration, marking frames to assist with
+identifying when escape responses occur, and more. <br> <br>
 
 #### 3\. Analyse escape responses
 
