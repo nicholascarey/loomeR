@@ -6,6 +6,6 @@
 \alias{loomeR-package}
 \title{loomeR: Create a looming animation}
 \description{
-Create a looming animation for use in behavioural and neurological experiments
+Create a looming animation for use in behavioural and neurological experiments.
 }
 \keyword{internal}
