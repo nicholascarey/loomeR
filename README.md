@@ -45,7 +45,7 @@ devtools::install_github("nicholascarey/loomeR")
 
 Using the package is straightforward:
 
-##### 1\. Create an animation model
+#### 1\. Create an animation model
 
 ``` r
 diameter_model(), constant_speed_model(), variable_speed_model()
@@ -62,7 +62,7 @@ The package can create simple or complex animations in three ways:
       - **Variable speed**: provide a profile of variable speeds, plus
         size and starting distance of the oncoming threat <br> <br>
 
-##### 2\. Create an animation from the model
+#### 2\. Create an animation from the model
 
 ``` r
 looming_animation()
@@ -78,9 +78,10 @@ would like to help with testing on Linux systems.
 Many options are available to customise the animation, such as
 specifying a frame rate, modifying the colour and background, padding
 the video with blank frames to a desired total duration, marking frames
-to assist with identifying when escape responses occur, and more.
+to assist with identifying when escape responses occur, and more. <br>
+<br>
 
-##### 3\. Analyse escape responses
+#### 3\. Analyse escape responses
 
 ``` r
 get_alt()
