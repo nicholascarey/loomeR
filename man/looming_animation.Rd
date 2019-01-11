@@ -4,13 +4,15 @@
 \alias{looming_animation}
 \title{Create a looming animation}
 \usage{
-looming_animation(x, correction = 0.0285, width = 1280, height = 1024,
-  fill = "black", background = "white", pad = NULL, pad_blank = FALSE,
-  dots = FALSE, dots_interval = 20, dots_colour = "grey",
-  dots_position = "br", dots_size = 0.005, frame_number = FALSE,
-  frame_number_colour = "grey", frame_number_position = "tr",
-  frame_number_size = 2, frame_number_rotation = 0, start_marker = TRUE,
-  start_marker_colour = "black", start_marker_size = 2, save_data = FALSE)
+looming_animation(x, correction = 0.0285, width = 1280,
+  height = 1024, fill = "black", background = "white", pad = NULL,
+  pad_blank = FALSE, dots = FALSE, dots_interval = 20,
+  dots_colour = "grey", dots_position = "br", dots_size = 0.005,
+  frame_number = FALSE, frame_number_colour = "grey",
+  frame_number_position = "tr", frame_number_size = 2,
+  frame_number_rotation = 0, start_marker = TRUE,
+  start_marker_colour = "black", start_marker_size = 2,
+  save_data = FALSE)
 }
 \arguments{
 \item{x}{list. A list object of class \code{constant_speed_model},

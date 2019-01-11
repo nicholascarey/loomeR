@@ -3,7 +3,6 @@
 %   R/looming_animation_calib.R
 \name{os}
 \alias{os}
-\alias{os}
 \title{Check operating system}
 \usage{
 os()
