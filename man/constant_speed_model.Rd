@@ -4,8 +4,8 @@
 \alias{constant_speed_model}
 \title{Constant Speed Model}
 \usage{
-constant_speed_model(screen_distance = 20, frame_rate = 60, speed = 500,
-  attacker_diameter = 50, start_distance = 1000)
+constant_speed_model(screen_distance = 20, frame_rate = 60,
+  speed = 500, attacker_diameter = 50, start_distance = 1000)
 }
 \arguments{
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to

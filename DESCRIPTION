@@ -4,11 +4,11 @@ Title: Create a looming animation
 Version: 0.2.0
 Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
-Description: Create a looming animation for use in behavioural and neurological experiments
+Description: Create a looming animation for use in behavioural and neurological experiments.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Imports:
     glue, plotrix
