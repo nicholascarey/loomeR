@@ -57,6 +57,7 @@
 #' @export
 
 constant_speed_model <-
+
   function(
     screen_distance = 20,
     frame_rate = 60,
@@ -67,8 +68,8 @@ constant_speed_model <-
     ## calculate total time of animation
     total_time <- start_distance/speed
 
-    ## get number of frames
-    ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
+    ## get number of frames. Ceiling to round up, otherwise results df will be a
+    ## frame short if total frames ends up a decimal
     total_frames <- ceiling(total_time*frame_rate)
 
     ## calculate distance covered each frame at this speed and frame rate

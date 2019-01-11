@@ -1,7 +1,7 @@
 Package: loomeR
 Type: Package
 Title: Create a looming animation
-Version: 0.2.0
+Version: 0.2.1
 Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
 Description: Create a looming animation for use in behavioural and neurological experiments.
@@ -13,5 +13,5 @@ Roxygen: list(markdown = TRUE)
 Imports:
     glue, plotrix
 Suggests: knitr,
-    rmarkdown, covr
+    rmarkdown, covr, testthat
 VignetteBuilder: knitr
