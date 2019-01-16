@@ -336,6 +336,14 @@ looming_animation <-
     if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
       stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'")
 
+    ## class detection message - assists with testing
+    if(class(x) == "constant_speed_model"){
+      message("constant_speed_model detected.")
+    } else if(class(x) == "variable_speed_model"){
+      message("variable_speed_model detected.")
+    } else if(class(x) == "diameter_model"){
+      message("diameter_model detected.")}
+
     ## check for odd numbered screen resolutions, and if so add a pixel
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
