@@ -288,6 +288,9 @@
 #'
 #' @importFrom glue glue
 #' @importFrom plotrix draw.circle
+#' @importFrom grDevices dev.off png
+#' @importFrom graphics arrows par plot.new rect text
+#' @importFrom utils write.csv
 #'
 #' @export
 
@@ -599,58 +602,3 @@ looming_animation <-
                  If so, these should be listed above'))
   }
 
-
-#' Get left n characters
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-left = function (string,n){
-  substr(string,1,n)
-}
-
-#' Get right n characters
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-right = function (string, n){
-  substr(string, nchar(string)-(n-1), nchar(string))
-}
-
-
-
-#' Check operating system
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-os <- function() {
-  if (.Platform$OS.type == "windows")
-    "win" else if (Sys.info()["sysname"] == "Darwin")
-      "mac" else if (.Platform$OS.type == "unix")
-        "unix" else stop("Unknown OS")
-}
-
-
-#' Display image generation progress bar
-#'
-#' @details
-#' Displays an updating progress bar within the frame image generation loop. Modified from
-#' \url{https://github.com/klmr/rcane/blob/master/system.R}.
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-image_progress <- function (x, max = 100) {
-  percent <- x / max * 100
-  cat(sprintf('\r[%-50s] %d%% Generating image files',
-              paste(rep('=', percent / 2), collapse = ''),
-              floor(percent)))
-  if (x == max)
-    cat('\n')
-}

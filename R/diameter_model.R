@@ -129,20 +129,4 @@ diameter_model <-
 
 
 
-#' Remove last n values from a vector
-#'
-#' @details
-#' Removes the specified nunmber of values/entries from the end of a vector
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-vect_rm_end <- function (x, n = 1) {
 
-  if(n >= length(x))
-    stop("Length of value is greater than or equal to length of vector")
-
-  x <- x[1:(length(x)-n)]
-  return(x)
-}

@@ -116,6 +116,8 @@
 #'
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
+#' @importFrom utils tail
+#'
 #' @export
 
 get_alt <-
@@ -406,56 +408,5 @@ get_alt <-
     return(output)
 
   } #END
-
-
-# Internal Functions ------------------------------------------------------
-
-#' Print get_alt result
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-print.get_alt <- function(x, ...) {
-  cat("\n")
-  cat("Extraction complete. \n \n")
-  cat("Using inputs: \n")
-  cat(glue::glue("Response Frame:            ",
-                 {x$response_frame}))
-  cat("\n")
-  cat(glue::glue("Response Frame Adjusted:   ",
-                 {x$response_frame_adjusted}))
-  cat("\n")
-  cat(glue::glue("Latency Applied:           ",
-                 {x$latency_applied},
-                 "s"))
-  cat("\n")
-  cat(glue::glue("New Screen Distance:       ",
-                 {x$inputs$new_distance},
-                 "cm"))
-  cat(" \n \n")
-  cat("The Apparent Looming Threshold is: \n")
-  cat(glue::glue("ALT: ",
-                 {round(x$alt, 4)},
-                 " radians/sec"))
-}
-
-
-#' Convert radians to degrees
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-deg2rad <- function(deg) {(deg * pi) / (180)}
-
-#' Convert degrees to radians
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-rad2deg <- function(rad){(rad * 180) / (pi)}
-
 
 

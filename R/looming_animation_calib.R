@@ -235,18 +235,3 @@ looming_animation_calib <-
 
   }
 
-
-
-#' Check operating system
-#'
-#' This is an internal function.
-#'
-#' @keywords internal
-#' @export
-
-os <- function() {
-  if (.Platform$OS.type == "windows")
-    "win" else if (Sys.info()["sysname"] == "Darwin")
-      "mac" else if (.Platform$OS.type == "unix")
-        "unix" else stop("Unknown OS")
-}
