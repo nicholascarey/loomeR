@@ -104,6 +104,9 @@ looming_animation_calib <-
            height = 1080,
            ruler = 10){
 
+    ## Message to help with testing
+    message("Creating calibration animation...")
+
     ## check for odd numbered screen resolutions, and if so add a pixel
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
@@ -189,6 +192,10 @@ looming_animation_calib <-
 
       ## clear plot before next loop
       dev.off()
+
+      ## Generate progress message
+      perc_done <- round(i/total_frames*100)
+      image_progress(perc_done)
 
     } # end loop
 

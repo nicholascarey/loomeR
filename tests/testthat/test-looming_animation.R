@@ -30,3 +30,10 @@ mod <- constant_speed_model(frame_rate = 30,
 
 expect_message(looming_animation(mod), "constant_speed_model detected.")
 
+
+
+# REMOVE RESULTING ANIMATION FILE -----------------------------------------
+
+## This will only work if testing on a Mac
+system("rm animation.mp4")
+
