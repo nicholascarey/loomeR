@@ -28,7 +28,10 @@ mod <- constant_speed_model(frame_rate = 30,
                             speed = 500,
                             start_distance = 500)
 
-expect_message(looming_animation(mod), "constant_speed_model detected.")
+expect_message(looming_animation(mod,
+                                 frame_number = TRUE,
+                                 frame_number_position = "bl"),
+               "constant_speed_model detected.")
 
 
 
@@ -58,17 +61,4 @@ system("rm ANIM_from_x_30fps_1280x1024.csv")
 
 
 # test --------------------------------------------------------------------
-
-## test system command runs
-mod <- diameter_model(start_diameter = 10,
-                      end_diameter = 9.5,
-                      duration = 1,
-                      frame_rate = 30)
-
-expect_message(looming_animation(mod,
-                          frame_number = TRUE,
-                          frame_number_position = "bl"),
-               "Encoding movie...")
-
-
 
