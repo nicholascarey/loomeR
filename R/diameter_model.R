@@ -95,8 +95,8 @@ diameter_model <-
     ## add screen diameter of model for each frame
     results_df$diam_on_screen <- 1/results_df$distance
 
-    ## remove distance column
-    results_df <- results_df[,c(1,2,4)]
+    ## Change distance column to NAs
+    results_df$distance <- NA
     }
 
 
@@ -106,6 +106,7 @@ diameter_model <-
   diam_per_frame <- (end_diameter - start_diameter)/(total_frames-1)
   results_df <- data.frame(frame = seq(1,total_frames,1))
   results_df$time <- results_df$frame/frame_rate
+  results_df$distance <- NA
   ## add diameter change to start distance for each row
   results_df$diam_on_screen <-
     apply(results_df, 1, function(x) start_diameter + (x[1]-1)*diam_per_frame)
