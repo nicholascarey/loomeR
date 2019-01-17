@@ -23,5 +23,13 @@ mod <- diameter_model(duration = d,
 expect_equal(nrow(mod$model),
              ceiling(mod$duration*mod$frame_rate))
 
+# test --------------------------------------------------------------------
+
+## check it stops if expansion operator not set correctly
+expect_error(diameter_model(expansion = "diam_mod"), "expansion operator not set correctly: must be 'constant_speed' or 'constant_diameter'")
 
 
+# test --------------------------------------------------------------------
+
+## check it works with expansion = "constant_diameter"
+expect_output(str(diameter_model(expansion = "constant_diameter")), "List of 6")

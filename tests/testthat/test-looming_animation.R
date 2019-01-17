@@ -32,8 +32,25 @@ expect_message(looming_animation(mod), "constant_speed_model detected.")
 
 
 
-# REMOVE RESULTING ANIMATION FILE -----------------------------------------
+# REMOVE RESULTING ANIMATION FILE
 
 ## This will only work if testing on a Mac
 system("rm animation.mp4")
 
+
+
+# test --------------------------------------------------------------------
+
+## test exports data
+mod <- diameter_model(start_diameter = 10,
+                      end_diameter = 9.5,
+                      duration = 1,
+                      frame_rate = 30)
+loomeR::looming_animation(mod,
+                          save_data = TRUE)
+
+test_path("ANIM_from_x_30fps_1280x1024.csv")
+
+# REMOVE RESULTING ANIMATION FILE
+## This will only work if testing on a Mac
+system("rm ANIM_from_x_30fps_1280x1024.csv")
