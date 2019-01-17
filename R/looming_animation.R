@@ -571,6 +571,7 @@ looming_animation <-
     ## build system/ffmpeg command on OS specific basis
     ## For Mac
     if(os() == "mac"){
+      message("Encoding movie...")
       instruction_string <-
         glue::glue(
           ## rm loom_img_*.png'
@@ -578,6 +579,8 @@ looming_animation <-
           ## this seems to work ok
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4; find . -maxdepth 1 -name "loom_img_*.png" -delete'
         )
+
+      message("Deleting image files...")
       ## run the command
       system(instruction_string)
     }
