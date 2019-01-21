@@ -80,6 +80,20 @@ expect_error(looming_animation(x, pad = 1),
 expect_error(looming_animation(x, pad = 1, pad_blank = TRUE),
                 NA)
 
+# test --------------------------------------------------------------------
+
+## test dots
+
+expect_error(looming_animation(x, dots = TRUE),
+                NA)
+
+# test --------------------------------------------------------------------
+
+## test null correction
+
+expect_error(looming_animation(x, correction = NULL),
+                NA)
+
 
 # test --------------------------------------------------------------------
 
