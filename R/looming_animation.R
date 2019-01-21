@@ -348,9 +348,13 @@ looming_animation <-
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
       width <- width +1
+      message(glue::glue("Screen `width` cannot be an odd number."))
+      message(glue::glue("Screen `width` modified to {width}."))
     }
     if(height %% 2 != 0){
       height <- height +1
+      message(glue::glue("Screen `height` cannot be an odd number."))
+      message(glue::glue("Screen `height` modified to {height}"))
     }
 
     ## extract data and parameters
@@ -368,14 +372,14 @@ looming_animation <-
               # If pad_blank is not TRUE
               # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
               if(!isTRUE(pad_blank)){
-                temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], pad*frame_rate), cs_model$diam_on_screen)
+                temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], ceiling(pad*frame_rate)), cs_model$diam_on_screen)
               # otherwise set the diameter to Zero for those frames to achieve a blank frame
               } else {
-                temp_diam_on_screen <- c(rep(0, pad*frame_rate), cs_model$diam_on_screen)
+                temp_diam_on_screen <- c(rep(0, ceiling(pad*frame_rate)), cs_model$diam_on_screen)
               }
 
 
-              temp_distance <- c(rep(cs_model$distance[1], pad*frame_rate), cs_model$distance)
+              temp_distance <- c(rep(cs_model$distance[1], ceiling(pad*frame_rate)), cs_model$distance)
               temp_frame <- seq(1, length(temp_diam_on_screen), 1)
               temp_time <- temp_frame/frame_rate
 
@@ -392,7 +396,7 @@ looming_animation <-
               cs_model <- padded_model
 
               ## check padded successfully
-              if(nrow(cs_model) != total_frames_anim + pad*frame_rate){
+              if(nrow(cs_model) != total_frames_anim + ceiling(pad*frame_rate)){
                 stop("Something has gone wrong with padding. ")
               }
 

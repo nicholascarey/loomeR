@@ -70,9 +70,41 @@ x <- loomeR::diameter_model(start_diameter = 10,
                             frame_rate = 29.97)
 
 expect_error(looming_animation(x, pad = 1),
-                "Something has gone wrong with padding. ") == FALSE
+                NA)
 
 
+# test --------------------------------------------------------------------
+
+## test padding blank works
+
+expect_error(looming_animation(x, pad = 1, pad_blank = TRUE),
+                NA)
+
+
+# test --------------------------------------------------------------------
+
+## test odd numbered resolution is modified - width
+
+expect_message(looming_animation(x,
+                                 width = 1279,
+                                 height = 1023),
+                "Screen `width` cannot be an odd number.")
+
+
+
+# test --------------------------------------------------------------------
+
+## test odd numbered resolution is modified - height
+
+expect_message(looming_animation(x,
+                                 width = 1279,
+                                 height = 1023),
+                "Screen `height` cannot be an odd number.")
+
+
+
+
+# Skip on travis tests ----------------------------------------------------
 
 # test --------------------------------------------------------------------
 
