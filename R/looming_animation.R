@@ -390,6 +390,12 @@ looming_animation <-
               names(padded_model) <- names(cs_model)
 
               cs_model <- padded_model
+
+              ## check padded successfully
+              if(nrow(cs_model) != total_frames_anim + pad*frame_rate){
+                stop("Something has gone wrong with padding. ")
+              }
+
               }
 
 
