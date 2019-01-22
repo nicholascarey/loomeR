@@ -84,7 +84,7 @@ expect_error(looming_animation(x, pad = 1, pad_blank = TRUE),
 
 ## test dots
 
-expect_error(looming_animation(x, dots = TRUE),
+expect_error(looming_animation(x, dots = TRUE, dots_position = "tl"),
                 NA)
 
 # test --------------------------------------------------------------------
