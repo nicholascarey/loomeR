@@ -111,9 +111,13 @@ looming_animation_calib <-
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
       width <- width +1
+      message(glue::glue("Screen `width` cannot be an odd number."))
+      message(glue::glue("Screen `width` modified to {width}."))
     }
     if(height %% 2 != 0){
       height <- height +1
+      message(glue::glue("Screen `height` cannot be an odd number."))
+      message(glue::glue("Screen `height` modified to {height}"))
     }
 
     ## set parameters
@@ -217,6 +221,7 @@ looming_animation_calib <-
     ## build system/ffmpeg command on OS specific basis
     ## For Mac
     if(os() == "mac"){
+      message("Encoding movie...")
       instruction_string <-
         glue::glue(
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%02d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation_calib.mp4; rm loom_img_*.png'
