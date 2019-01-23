@@ -2,11 +2,11 @@
 % Please edit documentation in R/internal_fns.R
 \name{rad2deg}
 \alias{rad2deg}
-\title{Convert degrees to radians}
+\title{Convert radians to degrees}
 \usage{
 rad2deg(rad)
 }
 \description{
-Convert degrees to radians
+Convert radians to degrees
 }
 \keyword{internal}

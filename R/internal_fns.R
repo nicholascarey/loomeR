@@ -28,36 +28,11 @@ print.get_alt <- function(x, ...) {
                  " radians/sec"))
 }
 
-
 #' Convert radians to degrees
 #'
 #' @keywords internal
 #' @export
-deg2rad <- function(deg) {(deg * pi) / (180)}
-
-
-#' Convert degrees to radians
-#'
-#' @keywords internal
-#' @export
 rad2deg <- function(rad){(rad * 180) / (pi)}
-
-
-#' Remove last n values from a vector
-#'
-#' @details
-#' Removes the specified nunmber of values/entries from the end of a vector
-#'
-#' @keywords internal
-#' @export
-vect_rm_end <- function (x, n = 1) {
-
-  if(n >= length(x))
-    stop("Length of value is greater than or equal to length of vector")
-
-  x <- x[1:(length(x)-n)]
-  return(x)
-}
 
 
 #' Get left n characters
