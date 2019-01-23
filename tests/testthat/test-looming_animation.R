@@ -149,6 +149,7 @@ expect_message(looming_animation(mod,
                "Encoding movie...")
 
 
+skip_on_travis()
 # REMOVE RESULTING FILES --------------------------------------------------
 
 ## This will only work if testing on a Mac
