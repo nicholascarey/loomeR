@@ -172,8 +172,34 @@ appreciated:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
 
+Or run this code:
+
+``` r
+citation("loomeR")
+#> 
+#> To cite package 'loomeR' in publications use:
+#> 
+#>   Nicholas Carey (2019). loomeR: Looming animations for use in
+#>   behavioural and neurological experiments.
+#>   https://github.com/nicholascarey/loomeR,
+#>   https://doi.org/10.5281/zenodo.1212570.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {loomeR: Looming animations for use in behavioural and neurological experiments},
+#>     author = {Nicholas Carey},
+#>     year = {2019},
+#>     note = {https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570},
+#>   }
+#> 
+#> ATTENTION: This citation information has been auto-generated from
+#> the package DESCRIPTION file and may need manual editing, see
+#> 'help("citation")'.
+```
+
 If you don’t have the space to cite it, not a problem, but please do
-[let me know](mailto:nicholascarey@gmail.com) if you use it in your
+**[let me know](mailto:nicholascarey@gmail.com)** if you use it in your
 experiments. I would love to keep an updated list of studies which have
 made use of it, and I can help publicise your paper by tweeting about
 it\!
