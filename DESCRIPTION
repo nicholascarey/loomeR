@@ -1,12 +1,15 @@
 Package: loomeR
 Type: Package
-Title: Create a looming animation
+Title: Looming animations for use in behavioural and neurological experiments
+Date: 2019-01-11
+Year: 2019
 Version: 0.2.1
 Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
 Description: Create a looming animation for use in behavioural and neurological experiments.
 License: GPL-3
 Encoding: UTF-8
+URL: https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570
 LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

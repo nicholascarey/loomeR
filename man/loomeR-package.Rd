@@ -4,8 +4,16 @@
 \name{loomeR-package}
 \alias{loomeR}
 \alias{loomeR-package}
-\title{loomeR: Create a looming animation}
+\title{loomeR: Looming animations for use in behavioural and neurological experiments}
 \description{
 Create a looming animation for use in behavioural and neurological experiments.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/nicholascarey/loomeR}
+  \item \url{https://doi.org/10.5281/zenodo.1212570}
+}
+
 }
 \keyword{internal}
