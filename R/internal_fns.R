@@ -57,9 +57,9 @@ right = function (string, n){
 #' @keywords internal
 #' @export
 os <- function() {
-  if (.Platform$OS.type == "windows")
-    "mac" else if (.Platform$OS.type == "unix")
-      "win" else if (Sys.info()["sysname"] == "Darwin")
+  if (Sys.info()["sysname"] == "Darwin")
+    "mac" else if (.Platform$OS.type == "windows")
+    "win" else if (.Platform$OS.type == "unix")
           "unix" else stop("Unknown OS")
 }
 
