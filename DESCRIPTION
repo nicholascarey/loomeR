@@ -10,6 +10,7 @@ Description: Create a looming animation for use in behavioural and neurological 
 License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570
+BugReports: https://github.com/nicholascarey/loomeR/issues
 LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
