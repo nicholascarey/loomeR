@@ -122,7 +122,7 @@ expect_message(looming_animation(x,
 # test --------------------------------------------------------------------
 
 ## test huge padding
-
+skip_on_cran()
 x <- loomeR::diameter_model(start_diameter = 10,
                             end_diameter = 9.5,
                             duration = 90,
