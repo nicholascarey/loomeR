@@ -6,7 +6,7 @@
 \alias{loomeR-package}
 \title{loomeR: Looming animations for use in behavioural and neurological experiments}
 \description{
-Create a looming animation for use in behavioural and neurological experiments.
+Create and analyse looming animations for use in behavioural and neurological experiments.
 }
 \seealso{
 Useful links:
