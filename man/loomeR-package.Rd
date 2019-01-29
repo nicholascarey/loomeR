@@ -6,13 +6,14 @@
 \alias{loomeR-package}
 \title{loomeR: Looming animations for use in behavioural and neurological experiments}
 \description{
-Create a looming animation for use in behavioural and neurological experiments.
+Create and analyse looming animations for use in behavioural and neurological experiments.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/nicholascarey/loomeR}
   \item \url{https://doi.org/10.5281/zenodo.1212570}
+  \item Report bugs at \url{https://github.com/nicholascarey/loomeR/issues}
 }
 
 }

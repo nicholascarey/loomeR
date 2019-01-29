@@ -7,7 +7,6 @@
 print.get_alt <- function(x, ...) {
   cat("\n")
   cat("Extraction complete. \n \n")
-  cat("Using inputs: \n")
   cat(glue::glue("Response Frame:            ",
                  {x$response_frame}))
   cat("\n")
@@ -21,7 +20,7 @@ print.get_alt <- function(x, ...) {
   cat(glue::glue("New Screen Distance:       ",
                  {x$inputs$new_distance},
                  "cm"))
-  cat(" \n \n")
+  cat(" \n")
   cat("The Apparent Looming Threshold is: \n")
   cat(glue::glue("ALT: ",
                  {round(x$alt, 4)},

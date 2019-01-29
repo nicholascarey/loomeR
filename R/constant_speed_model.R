@@ -101,7 +101,6 @@ constant_speed_model <-
     ## when dividing above.
     #results_df$diam_on_screen[length(results_df$diam_on_screen)] <- 1000
 
-
     ## assemble output list object
     output <- list(
       model = results_df,
