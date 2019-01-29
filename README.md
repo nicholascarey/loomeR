@@ -104,10 +104,10 @@ The included documentation is comprehensive, and a vignette explaining
 how to use the package is in preparation. For a quick evaluation try out
 the following code:
 
+##### 1\. Create a model
+
 ``` r
 library(loomeR) # load the package
-
-# 1. Create a model
 
 # Simple constant speed model
 # (speed in cm/s, frame rate in Hz, all other inputs in cm)
@@ -118,14 +118,28 @@ x <- constant_speed_model(
   speed = 500,             # Speed of the simulated oncoming object
   attacker_diameter = 50,  # Diameter of the simulated oncoming object
   start_distance = 1000)   # Starting distance of the simulated oncoming object
+```
 
+##### 2\. Use the model to create the animation
 
-# 2. Use the model to create the animation
+``` r
 looming_animation(x)
+```
 
-# 3. Extract the ALT 
+##### 3\. Extract the ALT
+
+``` r
 # E.g. from response frame 100, and applying a response latency of 60 milliseconds
 get_alt(x, response_frame = 100, latency = 0.06)
+#> 
+#> Extraction complete. 
+#>  
+#> Response Frame:            100
+#> Response Frame Adjusted:   96
+#> Latency Applied:           0.06s
+#>  
+#> The Apparent Looming Threshold is: 
+#> ALT: 0.5463 radians/sec
 ```
 
 ### Forthcoming and potential features
