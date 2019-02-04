@@ -70,7 +70,7 @@ x <- loomeR::diameter_model(start_diameter = 10,
                             frame_rate = 29.97)
 
 expect_error(looming_animation(x, pad = 1),
-                NA)
+             NA)
 
 
 # test --------------------------------------------------------------------
@@ -78,24 +78,24 @@ expect_error(looming_animation(x, pad = 1),
 ## test padding blank works
 
 expect_error(looming_animation(x, pad = 1, pad_blank = TRUE),
-                NA)
+             NA)
 
 # test --------------------------------------------------------------------
 
 ## test dots
 
 expect_error(looming_animation(x, dots = TRUE, dots_position = "tl"),
-                NA)
+             NA)
 
 expect_error(looming_animation(x, dots = TRUE, dots_position = "br"),
-                NA)
+             NA)
 
 # test --------------------------------------------------------------------
 
 ## test null correction
 
 expect_error(looming_animation(x, correction = NULL),
-                NA)
+             NA)
 
 
 # test --------------------------------------------------------------------
@@ -105,7 +105,7 @@ expect_error(looming_animation(x, correction = NULL),
 expect_message(looming_animation(x,
                                  width = 1279,
                                  height = 1023),
-                "Screen `width` cannot be an odd number.")
+               "Screen `width` cannot be an odd number.")
 
 
 
@@ -116,7 +116,7 @@ expect_message(looming_animation(x,
 expect_message(looming_animation(x,
                                  width = 1279,
                                  height = 1023),
-                "Screen `height` cannot be an odd number.")
+               "Screen `height` cannot be an odd number.")
 
 
 # Skip on travis tests ----------------------------------------------------
@@ -125,14 +125,15 @@ expect_message(looming_animation(x,
 
 ## test system command runs
 skip_on_travis()
+skip_on_appveyor()
 mod <- diameter_model(start_diameter = 10,
                       end_diameter = 9.5,
                       duration = 1,
                       frame_rate = 30)
 
 expect_message(looming_animation(mod,
-                          frame_number = TRUE,
-                          frame_number_position = "bl"),
+                                 frame_number = TRUE,
+                                 frame_number_position = "bl"),
                "Encoding movie...")
 
 
