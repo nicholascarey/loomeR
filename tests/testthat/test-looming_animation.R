@@ -119,19 +119,6 @@ expect_message(looming_animation(x,
                 "Screen `height` cannot be an odd number.")
 
 
-# test --------------------------------------------------------------------
-
-## test huge padding
-skip_on_cran()
-x <- loomeR::diameter_model(start_diameter = 10,
-                            end_diameter = 9.5,
-                            duration = 90,
-                            frame_rate = 120)
-
-expect_error(looming_animation(x),
-               NA)
-
-
 # Skip on travis tests ----------------------------------------------------
 
 # test --------------------------------------------------------------------

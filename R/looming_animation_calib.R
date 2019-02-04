@@ -151,9 +151,9 @@ looming_animation_calib <-
 
     ## create image for each frame
     for(i in 1:total_frames){
-      # create a name for each file with leading zeros
-      if (i < 10) {name = paste('loom_img_', '0',i,'.png',sep='')}
-      if (i < 100 && i >= 10) {name = paste('loom_img_',i,'.png', sep='')}
+
+      # create filename with leading zeros up to 2 numerals total
+      name <- paste0("loom_img_", sprintf("%02d", i), ".png")
 
       # make png file
         # res= here is a bit of a hack to scale the text so that it's readable on
