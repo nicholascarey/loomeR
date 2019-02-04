@@ -4,6 +4,8 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR)
 [![Travis build
 status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/nicholascarey/loomeR?branch=master&svg=true)](https://ci.appveyor.com/project/nicholascarey/loomeR)
 [![Coverage
 status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg)](https://codecov.io/github/nicholascarey/loomeR?branch=master)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)

@@ -1,3 +1,4 @@
+^appveyor\.yml$
 ^scratch\.R$
 ^cran-comments\.md$
 ^.*\.Rproj$
