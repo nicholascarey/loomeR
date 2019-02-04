@@ -1,3 +1,8 @@
+^\.git$
+^\.gitignore$
+^\.Rhistory$
+^\.RData$
+^\.DS_Store$
 ^scratch\.R$
 ^cran-comments\.md$
 ^.*\.Rproj$
