@@ -418,12 +418,9 @@ looming_animation <-
 
     ## create image for each frame
     for(i in 1:total_frames){
-      # create a name for each file with leading zeros
-      if (i < 10) {name = paste('loom_img_', '00000',i,'.png',sep='')}
-      if (i < 100 && i >= 10) {name = paste('loom_img_', '0000',i,'.png', sep='')}
-      if (i < 1000 && i >= 100) {name = paste('loom_img_', '000', i,'.png', sep='')}
-      if (i < 10000 && i >= 1000) {name = paste('loom_img_', '00', i,'.png', sep='')}
-      if (i >= 10000) {name = paste('loom_img_', '0', i,'.png', sep='')}
+
+      # create filename with leading zeros up to 6 numerals total
+      name <- paste0("loom_img_", sprintf("%06d", i), ".png")
 
       # make png file
       png(name, width=width, height=height, res=72)
