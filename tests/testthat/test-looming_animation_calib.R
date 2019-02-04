@@ -30,6 +30,7 @@ expect_message(looming_animation_calib(width = 1279,
 
 ## test system command runs
 skip_on_travis()
+skip_on_appveyor()
 expect_message(looming_animation_calib(),
                "Encoding movie...")
 
