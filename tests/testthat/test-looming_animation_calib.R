@@ -10,7 +10,7 @@ expect_message(looming_animation_calib(), "Creating calibration animation...")
 ## test odd numbered resolution is modified - width
 
 expect_message(looming_animation_calib(width = 1279,
-                                 height = 1023),
+                                       height = 1023),
                "Screen `width` cannot be an odd number.")
 
 # test --------------------------------------------------------------------
@@ -18,7 +18,7 @@ expect_message(looming_animation_calib(width = 1279,
 ## test odd numbered resolution is modified - height
 
 expect_message(looming_animation_calib(width = 1279,
-                                 height = 1023),
+                                       height = 1023),
                "Screen `height` cannot be an odd number.")
 
 
