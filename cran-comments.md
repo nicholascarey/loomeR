@@ -8,7 +8,7 @@
 There were no ERRORs or WARNINGs. 
 
 There were 2 NOTEs: 
-(only when CMD Check is run in terminal, none in RStudio)
+(only when CMD Check is run in terminal on binary, none in RStudio project)
 
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘Nicholas Carey <nicholascarey@gmail.com>’
