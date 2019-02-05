@@ -226,6 +226,7 @@ looming_animation_calib <-
         glue::glue(
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%02d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation_calib.mp4; rm loom_img_*.png'
         )
+      message("Deleting image files...")
       ## run the command
       system(instruction_string)
     }
@@ -234,6 +235,7 @@ looming_animation_calib <-
     ## NOTE - command changed to remove deletion instruction at end
     ## For some reason Windows needs to run this separately via the shell() command
     else if(os() == "win"){
+      message("Encoding movie...")
       instruction_string <-
         glue::glue(
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%02d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation_calib.mp4'
@@ -241,6 +243,7 @@ looming_animation_calib <-
       ## run command
       system(instruction_string)
 
+      message("Deleting image files...")
       ## delete png files
       shell("del loom_img_*.png")
     }
