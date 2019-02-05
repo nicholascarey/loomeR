@@ -10,6 +10,7 @@ status](https://ci.appveyor.com/api/projects/status/github/nicholascarey/loomeR?
 status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg)](https://codecov.io/github/nicholascarey/loomeR?branch=master)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
+[![HitCount](http://hits.dwyl.io/nicholascarey/loomeR.svg)](http://hits.dwyl.io/nicholascarey/loomeR)
 
 # Welcome
 
@@ -195,15 +196,15 @@ citation("loomeR")
 #> 
 #> To cite package 'loomeR' in publications use:
 #> 
-#>   Nicholas Carey (2019). loomeR: Looming animations for use in
-#>   behavioural and neurological experiments.
+#>   Nicholas Carey (2019). loomeR: Looming Animations for Use in
+#>   Behavioural and Neurological Experiments.
 #>   https://github.com/nicholascarey/loomeR,
 #>   https://doi.org/10.5281/zenodo.1212570.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {loomeR: Looming animations for use in behavioural and neurological experiments},
+#>     title = {loomeR: Looming Animations for Use in Behavioural and Neurological Experiments},
 #>     author = {Nicholas Carey},
 #>     year = {2019},
 #>     note = {https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570},
