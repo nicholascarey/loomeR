@@ -4,7 +4,7 @@
 \name{loomeR-package}
 \alias{loomeR}
 \alias{loomeR-package}
-\title{loomeR: Looming animations for use in behavioural and neurological experiments}
+\title{loomeR: Looming Animations for Use in Behavioural and Neurological Experiments}
 \description{
 Create and analyse looming animations for use in behavioural and neurological experiments.
 }
