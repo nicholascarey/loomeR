@@ -23,8 +23,7 @@ approaching threat and investigate phenomena such as perception, visual
 latency, escape responses, and neurological functioning. **ALT** is a
 metric which describes the threshold where a specimen may initiate an
 escape movement based on a combination of the perceived distance and/or
-speed of an oncoming
-threat.
+speed of an oncoming threat.
 
 <p align="center">
 
@@ -33,6 +32,10 @@ threat.
 </iframe>
 
 </p>
+
+See the
+[Reference](https://nicholascarey.github.io/loomeR/reference/index.html)
+page to view the detailed Help file for each function.
 
 ### Installation
 
@@ -103,9 +106,10 @@ lag in response time) can also be applied. <br> <br>
 
 ### Example code
 
-The included documentation is comprehensive, and a vignette explaining
-how to use the package is in preparation. For a quick evaluation try out
-the following code:
+The included
+[documentation](https://nicholascarey.github.io/loomeR/reference/index.html)
+is comprehensive, and a vignette explaining how to use the package is in
+preparation. For a quick evaluation try out the following code:
 
 ##### 1\. Create a model
 
@@ -147,20 +151,20 @@ get_alt(x, response_frame = 100, latency = 0.06)
 
 ### Forthcoming and potential features
 
-  - \[X\] Function to extract model parameters at a particular frame,
+  - [x] Function to extract model parameters at a particular frame,
     optionally apply a latency correction, and correct the perceived
     speed and distance for a different viewing distance. **DONE** - see
     `get_alt`
-  - \[ \] Linux support
-  - \[ \] Add a receding option for animations (possibly works by
-    setting speed as a negative, or start/end diameters the other way
-    round, but this has not been tested)
-  - \[ \] Enhancements (e.g. quicker padding method) and alternative to
+  - [ ] Linux support
+  - [ ] Add a receding option for animations (possibly works by setting
+    speed as a negative, or start/end diameters the other way round, but
+    this has not been tested)
+  - [ ] Enhancements (e.g. quicker padding method) and alternative to
     `ffmpeg`
-  - \[ \] Option to export images only, and not convert them
-  - \[ \] Option to subsample or interpolate variable speed profiles to
+  - [ ] Option to export images only, and not convert them
+  - [ ] Option to subsample or interpolate variable speed profiles to
     match a desired frame rate
-  - \[ \] Use of custom shapes (please [contact
+  - [ ] Use of custom shapes (please [contact
     me](mailto:nicholascarey@gmail.com) if you know of actual
     applications for this… it would be a *lot* of work)
 
@@ -184,8 +188,7 @@ Working with the following people inspired the creation of this package:
 ### Cite
 
 If you use `loomeR` in your work, a citation using this zenodo DOI would
-be much
-appreciated:
+be much appreciated:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
 

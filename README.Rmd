@@ -32,6 +32,8 @@ knitr::opts_chunk$set(
 
 </p>
 
+See the [Reference](https://nicholascarey.github.io/loomeR/reference/index.html) page to view the detailed Help file for each function. 
+
 ### Installation
 `loomeR` is not yet published on CRAN, but can be installed using the `devtools` package:
 
@@ -76,7 +78,7 @@ This function calculates the viewing angle, alpha (**&alpha;**), for each frame 
 
 ### Example code
 
-The included documentation is comprehensive, and a vignette explaining how to use the package is in preparation. For a quick evaluation try out the following code:
+The included [documentation](https://nicholascarey.github.io/loomeR/reference/index.html) is comprehensive, and a vignette explaining how to use the package is in preparation. For a quick evaluation try out the following code:
 
 ##### 1. Create a model
 
