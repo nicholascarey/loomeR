@@ -17,9 +17,9 @@ expect_is(model, "constant_speed_model")
 mod <- constant_speed_model()
 
 # test specific values for default inputs
-expect_equal(nrow(mod$model), 120)
+expect_equal(nrow(mod$model), 121)
 expect_equal(round(mod$model$distance[120], 2), 8.33)
-expect_equal(mod$model$time[120], 2)
+expect_equal(mod$model$time[121], 2)
 
 
 
