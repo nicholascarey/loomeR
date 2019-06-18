@@ -81,6 +81,50 @@ image_progress <- function (x, max = 100) {
 }
 
 
+#' Calculate alpha in radians
+#'
+#' This is an internal function.
+#'
+#' @keywords internal
+#' @export
+calc_alpha <- function(diameter, distance){
+  output <- 2*(atan((diameter/2)/distance))
+  return(output)
+}
+
+#' Calculate da/dt in radians
+#'
+#' This is an internal function.
+#'
+#' @keywords internal
+#' @export
+calc_dadt <- function(speed, diameter, distance){
+  output <- 4*(speed*diameter)/((4*distance^2)+(diameter^2))
+  return(output)
+}
+
+
+#' Calculates screen diameter
+#'
+#' alpha = alpha angles
+#' screen_distance = distance simulation will be viewed at
+#'
+#' @keywords internal
+#' @export
+calc_screen_diam <- function(alpha, screen_distance){
+  ## add diam_on_screen column
+  diam_on_screen <- 2 * screen_distance * (tan(alpha / 2))
+  ## Round to 2 decimal places (1/10th of a mm)
+  diam_on_screen <- sapply(diam_on_screen, function(z) round(z, 2))
+  ## Convert any diameter over 500cm to 500cm, which can't be displayed on screen anyway.
+  ## (deals with values on last frames, where diam can be approaching infinity)
+  diam_on_screen <- sapply(diam_on_screen, function(z) ifelse(z > 500, z <- 500, z))
+  return(diam_on_screen)
+}
+
+
+
+
 ## Leaving the below for now. Getting Windows commands to run is a pain.
 ## Might need to look into admin v non-admin user issues
 #' #' Check if ffmpeg is installed
