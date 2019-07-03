@@ -77,13 +77,13 @@ constant_speed_model <-
 
     ## build up data frame
     ## list of frames
-    results_df <- data.frame(frame = seq(0,total_frames,1))
+    results_df <- data.frame(frame = seq(1,total_frames,1))
 
     ## add time
     results_df$time <- results_df$frame/frame_rate
 
     ## add hypothetical predator distance
-    results_df$distance <- start_distance-((results_df$frame) * distance_per_frame)
+    results_df$distance <- round(start_distance-((results_df$frame) * distance_per_frame), 2)
 
     ## Add alpha and da/dt
     results_df$alpha <- calc_alpha(attacker_diameter, results_df$distance)

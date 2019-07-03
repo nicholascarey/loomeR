@@ -89,8 +89,12 @@ image_progress <- function (x, max = 100) {
 #' @export
 calc_alpha <- function(diameter, distance){
   output <- 2*(atan((diameter/2)/distance))
+  ## make positive
+  ## Sometimes 0 is returned as -3.14, sometimes not. No idea why...
+  output <- abs(output)
   return(output)
 }
+
 
 #' Calculate da/dt in radians
 #'
@@ -118,7 +122,8 @@ calc_screen_diam <- function(alpha, screen_distance){
   diam_on_screen <- sapply(diam_on_screen, function(z) round(z, 2))
   ## Convert any diameter over 500cm to 500cm, which can't be displayed on screen anyway.
   ## (deals with values on last frames, where diam can be approaching infinity)
-  diam_on_screen <- sapply(diam_on_screen, function(z) ifelse(z > 500, z <- 500, z))
+  ## (need to use abs because sometimes they are approaching negative infinity)
+  diam_on_screen <- sapply(diam_on_screen, function(z) ifelse(abs(z) > 500, z <- 500, z))
   return(diam_on_screen)
 }
 
