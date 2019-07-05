@@ -16,5 +16,5 @@ Roxygen: list(markdown = TRUE)
 Imports:
     glue, plotrix
 Suggests: knitr,
-    rmarkdown, covr, testthat
+    rmarkdown, testthat
 VignetteBuilder: knitr

@@ -382,12 +382,16 @@ looming_animation <-
               temp_distance <- c(rep(cs_model$distance[1], ceiling(pad*frame_rate)), cs_model$distance)
               temp_frame <- seq(1, length(temp_diam_on_screen), 1)
               temp_time <- temp_frame/frame_rate
+              temp_alpha <- c(rep(cs_model$alpha[1], ceiling(pad*frame_rate)), cs_model$alpha)
+              temp_dadt <- c(rep(cs_model$dadt[1], ceiling(pad*frame_rate)), cs_model$dadt)
 
               ## make new padded model
               padded_model <- data.frame(
                 temp_frame,
                 temp_time,
                 temp_distance,
+                temp_alpha,
+                temp_dadt,
                 temp_diam_on_screen
               )
 
