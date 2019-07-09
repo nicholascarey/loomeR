@@ -120,10 +120,10 @@ calc_screen_diam <- function(alpha, screen_distance){
   diam_on_screen <- 2 * screen_distance * (tan(alpha / 2))
   ## Round to 2 decimal places (1/10th of a mm)
   diam_on_screen <- sapply(diam_on_screen, function(z) round(z, 2))
-  ## Convert any diameter over 500cm to 500cm, which can't be displayed on screen anyway.
+  ## Convert any diameter over 1000cm to 1000cm, which can't be displayed on screen anyway.
   ## (deals with values on last frames, where diam can be approaching infinity)
   ## (need to use abs because sometimes they are approaching negative infinity)
-  diam_on_screen <- sapply(diam_on_screen, function(z) ifelse(abs(z) > 500, z <- 500, z))
+  diam_on_screen <- sapply(diam_on_screen, function(z) ifelse(abs(z) > 1000, z <- 1000, z))
   return(diam_on_screen)
 }
 

@@ -13,35 +13,37 @@
 #' @details IMPORTANT: The function works by saving an image file
 #'   (\code{loom_img_0000001.png} etc.) for every frame of the animation to the
 #'   current working directory. It then uses \code{ffmpeg} to encode these
-#'   images to an \code{.mp4} file (saved as \code{animation.mp4}). It then
-#'   deletes (actually deletes, not just sent to the trash) the \code{.png}
-#'   files from the working directory. It will overwrite any \code{.png} or
-#'   \code{.mp4} file it encounters which has an identical name. It's
-#'   recommended you create a new directory (i.e. folder) for each animation,
-#'   and use \code{setwd()} to set this as the current working directory before
-#'   running the function. If you want to save an animation, move it or rename
-#'   it before running the function again or it will get overwritten. It has not
-#'   been rigorously tested on older systems with slow read-write speeds to the
-#'   hard drive, which may cause unknown problems. Please provide feedback if
-#'   you encounter any issues.
+#'   images to an \code{.mp4} file. By default, this is saved as
+#'   \code{animation.mp4}, however the `filename` operator can be used to
+#'   specify a custom file name. It then deletes (actually deletes, not just
+#'   sent to the trash) the \code{.png} files from the working directory. The
+#'   function will overwrite any \code{.png} or \code{.mp4} file it encounters
+#'   which **has an identical name**. It's recommended you create a new
+#'   directory (i.e. folder) for each animation, and use \code{setwd()} to set
+#'   this as the current working directory before running the function. If you
+#'   want to save an animation, move or rename it, or change the `filename`
+#'   input before running the function again or it will get overwritten. It has
+#'   not been rigorously tested on older systems with slow read-write speeds to
+#'   the hard drive, which may cause unknown problems. Please provide feedback
+#'   if you encounter any issues.
 #'
 #'   The function is capable of controlling precise details of how the object is
 #'   displayed on screen. For example the \code{correction} operator ensures the
 #'   hypothesised size in the model is displayed at that exact size on a
 #'   specific display at a specific resolution. These details are important in
 #'   experiments where the time in the animation at which an escape response
-#'   occurs (and hence the perceived distance and/or speed of the attacker) are
-#'   of interest. If you simply want to generate an animation to elicit a
-#'   response and are unconcerned with these details, you can ignore most of
-#'   these options. For simple models where these details are unimportant see
-#'   \code{\link{diameter_model}}.
+#'   occurs (and hence the perceived visual angle (alpha), distance and/or speed
+#'   of the attacker) are of interest. If you simply want to generate an
+#'   animation to elicit a response and are unconcerned with these details, you
+#'   can ignore most of these options. For simple models where these details are
+#'   unimportant see \code{\link{diameter_model}}.
 #'
-#'   Note animations should end with a filled screen, because even small objects
-#'   at viewing distances approaching zero approach infinite perceived size (the
-#'   exception is if you have used \code{\link{diameter_model}} and set the end
-#'   diameter to less than the size of your screen). The final animation may
-#'   have several completely filled frames at the end, depending on the
-#'   \code{attacker_diameter} as set in \code{constant_speed_model} or
+#'   Note animations will typically end with a filled screen, because even small
+#'   objects at viewing distances approaching zero approach infinite perceived
+#'   size (the exception is if you have used \code{\link{diameter_model}} and
+#'   set the end diameter to less than the size of your screen). The final
+#'   animation may have several completely filled frames at the end, depending
+#'   on the \code{attacker_diameter} as set in \code{constant_speed_model} or
 #'   \code{variable_speed_model}. Obviously, an object above a certain diameter
 #'   cannot be displayed on a screen smaller than that diameter. If your
 #'   attacker is larger in diameter than the screen, the final stages of the
@@ -52,17 +54,19 @@
 #'   frames are left in the simulation beyond that point. In most cases, if
 #'   using biologically realistic parameters, this will be only a few frames.
 #'
-#' @section Screen display and playback considerations: The function creates a
-#'   video at the frame rate (\code{frame_rate}) specified in the
+#' @section Screen display and playback considerations: The output video is of a
+#'   circle increasing in diameter over time, as specified in the
+#'   \code{$model$diam_on_screen} component of the original
 #'   \code{\link{constant_speed_model}}, \code{\link{variable_speed_model}} or
-#'   \code{\link{diameter_model}} object. The frame rate should be one the
-#'   playback software handles correctly. Most modern displays have a maximum
-#'   refresh rate of 60 Hz, so videos at frame rates higher than this may not be
-#'   displayed correctly. I recommend using either 30 or 60 frames per second
-#'   (Hz) which is a frame rate most video playback software should honour
-#'   without problems. The output video is of a circle increasing in diameter
-#'   over time, as specified in the \code{$model$diam_on_screen} component of
-#'   the model.
+#'   \code{\link{diameter_model}} object. The function creates a video at the
+#'   \code{frame_rate} specified in this object. The frame rate should be one
+#'   the playback software handles correctly. Most modern displays have a
+#'   maximum refresh rate of 60 Hz, so videos at frame rates higher than this
+#'   may not be displayed correctly. I recommend using either 30 or 60 frames
+#'   per second (Hz) which is a frame rate most video playback software should
+#'   honour without problems. (I would be very interested to hear user
+#'   experiences of using displays which support higher frame rates than this,
+#'   such as recent iPad Pros with 120Hz refresh rates).
 #'
 #'   The display resolution of the screen you will use to play the animation
 #'   should be entered as \code{width} and \code{height}. NOTE - This is the
@@ -98,17 +102,27 @@
 #'   recordings of the experiment:
 #'
 #'   \subsection{Frame numbers}{ The animation frame number can be placed in
-#'   every frame using \code{frame_number = TRUE}. The colour, size, and corner
-#'   of the screen to place the number can be specified (see \code{Arguments}).
-#'   In addition, the orientation can be set with \code{frame_number_rotation}.
-#'   } \subsection{Dots}{ If \code{dots = TRUE}, starting from the first
-#'   animation frame a small dot is placed in the corner of the frame at the
-#'   frame interval specified with \code{dots_interval}. It is also placed in
-#'   the last frame, regardless of the \code{dots_interval}. Again, colour, size
-#'   and corner can be specified (see \code{Arguments}). }
+#'   every frame using \code{frame_number = TRUE}. The colour, size, inset
+#'   distance, and corner of the screen to place the number can be specified
+#'   (see \code{Arguments}), and the orientation can be set with
+#'   \code{frame_number_rotation}. In addition, text can be added to the start
+#'   of the frame numbers using `frame_number_tag`. For example, with
+#'   `frame_number_tag = "A-"`, frame numbers will follow the structure `A-1`,
+#'   `A-2`, etc. This is useful if you create multiple animations and want to
+#'   avoid getting them mixed up, or if you are combining multiple animations
+#'   into one video (see \code{\link{multi_loom}}).}
 #'
-#'   These markers are only inserted into animation frames, not to frames added
-#'   for padding (see next section).
+#'   Frame numbers are only added to animation frames, not to frames added for
+#'   padding (see next section).
+#'
+#'   \subsection{Dots}{ If \code{dots = TRUE}, starting from the first animation
+#'   frame a small dot is placed in the corner of the frame at the frame
+#'   interval specified with \code{dots_interval}. It is also placed in the last
+#'   frame, regardless of the \code{dots_interval}. Again, colour, size, inset
+#'   distance and corner can be specified (see \code{Arguments}). }
+#'
+#'   These markers are only added to animation frames, not to frames added for
+#'   padding (see next section).
 #'
 #'   \subsection{Start Marker}{ By default (\code{start_marker = TRUE}), a
 #'   marker (an "X") is placed at the bottom centre of the screen in the first
@@ -124,16 +138,16 @@
 #'   value is a duration in seconds added to the start of the animation before
 #'   playback. It duplicates the starting frame of the animation the required
 #'   number of times to achieve the padding duration. Essentially, this makes
-#'   the animation static for \code{pad} seconds before it starts to play.
-#'   This means the video may show a static circle until the animation starts.
-#'   If you do not want this, either modify the model parameters until the
-#'   initial diameter is negligible, or use the \code{pad_blank = TRUE} option,
-#'   in which case blank frames will be added rather than duplicating the
-#'   starting frame. Under this option, after \code{pad} seconds of blank
-#'   screen, the animation will suddenly appear and play. Again, how noticable
-#'   this is depends on the model parameters you have used. Note that frame
-#'   tracking markers (i.e. dots or frame numbers) will only be added to
-#'   animation frames, not to frames added for padding.
+#'   the animation static for \code{pad} seconds before it starts to play. This
+#'   means the video may show a static circle until the animation starts. If you
+#'   do not want this, either modify the model parameters until the initial
+#'   diameter is negligible, or use the \code{pad_blank = TRUE} option, in which
+#'   case blank frames will be added rather than duplicating the starting frame.
+#'   Under this option, after \code{pad} seconds of blank screen, the animation
+#'   will suddenly appear and play. Again, how noticable this is depends on the
+#'   model parameters you have used. Note that frame tracking markers (i.e. dots
+#'   or frame numbers) will only be added to animation frames, not to frames
+#'   added for padding.
 #'
 #'   NOTE: Be careful with padding options. Padding the video with extra frames
 #'   will increase the time it takes for the function to run. Finalise your
@@ -144,6 +158,20 @@
 #'   ~1.6GB of hard drive space, and require considerable time to process! Due
 #'   to compression, the resulting video file should however be only a few MB in
 #'   size.
+#'
+#' @section Looping animations: If you want the animation to loop or repeat a
+#'   set number of times, use the `loop =` operator. If set with any value
+#'   greater than the default of `1` this lets you output an additional video of
+#'   the animation looped the set number of times. In this case there will be
+#'   two output videos, the original `animation.mp4` (or whatever is set with
+#'   the `filename` input) plus a looped version appended with `_loop.mp4`. This
+#'   process is extremely fast, since it does not recreate the animation for
+#'   each loop, but just copies the `animation.mp4` file the set number of times
+#'   into a new video file.
+#'
+#'   If you need to create a single video with multiple, *different* animations
+#'   see \code{\link{multi_loom}}.
+#'
 #'
 #' @section Compatibility: The function should work with both Windows and macOS
 #'   (Linux coming soon), however it requires \code{ffmpeg}
@@ -159,6 +187,9 @@
 #'
 #'
 #'
+#'
+#'
+#'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
 #'   \code{setwd()} to the current or desired folder. It has not been
@@ -168,13 +199,15 @@
 #' @section Playback in experiments: For triggered playback of the animation on
 #'   a Mac I recommend Apple Quicktime Player. Playback can be started with the
 #'   spacebar, the arrow keys allow frame-by-frame movement through the video,
-#'   and Cmd-Left Arrow  the video to be rewound to the start. Others
-#'   applications such as VLC have quirks, for example automatically playing the
-#'   video on opening the file, and closing it at the end of the video. However,
-#'   find the application that works best for your purposes. If you need to loop
-#'   the video, many video applications have an option for that. If there is
-#'   demand, an option may be added to create looping videos or gifs. Get in
-#'   touch if that's something you'd like to see implemented.
+#'   and Cmd-Left Arrow makes the video rewind to the start. Other applications
+#'   such as VLC have quirks, for example automatically playing the video on
+#'   opening the file, and closing it at the end of the video. However, find the
+#'   application that works best for your purposes. If you need to loop the
+#'   video, many video applications have an option for that. However, the `loop`
+#'   operator (set with any value greater than 1) also lets you output an
+#'   additional video of the animation looped the set number of times. In this
+#'   case there will be two output videos, the original `animation.mp4` plus a
+#'   looped version called `animation_loop.mp4`.
 #'
 #'   As a check, it's a good idea to ensure the application you use is correctly
 #'   identifying the metadata of the video. This depends on the software, but in
@@ -183,9 +216,8 @@
 #'
 #'   In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format'
 #'   matches 'Current Size', and that both match your entered screen resolution
-#'   \code{width} and \code{height}. Check 'FPS' matches the
-#'   \code{frame_rate} used to create the model in
-#'   \code{\link{constant_speed_model}}.
+#'   \code{width} and \code{height}. Check 'FPS' matches the \code{frame_rate}
+#'   used to create the model in \code{\link{constant_speed_model}}.
 #'
 #'   In VLC, Cmd-I or Window > Media Information, the 'Codec Details' tab. Check
 #'   'Resolution' and 'Display Resolution' both match your entered screen
@@ -199,7 +231,7 @@
 #'
 #' @seealso \code{\link{constant_speed_model}},
 #'   \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
-#'   \code{\link{looming_animation_calib}}
+#'   \code{\link{looming_animation_calib}}, \code{\link{multi_loom}}.
 #'
 #' @param x list. A list object of class \code{constant_speed_model},
 #'   \code{variable_speed_model}, or \code{diameter_model}.
@@ -234,8 +266,13 @@
 #'   \code{tl}, \code{br}, \code{bl}, indicating top right, top left, bottom
 #'   right, or bottom left.
 #' @param dots_size numeric. Size of added dots. Default = 0.005.
+#' @param dots_inset numeric. Distance of dots from edges of frame as proportion
+#'   of entire width/height. Default = 0.05.
 #' @param frame_number logical. Controls if frame numbers are added to animation
 #'   frames (see Details).
+#' @param frame_number_tag string. Text string to be added to the start of the
+#'   frame numbers, e.g. '1-' or 'A-'. Useful for distinguishing between
+#'   different animations.
 #' @param frame_number_colour string. Colour of frame numbers
 #' @param frame_number_position string. Corner in which to display frame
 #'   numbers: \code{tr}, \code{tl}, \code{br}, \code{bl}, indicating top right,
@@ -244,17 +281,27 @@
 #'   default plotting text size. Default = 2.
 #' @param frame_number_rotation numeric. Value in degrees (0-360) to rotate
 #'   frame numbers.
+#' @param frame_number_inset numeric. Distance of frame numbers from edges of
+#'   frame as proportion of entire width/height. Increase this if frame numbers
+#'   start to run off the edge of the screen as they get larger. Default = 0.05.
 #' @param start_marker logical. Controls if a marker ("X") is added to the first
 #'   frame. This is a visual aid: if it disappears it indicates the video is
 #'   playing.
 #' @param start_marker_colour logical. Colour of the \code{start_marker}
 #' @param start_marker_size logical. Size of the \code{start_marker} as
 #'   proportion of default plotting text size. Default = 2.
+#' @param loop integer. Default = 1. This sets the number of times to repeat the
+#'   animation. Any value of 2 or higher will mean an additional video file is
+#'   created called `animation_loop.mp4` with the original animation (including
+#'   any padding) repeated this number of times.
 #' @param save_data logical. If \code{=TRUE}, exports to the current working
 #'   directory a \code{.csv} file containing the data used to make the
 #'   animation, including the column of values scaled using the
 #'   \code{correction} value. File name: \code{ANIM_from_**name of R object
 #'   used**_**frame rate**_**display resolution**.csv}
+#' @param filename string. Desired name of the output file without file
+#'   extension. Default is `animation`, and output file is `animation.mp4`. Also
+#'   used for looped video output, if the `loop` operator is used.
 #'
 #' @examples
 #' # make a looming model
@@ -322,15 +369,20 @@ looming_animation <-
            dots_colour = "grey",
            dots_position = "br",
            dots_size = 0.005,
+           dots_inset = 0.05,
            frame_number = FALSE,
+           frame_number_tag = NULL,
            frame_number_colour = "grey",
            frame_number_position = "tr",
            frame_number_size = 2,
            frame_number_rotation = 0,
+           frame_number_inset = 0.05,
            start_marker = TRUE,
            start_marker_colour = "black",
            start_marker_size = 2,
-           save_data = FALSE){
+           loop = 1,
+           save_data = FALSE,
+           filename = "animation"){
 
     ## check class
     if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
@@ -344,17 +396,20 @@ looming_animation <-
     } else if(class(x) == "diameter_model"){
       message("diameter_model detected.")}
 
+    ## check loop is an integer
+    if(loop %% 1 != 0)  stop("loop input must be an integer")
+
     ## check for odd numbered screen resolutions, and if so add a pixel
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
       width <- width +1
-      message(glue::glue("Screen `width` cannot be an odd number."))
-      message(glue::glue("Screen `width` modified to {width}."))
+      message(glue("Screen `width` cannot be an odd number."))
+      message(glue("Screen `width` modified to {width}."))
     }
     if(height %% 2 != 0){
       height <- height +1
-      message(glue::glue("Screen `height` cannot be an odd number."))
-      message(glue::glue("Screen `height` modified to {height}"))
+      message(glue("Screen `height` cannot be an odd number."))
+      message(glue("Screen `height` modified to {height}"))
     }
 
     ## extract data and parameters
@@ -365,46 +420,46 @@ looming_animation <-
     total_frames_anim <- nrow(cs_model)
 
 
-              ## use pad to duplicate starting frame the required number of times
-              ## this modifies the input 'constant_speed_model' cs_model and replaces it
-              if(!is.null(pad)){
+    ## use pad to duplicate starting frame the required number of times
+    ## this modifies the input 'constant_speed_model' cs_model and replaces it
+    if(!is.null(pad)){
 
-              # If pad_blank is not TRUE
-              # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
-              if(!isTRUE(pad_blank)){
-                temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], ceiling(pad*frame_rate)), cs_model$diam_on_screen)
-              # otherwise set the diameter to Zero for those frames to achieve a blank frame
-              } else {
-                temp_diam_on_screen <- c(rep(0, ceiling(pad*frame_rate)), cs_model$diam_on_screen)
-              }
+      # If pad_blank is not TRUE
+      # replicates first diam_on_screen value required number of times and adds rest of diam_on_screen
+      if(!isTRUE(pad_blank)){
+        temp_diam_on_screen <- c(rep(cs_model$diam_on_screen[1], ceiling(pad*frame_rate)), cs_model$diam_on_screen)
+        # otherwise set the diameter to Zero for those frames to achieve a blank frame
+      } else {
+        temp_diam_on_screen <- c(rep(0, ceiling(pad*frame_rate)), cs_model$diam_on_screen)
+      }
 
 
-              temp_distance <- c(rep(cs_model$distance[1], ceiling(pad*frame_rate)), cs_model$distance)
-              temp_frame <- seq(1, length(temp_diam_on_screen), 1)
-              temp_time <- temp_frame/frame_rate
-              temp_alpha <- c(rep(cs_model$alpha[1], ceiling(pad*frame_rate)), cs_model$alpha)
-              temp_dadt <- c(rep(cs_model$dadt[1], ceiling(pad*frame_rate)), cs_model$dadt)
+      temp_distance <- c(rep(cs_model$distance[1], ceiling(pad*frame_rate)), cs_model$distance)
+      temp_frame <- seq(1, length(temp_diam_on_screen), 1)
+      temp_time <- temp_frame/frame_rate
+      temp_alpha <- c(rep(cs_model$alpha[1], ceiling(pad*frame_rate)), cs_model$alpha)
+      temp_dadt <- c(rep(cs_model$dadt[1], ceiling(pad*frame_rate)), cs_model$dadt)
 
-              ## make new padded model
-              padded_model <- data.frame(
-                temp_frame,
-                temp_time,
-                temp_distance,
-                temp_alpha,
-                temp_dadt,
-                temp_diam_on_screen
-              )
+      ## make new padded model
+      padded_model <- data.frame(
+        temp_frame,
+        temp_time,
+        temp_distance,
+        temp_alpha,
+        temp_dadt,
+        temp_diam_on_screen
+      )
 
-              names(padded_model) <- names(cs_model)
+      names(padded_model) <- names(cs_model)
 
-              cs_model <- padded_model
+      cs_model <- padded_model
 
-              ## check padded successfully
-              if(nrow(cs_model) != total_frames_anim + ceiling(pad*frame_rate)){
-                stop("Something has gone wrong with padding. ")
-              }
+      ## check padded successfully
+      if(nrow(cs_model) != total_frames_anim + ceiling(pad*frame_rate)){
+        stop("Something has gone wrong with padding. ")
+      }
 
-              }
+    }
 
 
     ## total frames
@@ -417,8 +472,6 @@ looming_animation <-
     } else {
       cs_model$diam_on_screen_corrected <- cs_model$diam_on_screen
     }
-
-
 
     ## create image for each frame
     for(i in 1:total_frames){
@@ -435,12 +488,12 @@ looming_animation <-
 
       # make circle - centered
       plotrix::draw.circle(x=0.5, y=0.5,
-                  ## NOTE - use corrected column
-                  r <- cs_model$diam_on_screen_corrected[i]/2,
-                  nv=100,
-                  border=fill,
-                  col=fill,
-                  lty=1,lwd=1)
+                           ## NOTE - use corrected column
+                           r <- cs_model$diam_on_screen_corrected[i]/2,
+                           nv=100,
+                           border=fill,
+                           col=fill,
+                           lty=1,lwd=1)
 
       ## add start marker
       if(start_marker == TRUE && i == 1){
@@ -467,16 +520,16 @@ looming_animation <-
 
         # set x position
         if(dots_x_pos == "l"){
-          dots_x_coord <- 0.07
+          dots_x_coord <- dots_inset
         } else if(dots_x_pos == "r"){
-          dots_x_coord <- 0.93
+          dots_x_coord <- 1 - dots_inset
         }
 
         # set y position
         if(dots_y_pos == "b"){
-          dots_y_coord <- 0.05
+          dots_y_coord <- dots_inset
         } else if(dots_y_pos == "t"){
-          dots_y_coord <- 0.95
+          dots_y_coord <- 1 - dots_inset
         }
 
         ## draw dot in corner of first animation frame
@@ -490,12 +543,12 @@ looming_animation <-
 
         # draw dot in corner every nth animation frame
         if(af %% dots_interval == 0) {draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                                 r <- dots_size,
-                                                 nv=100,
-                                                 border=dots_colour,
-                                                 col=dots_colour,
-                                                 lty=1,
-                                                 lwd=1)}
+                                                  r <- dots_size,
+                                                  nv=100,
+                                                  border=dots_colour,
+                                                  col=dots_colour,
+                                                  lty=1,
+                                                  lwd=1)}
 
         # draw dot in corner of last frame
         if(i == total_frames) {draw.circle(x=dots_x_coord, y=dots_y_coord,
@@ -508,7 +561,37 @@ looming_animation <-
       }
 
 
-      ## add frame numbers
+      ## add frame numbers to padded frames
+      if(frame_number == TRUE && i < asf){
+        ## set x and y coords from position
+        fn_x_pos <- right(frame_number_position, 1)
+        fn_y_pos <- left(frame_number_position, 1)
+
+        if(fn_x_pos == "l"){
+          fn_x_coord <- frame_number_inset
+        } else if(fn_x_pos == "r"){
+          fn_x_coord <- 1 - frame_number_inset
+        }
+
+        if(fn_y_pos == "b"){
+          fn_y_coord <- frame_number_inset
+        } else if(fn_y_pos == "t"){
+          fn_y_coord <- 1 - frame_number_inset
+        }
+
+        ## make frame number label
+        ## with frame number prepend label
+        ## NOTE - can't use 'i' alone since it include padded frames
+        ## must use this code to get actual animation frame
+        text(labels = paste0(frame_number_tag, i, "P"),
+             col = frame_number_colour,
+             x = fn_x_coord,
+             y = fn_y_coord,
+             cex = frame_number_size,
+             srt = frame_number_rotation)
+      }
+
+      ## add frame numbers to animation frames
       if(frame_number == TRUE && i >= asf){
 
         ## set x and y coords from position
@@ -516,21 +599,22 @@ looming_animation <-
         fn_y_pos <- left(frame_number_position, 1)
 
         if(fn_x_pos == "l"){
-          fn_x_coord <- 0.05
+          fn_x_coord <- frame_number_inset
         } else if(fn_x_pos == "r"){
-          fn_x_coord <- 0.95
+          fn_x_coord <- 1 - frame_number_inset
         }
 
         if(fn_y_pos == "b"){
-          fn_y_coord <- 0.05
+          fn_y_coord <- frame_number_inset
         } else if(fn_y_pos == "t"){
-          fn_y_coord <- 0.95
+          fn_y_coord <- 1 - frame_number_inset
         }
 
         ## make frame number label
+        ## with frame number prepend label
         ## NOTE - can't use 'i' alone since it include padded frames
         ## must use this code to get actual animation frame
-        text(paste(af),
+        text(labels = paste0(frame_number_tag, af),
              col = frame_number_colour,
              x = fn_x_coord,
              y = fn_y_coord,
@@ -549,7 +633,7 @@ looming_animation <-
 
     ## save data
     if(save_data == TRUE){
-      filename <- glue::glue('ANIM_from_',
+      exp_filename <- glue('ANIM_from_',
                              deparse(quote(x)),
                              '_',
                              {frame_rate},
@@ -560,7 +644,7 @@ looming_animation <-
                              '.csv'
       )
 
-      write.csv(cs_model, file = glue::glue(filename))
+      write.csv(cs_model, file = glue(exp_filename))
     }
 
 
@@ -584,11 +668,11 @@ looming_animation <-
     if(os() == "mac"){
       message("Encoding movie...")
       instruction_string <-
-        glue::glue(
+        glue(
           ## rm loom_img_*.png'
           ## old remove command above - ran into Terminal "Argument list too long" error when there were huge numbers of files
           ## this seems to work ok
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4; find . -maxdepth 1 -name "loom_img_*.png" -delete'
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4; find . -maxdepth 1 -name "loom_img_*.png" -delete'
         )
 
       message("Deleting image files...")
@@ -601,8 +685,8 @@ looming_animation <-
     ## For some reason Windows needs to run this via the shell() command
     else if(os() == "win"){
       instruction_string <-
-        glue::glue(
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation.mp4'
+        glue(
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4'
         )
       ## run command
       system(instruction_string)
@@ -616,11 +700,24 @@ looming_animation <-
     ## this rounds it to 2 decimal places, even if they are zeros.
     ## i.e. 2.001 gets displayed as "2.00s" not "2s"
     duration <- sprintf('%.2f', duration)
+    duration_loop <- sprintf('%.2f', total_frames/frame_rate*loop)
+
+    ## make looped video
+    if(loop > 1){
+      loop_n <- loop-1
+      instruction_string <- glue(
+        'ffmpeg -y -stream_loop {loop_n} -i {filename}.mp4 -c copy {filename}_loop.mp4')
+      system(instruction_string)
+    }
 
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
-    message(glue('Conversion complete.
-                 Resulting video should be {duration}s in duration, unless ffmpeg encountered errors.
-                 If so, these should be listed above'))
+    cat("\n# Conversion complete # -------------------------\n")
+    message(glue('Resulting {filename}.mp4 video should be {duration}s in duration.'))
+    if(loop > 1) cat("\n# Looped video created # ------------------------\n")
+    if(loop > 1) message(glue('Resulting {filename}_loop.mp4 video should be {duration_loop}s in duration and contain {loop} loops.'))
+    message("")
+    message('Any ffmpeg errors should be listed above')
+
   }
 
