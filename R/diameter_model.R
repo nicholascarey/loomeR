@@ -92,6 +92,10 @@ diameter_model <-
     ## minus 1 because we want first entry to be start_dist, so no need to add to it
     results_df$distance <- start_dist-((results_df$frame-1) * distance_per_frame)
 
+    ## add empty alpha and dadt
+    results_df$alpha <- NA
+    results_df$dadt <- NA
+
     ## add screen diameter of model for each frame
     results_df$diam_on_screen <- 1/results_df$distance
 
@@ -107,6 +111,8 @@ diameter_model <-
   results_df <- data.frame(frame = seq(1,total_frames,1))
   results_df$time <- results_df$frame/frame_rate
   results_df$distance <- NA
+  results_df$alpha <- NA
+  results_df$dadt <- NA
   ## add diameter change to start distance for each row
   results_df$diam_on_screen <-
     apply(results_df, 1, function(x) start_diameter + (x[1]-1)*diam_per_frame)

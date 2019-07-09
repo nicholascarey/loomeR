@@ -128,7 +128,7 @@ If you have any bugs or feedback, you can contact me via [email](mailto:nicholas
 
 Working with the following people inspired the creation of this package:
 
-- Paolo Domenici, CNR IAMC, Italy.  [Link](http://oristano.iamc.cnr.it/IAMC/staff/paolo-domenici/domenici-paolo?set_language=en)
+- Paolo Domenici, CNR IAMC, Italy.  [Link](http://iamc.objectis.net/staff/domenici-paolo)
 - Jeremy Goldbogen & Dave Cade, Hopkins Marine Station, Stanford University. [Link](http://goldbogen.stanford.edu)
 - Januar Harianto, University of Sydney [Link](https://github.com/januarharianto)
 

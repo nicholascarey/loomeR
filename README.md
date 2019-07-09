@@ -146,7 +146,7 @@ get_alt(x, response_frame = 100, latency = 0.06)
 #> Latency Applied:           0.06s
 #>  
 #> The Apparent Looming Threshold is: 
-#> ALT: 0.5463 radians/sec
+#> ALT: 0.5911 radians/sec
 ```
 
 ### Forthcoming and potential features
@@ -179,7 +179,7 @@ issue](https://github.com/nicholascarey/loomeR/issues).
 Working with the following people inspired the creation of this package:
 
   - Paolo Domenici, CNR IAMC, Italy.
-    [Link](http://oristano.iamc.cnr.it/IAMC/staff/paolo-domenici/domenici-paolo?set_language=en)
+    [Link](http://iamc.objectis.net/staff/domenici-paolo)
   - Jeremy Goldbogen & Dave Cade, Hopkins Marine Station, Stanford
     University. [Link](http://goldbogen.stanford.edu)
   - Januar Harianto, University of Sydney

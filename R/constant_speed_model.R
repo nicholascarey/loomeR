@@ -83,10 +83,15 @@ constant_speed_model <-
     results_df$time <- results_df$frame/frame_rate
 
     ## add hypothetical predator distance
-    results_df$distance <- start_distance-((results_df$frame-1) * distance_per_frame)
+    results_df$distance <- round(start_distance-((results_df$frame) * distance_per_frame), 2)
+
+    ## Add alpha and da/dt
+    results_df$alpha <- calc_alpha(attacker_diameter, results_df$distance)
+    results_df$dadt <- calc_dadt(speed, attacker_diameter, results_df$distance)
 
     ## add screen diameter of model for each frame
-    results_df$diam_on_screen <- (attacker_diameter*screen_distance)/results_df$distance
+    results_df$diam_on_screen <- calc_screen_diam(results_df$alpha, screen_distance)
+
 
     ## Have commented out the below for now. Should not be necessary.
     ## Also removed the rounding of distance_per_frame above. It also should

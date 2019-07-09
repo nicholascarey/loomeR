@@ -8,11 +8,12 @@ looming_animation(x, correction = 0.0285, width = 1280,
   height = 1024, fill = "black", background = "white", pad = NULL,
   pad_blank = FALSE, dots = FALSE, dots_interval = 20,
   dots_colour = "grey", dots_position = "br", dots_size = 0.005,
-  frame_number = FALSE, frame_number_colour = "grey",
-  frame_number_position = "tr", frame_number_size = 2,
-  frame_number_rotation = 0, start_marker = TRUE,
-  start_marker_colour = "black", start_marker_size = 2,
-  save_data = FALSE)
+  dots_inset = 0.05, frame_number = FALSE, frame_number_tag = NULL,
+  frame_number_colour = "grey", frame_number_position = "tr",
+  frame_number_size = 2, frame_number_rotation = 0,
+  frame_number_inset = 0.05, start_marker = TRUE,
+  start_marker_colour = "black", start_marker_size = 2, loop = 1,
+  save_data = FALSE, filename = "animation")
 }
 \arguments{
 \item{x}{list. A list object of class \code{constant_speed_model},
@@ -61,8 +62,15 @@ right, or bottom left.}
 
 \item{dots_size}{numeric. Size of added dots. Default = 0.005.}
 
+\item{dots_inset}{numeric. Distance of dots from edges of frame as proportion
+of entire width/height. Default = 0.05.}
+
 \item{frame_number}{logical. Controls if frame numbers are added to animation
 frames (see Details).}
+
+\item{frame_number_tag}{string. Text string to be added to the start of the
+frame numbers, e.g. '1-' or 'A-'. Useful for distinguishing between
+different animations.}
 
 \item{frame_number_colour}{string. Colour of frame numbers}
 
@@ -76,6 +84,10 @@ default plotting text size. Default = 2.}
 \item{frame_number_rotation}{numeric. Value in degrees (0-360) to rotate
 frame numbers.}
 
+\item{frame_number_inset}{numeric. Distance of frame numbers from edges of
+frame as proportion of entire width/height. Increase this if frame numbers
+start to run off the edge of the screen as they get larger. Default = 0.05.}
+
 \item{start_marker}{logical. Controls if a marker ("X") is added to the first
 frame. This is a visual aid: if it disappears it indicates the video is
 playing.}
@@ -85,11 +97,20 @@ playing.}
 \item{start_marker_size}{logical. Size of the \code{start_marker} as
 proportion of default plotting text size. Default = 2.}
 
+\item{loop}{integer. Default = 1. This sets the number of times to repeat the
+animation. Any value of 2 or higher will mean an additional video file is
+created called \code{animation_loop.mp4} with the original animation (including
+any padding) repeated this number of times.}
+
 \item{save_data}{logical. If \code{=TRUE}, exports to the current working
 directory a \code{.csv} file containing the data used to make the
 animation, including the column of values scaled using the
 \code{correction} value. File name: \code{ANIM_from_**name of R object
   used**_**frame rate**_**display resolution**.csv}}
+
+\item{filename}{string. Desired name of the output file without file
+extension. Default is \code{animation}, and output file is \code{animation.mp4}. Also
+used for looped video output, if the \code{loop} operator is used.}
 }
 \description{
 \code{looming_animation} creates a movie file (\code{.mp4}) of a
@@ -106,35 +127,37 @@ installed on your system.
 IMPORTANT: The function works by saving an image file
 (\code{loom_img_0000001.png} etc.) for every frame of the animation to the
 current working directory. It then uses \code{ffmpeg} to encode these
-images to an \code{.mp4} file (saved as \code{animation.mp4}). It then
-deletes (actually deletes, not just sent to the trash) the \code{.png}
-files from the working directory. It will overwrite any \code{.png} or
-\code{.mp4} file it encounters which has an identical name. It's
-recommended you create a new directory (i.e. folder) for each animation,
-and use \code{setwd()} to set this as the current working directory before
-running the function. If you want to save an animation, move it or rename
-it before running the function again or it will get overwritten. It has not
-been rigorously tested on older systems with slow read-write speeds to the
-hard drive, which may cause unknown problems. Please provide feedback if
-you encounter any issues.
+images to an \code{.mp4} file. By default, this is saved as
+\code{animation.mp4}, however the \code{filename} operator can be used to
+specify a custom file name. It then deletes (actually deletes, not just
+sent to the trash) the \code{.png} files from the working directory. The
+function will overwrite any \code{.png} or \code{.mp4} file it encounters
+which \strong{has an identical name}. It's recommended you create a new
+directory (i.e. folder) for each animation, and use \code{setwd()} to set
+this as the current working directory before running the function. If you
+want to save an animation, move or rename it, or change the \code{filename}
+input before running the function again or it will get overwritten. It has
+not been rigorously tested on older systems with slow read-write speeds to
+the hard drive, which may cause unknown problems. Please provide feedback
+if you encounter any issues.
 
 The function is capable of controlling precise details of how the object is
 displayed on screen. For example the \code{correction} operator ensures the
 hypothesised size in the model is displayed at that exact size on a
 specific display at a specific resolution. These details are important in
 experiments where the time in the animation at which an escape response
-occurs (and hence the perceived distance and/or speed of the attacker) are
-of interest. If you simply want to generate an animation to elicit a
-response and are unconcerned with these details, you can ignore most of
-these options. For simple models where these details are unimportant see
-\code{\link{diameter_model}}.
+occurs (and hence the perceived visual angle (alpha), distance and/or speed
+of the attacker) are of interest. If you simply want to generate an
+animation to elicit a response and are unconcerned with these details, you
+can ignore most of these options. For simple models where these details are
+unimportant see \code{\link{diameter_model}}.
 
-Note animations should end with a filled screen, because even small objects
-at viewing distances approaching zero approach infinite perceived size (the
-exception is if you have used \code{\link{diameter_model}} and set the end
-diameter to less than the size of your screen). The final animation may
-have several completely filled frames at the end, depending on the
-\code{attacker_diameter} as set in \code{constant_speed_model} or
+Note animations will typically end with a filled screen, because even small
+objects at viewing distances approaching zero approach infinite perceived
+size (the exception is if you have used \code{\link{diameter_model}} and
+set the end diameter to less than the size of your screen). The final
+animation may have several completely filled frames at the end, depending
+on the \code{attacker_diameter} as set in \code{constant_speed_model} or
 \code{variable_speed_model}. Obviously, an object above a certain diameter
 cannot be displayed on a screen smaller than that diameter. If your
 attacker is larger in diameter than the screen, the final stages of the
@@ -146,17 +169,19 @@ frames are left in the simulation beyond that point. In most cases, if
 using biologically realistic parameters, this will be only a few frames.
 }
 \section{Screen display and playback considerations}{
- The function creates a
-video at the frame rate (\code{frame_rate}) specified in the
+ The output video is of a
+circle increasing in diameter over time, as specified in the
+\code{$model$diam_on_screen} component of the original
 \code{\link{constant_speed_model}}, \code{\link{variable_speed_model}} or
-\code{\link{diameter_model}} object. The frame rate should be one the
-playback software handles correctly. Most modern displays have a maximum
-refresh rate of 60 Hz, so videos at frame rates higher than this may not be
-displayed correctly. I recommend using either 30 or 60 frames per second
-(Hz) which is a frame rate most video playback software should honour
-without problems. The output video is of a circle increasing in diameter
-over time, as specified in the \code{$model$diam_on_screen} component of
-the model.
+\code{\link{diameter_model}} object. The function creates a video at the
+\code{frame_rate} specified in this object. The frame rate should be one
+the playback software handles correctly. Most modern displays have a
+maximum refresh rate of 60 Hz, so videos at frame rates higher than this
+may not be displayed correctly. I recommend using either 30 or 60 frames
+per second (Hz) which is a frame rate most video playback software should
+honour without problems. (I would be very interested to hear user
+experiences of using displays which support higher frame rates than this,
+such as recent iPad Pros with 120Hz refresh rates).
 
 The display resolution of the screen you will use to play the animation
 should be entered as \code{width} and \code{height}. NOTE - This is the
@@ -194,17 +219,26 @@ two ways of marking the animation so the frame can be identified in video
 recordings of the experiment:
 
 \subsection{Frame numbers}{ The animation frame number can be placed in
-every frame using \code{frame_number = TRUE}. The colour, size, and corner
-of the screen to place the number can be specified (see \code{Arguments}).
-In addition, the orientation can be set with \code{frame_number_rotation}.
-} \subsection{Dots}{ If \code{dots = TRUE}, starting from the first
-animation frame a small dot is placed in the corner of the frame at the
-frame interval specified with \code{dots_interval}. It is also placed in
-the last frame, regardless of the \code{dots_interval}. Again, colour, size
-and corner can be specified (see \code{Arguments}). }
+every frame using \code{frame_number = TRUE}. The colour, size, inset
+distance, and corner of the screen to place the number can be specified
+(see \code{Arguments}), and the orientation can be set with
+\code{frame_number_rotation}. In addition, text can be added to the start
+of the frame numbers using \code{frame_number_tag}. For example, with
+\code{frame_number_tag = "A-"}, frame numbers will follow the structure \code{A-1},
+\code{A-2}, etc. This is useful if you create multiple animations and want to
+avoid getting them mixed up.}
 
-These markers are only inserted into animation frames, not to frames added
-for padding (see next section).
+Frame numbers are only added to animation frames, not to frames added for
+padding (see next section).
+
+\subsection{Dots}{ If \code{dots = TRUE}, starting from the first animation
+frame a small dot is placed in the corner of the frame at the frame
+interval specified with \code{dots_interval}. It is also placed in the last
+frame, regardless of the \code{dots_interval}. Again, colour, size, inset
+distance and corner can be specified (see \code{Arguments}). }
+
+These markers are only added to animation frames, not to frames added for
+padding (see next section).
 
 \subsection{Start Marker}{ By default (\code{start_marker = TRUE}), a
 marker (an "X") is placed at the bottom centre of the screen in the first
@@ -222,16 +256,16 @@ extended to a required total duration using the \code{pad} option. This
 value is a duration in seconds added to the start of the animation before
 playback. It duplicates the starting frame of the animation the required
 number of times to achieve the padding duration. Essentially, this makes
-the animation static for \code{pad} seconds before it starts to play.
-This means the video may show a static circle until the animation starts.
-If you do not want this, either modify the model parameters until the
-initial diameter is negligible, or use the \code{pad_blank = TRUE} option,
-in which case blank frames will be added rather than duplicating the
-starting frame. Under this option, after \code{pad} seconds of blank
-screen, the animation will suddenly appear and play. Again, how noticable
-this is depends on the model parameters you have used. Note that frame
-tracking markers (i.e. dots or frame numbers) will only be added to
-animation frames, not to frames added for padding.
+the animation static for \code{pad} seconds before it starts to play. This
+means the video may show a static circle until the animation starts. If you
+do not want this, either modify the model parameters until the initial
+diameter is negligible, or use the \code{pad_blank = TRUE} option, in which
+case blank frames will be added rather than duplicating the starting frame.
+Under this option, after \code{pad} seconds of blank screen, the animation
+will suddenly appear and play. Again, how noticable this is depends on the
+model parameters you have used. Note that frame tracking markers (i.e. dots
+or frame numbers) will only be added to animation frames, not to frames
+added for padding.
 
 NOTE: Be careful with padding options. Padding the video with extra frames
 will increase the time it takes for the function to run. Finalise your
@@ -242,6 +276,18 @@ duration video, be aware that every frame png file generated is around
 ~1.6GB of hard drive space, and require considerable time to process! Due
 to compression, the resulting video file should however be only a few MB in
 size.
+}
+
+\section{Looping animations}{
+ If you want the animation to loop or repeat a
+set number of times, use the \code{loop =} operator. If set with any value
+greater than the default of \code{1} this lets you output an additional video of
+the animation looped the set number of times. In this case there will be
+two output videos, the original \code{animation.mp4} (or whatever is set with
+the \code{filename} input) plus a looped version appended with \code{_loop.mp4}. This
+process is extremely fast, since it does not recreate the animation for
+each loop, but just copies the \code{animation.mp4} file the set number of times
+into a new video file.
 }
 
 \section{Compatibility}{
@@ -265,13 +311,15 @@ issues you encounter.
  For triggered playback of the animation on
 a Mac I recommend Apple Quicktime Player. Playback can be started with the
 spacebar, the arrow keys allow frame-by-frame movement through the video,
-and Cmd-Left Arrow  the video to be rewound to the start. Others
-applications such as VLC have quirks, for example automatically playing the
-video on opening the file, and closing it at the end of the video. However,
-find the application that works best for your purposes. If you need to loop
-the video, many video applications have an option for that. If there is
-demand, an option may be added to create looping videos or gifs. Get in
-touch if that's something you'd like to see implemented.
+and Cmd-Left Arrow makes the video rewind to the start. Other applications
+such as VLC have quirks, for example automatically playing the video on
+opening the file, and closing it at the end of the video. However, find the
+application that works best for your purposes. If you need to loop the
+video, many video applications have an option for that. However, the \code{loop}
+operator (set with any value greater than 1) also lets you output an
+additional video of the animation looped the set number of times. In this
+case there will be two output videos, the original \code{animation.mp4} plus a
+looped version called \code{animation_loop.mp4}.
 
 As a check, it's a good idea to ensure the application you use is correctly
 identifying the metadata of the video. This depends on the software, but in
@@ -280,9 +328,8 @@ fullscreen, and then:
 
 In Quicktime, Cmd-I or Window > Show Movie Inspector. Check 'Format'
 matches 'Current Size', and that both match your entered screen resolution
-\code{width} and \code{height}. Check 'FPS' matches the
-\code{frame_rate} used to create the model in
-\code{\link{constant_speed_model}}.
+\code{width} and \code{height}. Check 'FPS' matches the \code{frame_rate}
+used to create the model in \code{\link{constant_speed_model}}.
 
 In VLC, Cmd-I or Window > Media Information, the 'Codec Details' tab. Check
 'Resolution' and 'Display Resolution' both match your entered screen
@@ -329,7 +376,7 @@ looming_animation(loom_model,
 \seealso{
 \code{\link{constant_speed_model}},
 \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
-\code{\link{looming_animation_calib}}
+\code{\link{looming_animation_calib}}.
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}
