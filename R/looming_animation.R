@@ -680,13 +680,16 @@ looming_animation <-
     ## NOTE - command changed to remove deletion instruction at end
     ## For some reason Windows needs to run this via the shell() command
     else if(os() == "win"){
+      message("Encoding movie...")
       instruction_string <-
         glue(
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4'
         )
+
       ## run command
       system(instruction_string)
 
+      message("Deleting image files...")
       ## delete png files
       shell("del loom_img_*.png")
     }

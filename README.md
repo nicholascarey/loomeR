@@ -10,6 +10,7 @@ status](https://ci.appveyor.com/api/projects/status/github/nicholascarey/loomeR?
 status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg)](https://codecov.io/github/nicholascarey/loomeR?branch=master)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
+[![HitCount](http://hits.dwyl.io/nicholascarey/loomeR.svg)](http://hits.dwyl.io/nicholascarey/loomeR)
 
 # Welcome
 
@@ -31,6 +32,10 @@ speed of an oncoming threat.
 </iframe>
 
 </p>
+
+See the
+[Reference](https://nicholascarey.github.io/loomeR/reference/index.html)
+page to view the detailed Help file for each function.
 
 ### Installation
 
@@ -101,9 +106,10 @@ lag in response time) can also be applied. <br> <br>
 
 ### Example code
 
-The included documentation is comprehensive, and a vignette explaining
-how to use the package is in preparation. For a quick evaluation try out
-the following code:
+The included
+[documentation](https://nicholascarey.github.io/loomeR/reference/index.html)
+is comprehensive, and a vignette explaining how to use the package is in
+preparation. For a quick evaluation try out the following code:
 
 ##### 1\. Create a model
 

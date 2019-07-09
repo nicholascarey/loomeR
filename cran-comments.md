@@ -1,19 +1,25 @@
 ## Test environments
 * local macOS 10.14.2 install, R 3.5.2
-* remote macOS ??? (on travis-ci), R 3.5.2
+* remote macOS 10.13.3 (on travis-ci), R 3.5.2
 * remote ubuntu 14.04 (on travis-ci), R 3.5.2
+* remote Windows Server 2012 R2 x64 (build 9600) (on appveyor), R 3.5.2
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There was 0 NOTE:
+There were 2 NOTEs: 
+(only when CMD Check is run in terminal on binary, none in RStudio project)
 
-## Downstream dependencies
-I have also run R CMD check on downstream dependencies of httr 
-(https://github.com/wch/checkresults/blob/master/httr/r-release). 
-All packages that I could install passed except:
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Nicholas Carey <nicholascarey@gmail.com>’
 
-* Ecoengine: this appears to be a failure related to config on 
-  that machine. I couldn't reproduce it locally, and it doesn't 
-  seem to be related to changes in httr (the same problem exists 
-  with httr 0.4).
+New submission
+
+Package has a VignetteBuilder field but no prebuilt vignette index.
+
+* checking examples ... NOTE
+Examples with CPU or elapsed time > 5s
+                          user system elapsed
+looming_animation       35.952  3.030  37.063
+looming_animation_calib  5.862  1.017   7.802
+
