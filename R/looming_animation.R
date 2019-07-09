@@ -21,11 +21,11 @@
 #'   which **has an identical name**. It's recommended you create a new
 #'   directory (i.e. folder) for each animation, and use \code{setwd()} to set
 #'   this as the current working directory before running the function. If you
-#'   want to save an animation, move or rename it, or change the `filename`
-#'   input before running the function again or it will get overwritten. It has
-#'   not been rigorously tested on older systems with slow read-write speeds to
-#'   the hard drive, which may cause unknown problems. Please provide feedback
-#'   if you encounter any issues.
+#'   want to save an animation, you should move or rename it, or change the
+#'   `filename` input before running the function again or it will get
+#'   overwritten. It has not been rigorously tested on older systems with slow
+#'   read-write speeds to the hard drive, which may cause unknown problems.
+#'   Please provide feedback if you encounter any issues.
 #'
 #'   The function is capable of controlling precise details of how the object is
 #'   displayed on screen. For example the \code{correction} operator ensures the
@@ -184,8 +184,6 @@
 #'
 #'
 #'
-#'
-#'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
 #'   \code{setwd()} to the current or desired folder. It has not been
@@ -221,6 +219,11 @@
 #'   which is ok). Check 'Frame Rate' matches the \code{frame_rate} used to
 #'   create the model in \code{\link{constant_speed_model}}. Make sure playback
 #'   speed is at 'Normal' (Menu>Playback).
+#'
+#' @section Cleaning up: The package has been coded to clean up after itself.
+#'   However, with heavy use occasionally orphaned png and mp4 files
+#'   may remain in the various working directories, so it's a good idea to go
+#'   through these periodically and manually delete unwanted files.
 #'
 #' @section Dependencies: The function requires the following packages:
 #'   \code{glue}, \code{plotrix}
