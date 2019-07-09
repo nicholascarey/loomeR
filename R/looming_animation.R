@@ -109,8 +109,7 @@
 #'   of the frame numbers using `frame_number_tag`. For example, with
 #'   `frame_number_tag = "A-"`, frame numbers will follow the structure `A-1`,
 #'   `A-2`, etc. This is useful if you create multiple animations and want to
-#'   avoid getting them mixed up, or if you are combining multiple animations
-#'   into one video (see \code{\link{multi_loom}}).}
+#'   avoid getting them mixed up.}
 #'
 #'   Frame numbers are only added to animation frames, not to frames added for
 #'   padding (see next section).
@@ -168,9 +167,6 @@
 #'   process is extremely fast, since it does not recreate the animation for
 #'   each loop, but just copies the `animation.mp4` file the set number of times
 #'   into a new video file.
-#'
-#'   If you need to create a single video with multiple, *different* animations
-#'   see \code{\link{multi_loom}}.
 #'
 #'
 #' @section Compatibility: The function should work with both Windows and macOS
@@ -231,7 +227,7 @@
 #'
 #' @seealso \code{\link{constant_speed_model}},
 #'   \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
-#'   \code{\link{looming_animation_calib}}, \code{\link{multi_loom}}.
+#'   \code{\link{looming_animation_calib}}.
 #'
 #' @param x list. A list object of class \code{constant_speed_model},
 #'   \code{variable_speed_model}, or \code{diameter_model}.

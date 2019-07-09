@@ -22,8 +22,7 @@ approaching threat and investigate phenomena such as perception, visual
 latency, escape responses, and neurological functioning. **ALT** is a
 metric which describes the threshold where a specimen may initiate an
 escape movement based on a combination of the perceived distance and/or
-speed of an oncoming
-threat.
+speed of an oncoming threat.
 
 <p align="center">
 
@@ -141,25 +140,25 @@ get_alt(x, response_frame = 100, latency = 0.06)
 #> Latency Applied:           0.06s
 #>  
 #> The Apparent Looming Threshold is: 
-#> ALT: 0.5463 radians/sec
+#> ALT: 0.5911 radians/sec
 ```
 
 ### Forthcoming and potential features
 
-  - \[X\] Function to extract model parameters at a particular frame,
+  - [x] Function to extract model parameters at a particular frame,
     optionally apply a latency correction, and correct the perceived
     speed and distance for a different viewing distance. **DONE** - see
     `get_alt`
-  - \[ \] Linux support
-  - \[ \] Add a receding option for animations (possibly works by
-    setting speed as a negative, or start/end diameters the other way
-    round, but this has not been tested)
-  - \[ \] Enhancements (e.g. quicker padding method) and alternative to
+  - [ ] Linux support
+  - [ ] Add a receding option for animations (possibly works by setting
+    speed as a negative, or start/end diameters the other way round, but
+    this has not been tested)
+  - [ ] Enhancements (e.g. quicker padding method) and alternative to
     `ffmpeg`
-  - \[ \] Option to export images only, and not convert them
-  - \[ \] Option to subsample or interpolate variable speed profiles to
+  - [ ] Option to export images only, and not convert them
+  - [ ] Option to subsample or interpolate variable speed profiles to
     match a desired frame rate
-  - \[ \] Use of custom shapes (please [contact
+  - [ ] Use of custom shapes (please [contact
     me](mailto:nicholascarey@gmail.com) if you know of actual
     applications for this… it would be a *lot* of work)
 
@@ -174,7 +173,7 @@ issue](https://github.com/nicholascarey/loomeR/issues).
 Working with the following people inspired the creation of this package:
 
   - Paolo Domenici, CNR IAMC, Italy.
-    [Link](http://oristano.iamc.cnr.it/IAMC/staff/paolo-domenici/domenici-paolo?set_language=en)
+    [Link](http://iamc.objectis.net/staff/domenici-paolo)
   - Jeremy Goldbogen & Dave Cade, Hopkins Marine Station, Stanford
     University. [Link](http://goldbogen.stanford.edu)
   - Januar Harianto, University of Sydney
@@ -183,8 +182,7 @@ Working with the following people inspired the creation of this package:
 ### Cite
 
 If you use `loomeR` in your work, a citation using this zenodo DOI would
-be much
-appreciated:
+be much appreciated:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
 
@@ -195,15 +193,15 @@ citation("loomeR")
 #> 
 #> To cite package 'loomeR' in publications use:
 #> 
-#>   Nicholas Carey (2019). loomeR: Looming animations for use in
-#>   behavioural and neurological experiments.
+#>   Nicholas Carey (2019). loomeR: Looming Animations for Use in
+#>   Behavioural and Neurological Experiments.
 #>   https://github.com/nicholascarey/loomeR,
 #>   https://doi.org/10.5281/zenodo.1212570.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {loomeR: Looming animations for use in behavioural and neurological experiments},
+#>     title = {loomeR: Looming Animations for Use in Behavioural and Neurological Experiments},
 #>     author = {Nicholas Carey},
 #>     year = {2019},
 #>     note = {https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570},

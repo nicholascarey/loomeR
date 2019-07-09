@@ -226,8 +226,7 @@ distance, and corner of the screen to place the number can be specified
 of the frame numbers using \code{frame_number_tag}. For example, with
 \code{frame_number_tag = "A-"}, frame numbers will follow the structure \code{A-1},
 \code{A-2}, etc. This is useful if you create multiple animations and want to
-avoid getting them mixed up, or if you are combining multiple animations
-into one video (see \code{\link{multi_loom}}).}
+avoid getting them mixed up.}
 
 Frame numbers are only added to animation frames, not to frames added for
 padding (see next section).
@@ -289,9 +288,6 @@ the \code{filename} input) plus a looped version appended with \code{_loop.mp4}.
 process is extremely fast, since it does not recreate the animation for
 each loop, but just copies the \code{animation.mp4} file the set number of times
 into a new video file.
-
-If you need to create a single video with multiple, \emph{different} animations
-see \code{\link{multi_loom}}.
 }
 
 \section{Compatibility}{
@@ -380,7 +376,7 @@ looming_animation(loom_model,
 \seealso{
 \code{\link{constant_speed_model}},
 \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
-\code{\link{looming_animation_calib}}, \code{\link{multi_loom}}.
+\code{\link{looming_animation_calib}}.
 }
 \author{
 Nicholas Carey - \email{nicholascarey@gmail.com}
