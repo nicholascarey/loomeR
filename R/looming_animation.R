@@ -109,10 +109,12 @@
 #'   of the frame numbers using `frame_number_tag`. For example, with
 #'   `frame_number_tag = "A-"`, frame numbers will follow the structure `A-1`,
 #'   `A-2`, etc. This is useful if you create multiple animations and want to
-#'   avoid getting them mixed up.}
+#'   avoid getting them mixed up.}.
 #'
-#'   Frame numbers are only added to animation frames, not to frames added for
-#'   padding (see next section).
+#'   Frame numbers are also added to frames added for padding, although these
+#'   follow their own numeric sequence and are also appended with "P" (see next
+#'   section). Animation frame numbers will always refer to the correct row of
+#'   the original model regardless of padding.
 #'
 #'   \subsection{Dots}{ If \code{dots = TRUE}, starting from the first animation
 #'   frame a small dot is placed in the corner of the frame at the frame
@@ -121,7 +123,8 @@
 #'   distance and corner can be specified (see \code{Arguments}). }
 #'
 #'   These markers are only added to animation frames, not to frames added for
-#'   padding (see next section).
+#'   padding (see next section). Use frame numbers if you need padding frames
+#'   marked in some way.
 #'
 #'   \subsection{Start Marker}{ By default (\code{start_marker = TRUE}), a
 #'   marker (an "X") is placed at the bottom centre of the screen in the first
@@ -144,9 +147,10 @@
 #'   case blank frames will be added rather than duplicating the starting frame.
 #'   Under this option, after \code{pad} seconds of blank screen, the animation
 #'   will suddenly appear and play. Again, how noticable this is depends on the
-#'   model parameters you have used. Note that frame tracking markers (i.e. dots
-#'   or frame numbers) will only be added to animation frames, not to frames
-#'   added for padding.
+#'   model parameters you have used. Note that frame numbers are also added to
+#'   padding frames. These follow their own numeric sequence and are also
+#'   appended with "P". Other tracking markers (i.e. dots) will only be added to
+#'   animation frames, not to frames added for padding.
 #'
 #'   NOTE: Be careful with padding options. Padding the video with extra frames
 #'   will increase the time it takes for the function to run. Finalise your
@@ -177,12 +181,6 @@
 #'   \url{http://adaptivesamples.com/how-to-install-ffmpeg-on-windows/} (may
 #'   need to restart) or
 #'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
-#'
-#'
-#'
-#'
-#'
-#'
 #'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
@@ -221,9 +219,9 @@
 #'   speed is at 'Normal' (Menu>Playback).
 #'
 #' @section Cleaning up: The package has been coded to clean up after itself.
-#'   However, with heavy use occasionally orphaned png and mp4 files
-#'   may remain in the various working directories, so it's a good idea to go
-#'   through these periodically and manually delete unwanted files.
+#'   However, with heavy use occasionally orphaned png and mp4 files may remain
+#'   in the various working directories, so it's a good idea to go through these
+#'   periodically and manually delete unwanted files.
 #'
 #' @section Dependencies: The function requires the following packages:
 #'   \code{glue}, \code{plotrix}
@@ -303,32 +301,33 @@
 #'   used for looped video output, if the `loop` operator is used.
 #'
 #' @examples
+#' # uncomment to run
 #' # make a looming model
-#' loom_model <- constant_speed_model(
-#'                      screen_distance = 20,
-#'                      frame_rate = 60,
-#'                      speed = 500,
-#'                      attacker_diameter = 50,
-#'                      start_distance = 1000)
+#' # loom_model <- constant_speed_model(
+#' #                      screen_distance = 20,
+#' #                      frame_rate = 60,
+#' #                      speed = 500,
+#' #                      attacker_diameter = 50,
+#' #                      start_distance = 1000)
 #'
 #' # use it to create an animation with frame numbers in top right corner
-#' looming_animation(loom_model,
-#'                    correction = 0.0285,
-#'                    width = 1920,
-#'                    height = 1080,
-#'                    frame_number = TRUE,
-#'                    frame_number_position = "tr",
-#'                    frame_number_size = 2)
+#' # looming_animation(loom_model,
+#' #                   correction = 0.0285,
+#' #                   width = 1920,
+#' #                   height = 1080,
+#' #                   frame_number = TRUE,
+#' #                   frame_number_position = "tr",
+#' #                   frame_number_size = 2)
 #'
 #' # pad animation with 5 seconds of the starting frame before playback
-#' looming_animation(loom_model,
-#'                    correction = 0.0285,
-#'                    width = 1920,
-#'                    height = 1080,
-#'                    frame_number = TRUE,
-#'                    frame_number_position = "tr",
-#'                    frame_number_size = 2,
-#'                    pad = 5)
+#' # looming_animation(loom_model,
+#' #                    correction = 0.0285,
+#' #                    width = 1920,
+#' #                    height = 1080,
+#' #                    frame_number = TRUE,
+#' #                    frame_number_position = "tr",
+#' #                    frame_number_size = 2,
+#' #                    pad = 5)
 #'
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
