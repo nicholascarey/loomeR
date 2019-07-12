@@ -9,9 +9,8 @@ variable_speed_model(x, screen_distance = 20, frame_rate = 60,
 }
 \arguments{
 \item{x}{numeric. Vector of speeds (cm/s) of the hypothetical approaching
-attacker at the same frequency (Hz) as the \code{frame_rate}. Length
-of the vector will thus determine total duration of the resulting
-animation.}
+attacker at the same frequency (Hz) as the \code{frame_rate}. Length of the
+vector will thus determine total duration of the resulting animation.}
 
 \item{screen_distance}{numeric. Distance (cm) from the playback screen to
 your specimen.}
@@ -37,13 +36,12 @@ precise parameters to be created.
 Calculates the screen diameters for a modelled object of specified
 size approaching at a variable speed. The variable speed must be supplied
 as a vector of speeds (operator \code{x}) in cm/s at the same frequency
-(i.e. same Hz) as the entered \code{frame_rate}, which is the frame
-rate the resulting animation created from this model will be played back
-at. If the speed profile is in a different frequency than common video
-frame rates (e.g, 24, 30, 60 fps) it is recommended to interpolate or
-subsample it to be so. I can't guarantee all playback software will
-correctly play videos encoded at odd frame rates, though you are free to
-try.
+(i.e. same Hz) as the entered \code{frame_rate}, which is the frame rate
+the resulting animation created from this model will be played back at. If
+the speed profile is in a different frequency than common video frame rates
+(e.g, 24, 30, 60 fps) it is recommended to interpolate or subsample it to
+be so. I can't guarantee all playback software will correctly play videos
+encoded at odd frame rates, though you are free to try.
 
 The output list object can be used to create a looming animation in
 \code{\link{looming_animation}}. Unlike \code{constant_speed_model}, no
@@ -79,10 +77,7 @@ Inputs should be in \code{cm}, speeds in \code{cm/s}, and frame rate in
 x <- seq(1, 500, 1)
 
 ## Use the variable speed vector to create the model
-loom_model <- variable_speed_model(x,
-                                   screen_distance = 20,
-                                   frame_rate = 60,
-                                   attacker_diameter = 50)
+loom_model <- variable_speed_model(x, screen_distance = 20, frame_rate = 60, attacker_diameter = 50)
 
 }
 \seealso{
