@@ -125,9 +125,8 @@ precise parameters to be created.</p>
     <tr>
       <th>x</th>
       <td><p>numeric. Vector of speeds (cm/s) of the hypothetical approaching
-attacker at the same frequency (Hz) as the <code>frame_rate</code>. Length
-of the vector will thus determine total duration of the resulting
-animation.</p></td>
+attacker at the same frequency (Hz) as the <code>frame_rate</code>. Length of the
+vector will thus determine total duration of the resulting animation.</p></td>
     </tr>
     <tr>
       <th>screen_distance</th>
@@ -157,13 +156,12 @@ diameter for each frame in the animation.</p>
     <p>Calculates the screen diameters for a modelled object of specified
 size approaching at a variable speed. The variable speed must be supplied
 as a vector of speeds (operator <code>x</code>) in cm/s at the same frequency
-(i.e. same Hz) as the entered <code>frame_rate</code>, which is the frame
-rate the resulting animation created from this model will be played back
-at. If the speed profile is in a different frequency than common video
-frame rates (e.g, 24, 30, 60 fps) it is recommended to interpolate or
-subsample it to be so. I can't guarantee all playback software will
-correctly play videos encoded at odd frame rates, though you are free to
-try.</p>
+(i.e. same Hz) as the entered <code>frame_rate</code>, which is the frame rate
+the resulting animation created from this model will be played back at. If
+the speed profile is in a different frequency than common video frame rates
+(e.g, 24, 30, 60 fps) it is recommended to interpolate or subsample it to
+be so. I can't guarantee all playback software will correctly play videos
+encoded at odd frame rates, though you are free to try.</p>
 <p>The output list object can be used to create a looming animation in
 <code><a href='looming_animation.html'>looming_animation</a></code>. Unlike <code>constant_speed_model</code>, no
 <code>starting_distance</code> operator is required: it is assumed the final
@@ -202,11 +200,7 @@ are not concerned with the precise details, see
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1</span>, <span class='fl'>500</span>, <span class='fl'>1</span>)
 
 <span class='co'>## Use the variable speed vector to create the model</span>
-<span class='no'>loom_model</span> <span class='kw'>&lt;-</span> <span class='fu'>variable_speed_model</span>(
-                     <span class='no'>x</span>,
-                     <span class='kw'>screen_distance</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-                     <span class='kw'>frame_rate</span> <span class='kw'>=</span> <span class='fl'>60</span>,
-                     <span class='kw'>attacker_diameter</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div></pre>
+<span class='no'>loom_model</span> <span class='kw'>&lt;-</span> <span class='fu'>variable_speed_model</span>(<span class='no'>x</span>, <span class='kw'>screen_distance</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>frame_rate</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>attacker_diameter</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
