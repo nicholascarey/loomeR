@@ -17,4 +17,3 @@ Imports:
     glue, plotrix
 Suggests: knitr,
     rmarkdown, testthat
-VignetteBuilder: knitr

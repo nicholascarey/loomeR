@@ -69,11 +69,10 @@
 #' x <- seq(1, 500, 1)
 #'
 #' ## Use the variable speed vector to create the model
-#' loom_model <- variable_speed_model(
-#'                      x,
-#'                      screen_distance = 20,
-#'                      frame_rate = 60,
-#'                      attacker_diameter = 50)
+#' loom_model <- variable_speed_model(x,
+#'                                    screen_distance = 20,
+#'                                    frame_rate = 60,
+#'                                    attacker_diameter = 50)
 #'
 #' @author Nicholas Carey - \email{nicholascarey@gmail.com}
 #'
