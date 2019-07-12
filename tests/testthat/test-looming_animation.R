@@ -126,6 +126,7 @@ expect_message(looming_animation(x,
 ## test system command runs
 skip_on_travis()
 skip_on_appveyor()
+skip_on_cran()
 mod <- diameter_model(start_diameter = 10,
                       end_diameter = 9.5,
                       duration = 1,
