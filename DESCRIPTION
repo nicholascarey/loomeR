@@ -1,7 +1,7 @@
 Package: loomeR
 Type: Package
 Title: Looming Animations for Use in Behavioural and Neurological Experiments
-Date: 2019-01-11
+Date: 2019-07-11
 Version: 0.3.0
 Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
