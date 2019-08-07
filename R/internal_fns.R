@@ -73,7 +73,23 @@ os <- function() {
 #' @export
 image_progress <- function (x, max = 100) {
   percent <- x / max * 100
-  cat(sprintf('\r[%-50s] %d%% Generating image files',
+  cat(sprintf('\r[%-50s] %d%% Generating image files...',
+              paste(rep('=', percent / 2), collapse = ''),
+              floor(percent)))
+  if (x == max)
+    cat('\n')
+}
+
+#' Display preparing video progress bar
+#'
+#' @details
+#' Simply implements a delay
+#'
+#' @keywords internal
+#' @export
+prep_progress <- function (x, max = 100) {
+  percent <- x / max * 100
+  cat(sprintf('\r[%-50s] %d%% Preparing to create video file...',
               paste(rep('=', percent / 2), collapse = ''),
               floor(percent)))
   if (x == max)

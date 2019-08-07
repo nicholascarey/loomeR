@@ -663,6 +663,11 @@ looming_animation <-
 
 # Run ffmpeg command ------------------------------------------------------
 
+    ## Add 5 second delay (for slow PCs to make sure file system has updated )
+    for(i in 1:10){
+      prep_progress(i, max = 10)
+      Sys.sleep(0.5)}
+
     ## ffmpeg options
     # -y (global) = Overwrite output files without asking
     # -r = Set frame rate (Hz value, fraction or abbreviation)
