@@ -336,6 +336,7 @@
 #' @importFrom grDevices dev.off png
 #' @importFrom graphics arrows par plot.new rect text
 #' @importFrom utils write.csv
+#' @importFrom stringr str_match
 #'
 #' @export
 
@@ -379,6 +380,7 @@ looming_animation <-
            start_marker_colour = "black",
            start_marker_size = 2,
            loop = 1,
+           pause = 0,
            save_data = FALSE,
            filename = "animation"){
 
@@ -417,6 +419,8 @@ looming_animation <-
     ## get total frames of the animation - useful later for adding frame markers
     total_frames_anim <- nrow(cs_model)
 
+
+# Padding -----------------------------------------------------------------
 
     ## use pad to duplicate starting frame the required number of times
     ## this modifies the input 'constant_speed_model' cs_model and replaces it
@@ -460,9 +464,13 @@ looming_animation <-
     }
 
 
+# Total Frames ------------------------------------------------------------
+
     ## total frames
     total_frames <- nrow(cs_model)
 
+
+# Correct diameters -------------------------------------------------------
 
     ## use correction factor to modify diameters
     if(!is.null(correction)){
@@ -471,7 +479,9 @@ looming_animation <-
       cs_model$diam_on_screen_corrected <- cs_model$diam_on_screen
     }
 
-    ## create image for each frame
+
+# Loop to create images ---------------------------------------------------
+
     for(i in 1:total_frames){
 
       # create filename with leading zeros up to 6 numerals total
@@ -627,9 +637,14 @@ looming_animation <-
       perc_done <- round(i/total_frames*100)
       image_progress(perc_done)
 
+      ## pause
+      Sys.sleep(pause)
+
     } # end loop
 
-    ## save data
+
+# Export data -------------------------------------------------------------
+
     if(save_data == TRUE){
       exp_filename <- glue('ANIM_from_',
                              deparse(quote(x)),
@@ -645,6 +660,8 @@ looming_animation <-
       write.csv(cs_model, file = glue(exp_filename))
     }
 
+
+# Run ffmpeg command ------------------------------------------------------
 
     ## ffmpeg options
     # -y (global) = Overwrite output files without asking
@@ -719,6 +736,22 @@ looming_animation <-
     if(loop > 1) message(glue('Resulting {filename}_loop.mp4 video should be {duration_loop}s in duration and contain {loop} loops.'))
     message("")
     message('Any ffmpeg errors should be listed above')
+
+
+# Check total frames of video are correct ---------------------------------
+    ## check and save video metadata
+    ffmpeg_log <- suppressWarnings(system2(command = "ffmpeg", args = glue("-i {filename}.mp4 -map 0:v:0 -c copy -f null -"), stderr = TRUE))
+
+    ## where is total frames within metadata
+    frames_loc <- grep("frame=", ffmpeg_log)
+
+    ## Extract, trim white space and convert to numeric
+    n_frames <- str_match(ffmpeg_log[frames_loc], "frame= (.*?) fps=")
+    n_frames <-trimws(n_frames[,2])
+    n_frames <- as.numeric(n_frames)
+
+    if(n_frames != total_frames) warning("\nWARNING: \nTotal number of frames in the output video does not match total number in model.\nSome frames may have been dropped during conversion.\nTry using 'pause = ' to slow down the function.")
+
 
   }
 

@@ -13,7 +13,7 @@ looming_animation(x, correction = 0.0285, width = 1280,
   frame_number_size = 2, frame_number_rotation = 0,
   frame_number_inset = 0.05, start_marker = TRUE,
   start_marker_colour = "black", start_marker_size = 2, loop = 1,
-  save_data = FALSE, filename = "animation")
+  pause = 0, save_data = FALSE, filename = "animation")
 }
 \arguments{
 \item{x}{list. A list object of class \code{constant_speed_model},
