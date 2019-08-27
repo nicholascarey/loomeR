@@ -102,6 +102,12 @@ animation. Any value of 2 or higher will mean an additional video file is
 created called \code{animation_loop.mp4} with the original animation (including
 any padding) repeated this number of times.}
 
+\item{pause}{numeric. Default = 0. For slow PCs a delay can be added to
+ensure the filesystem is not overloaded. This operator adds a delay in
+seconds to the generation of each frame. E.g. for a 600 frame video, 'pause
+= 0.05' will add an \emph{additional} 30 seconds (600 * 0.05) to the total time
+taken.}
+
 \item{save_data}{logical. If \code{=TRUE}, exports to the current working
 directory a \code{.csv} file containing the data used to make the
 animation, including the column of values scaled using the
