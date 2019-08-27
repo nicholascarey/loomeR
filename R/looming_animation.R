@@ -229,7 +229,7 @@
 #'   periodically and manually delete unwanted files.
 #'
 #' @section Dependencies: The function requires the following packages:
-#'   \code{glue}, \code{plotrix}
+#'   \code{glue}, \code{plotrix}, \code{stringr}
 #'
 #' @seealso \code{\link{constant_speed_model}},
 #'   \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
