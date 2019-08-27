@@ -103,10 +103,10 @@ created called \code{animation_loop.mp4} with the original animation (including
 any padding) repeated this number of times.}
 
 \item{pause}{numeric. Default = 0. For slow PCs a delay can be added to
-ensure the filesystem is not overloaded. This operator adds a delay in
-seconds to the generation of each frame. E.g. for a 600 frame video, 'pause
-= 0.05' will add an \emph{additional} 30 seconds (600 * 0.05) to the total time
-taken.}
+ensure the filesystem is not overloaded by having to write so many image
+files. This adds a delay (in seconds) to the generation of each frame. E.g.
+for a 600 frame video, 'pause = 0.05' will add an \emph{additional} 30 seconds
+(600 * 0.05) to the total time taken.}
 
 \item{save_data}{logical. If \code{=TRUE}, exports to the current working
 directory a \code{.csv} file containing the data used to make the
@@ -144,7 +144,8 @@ this as the current working directory before running the function. If you
 want to save an animation, you should move or rename it, or change the
 \code{filename} input before running the function again or it will get
 overwritten. It has not been rigorously tested on older systems with slow
-read-write speeds to the hard drive, which may cause unknown problems.
+read-write speeds to the hard drive, which may cause unknown problems (but
+see the \code{pause} operator, which allows the function to be slowed down)
 Please provide feedback if you encounter any issues.
 
 The function is capable of controlling precise details of how the object is

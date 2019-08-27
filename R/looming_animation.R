@@ -24,7 +24,8 @@
 #'   want to save an animation, you should move or rename it, or change the
 #'   `filename` input before running the function again or it will get
 #'   overwritten. It has not been rigorously tested on older systems with slow
-#'   read-write speeds to the hard drive, which may cause unknown problems.
+#'   read-write speeds to the hard drive, which may cause unknown problems (but
+#'   see the `pause` operator, which allows the function to be slowed down)
 #'   Please provide feedback if you encounter any issues.
 #'
 #'   The function is capable of controlling precise details of how the object is
@@ -185,8 +186,6 @@
 #'
 #'
 #'
-#'
-#'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
 #'   \code{setwd()} to the current or desired folder. It has not been
@@ -297,10 +296,10 @@
 #'   created called `animation_loop.mp4` with the original animation (including
 #'   any padding) repeated this number of times.
 #' @param pause numeric. Default = 0. For slow PCs a delay can be added to
-#'   ensure the filesystem is not overloaded. This operator adds a delay in
-#'   seconds to the generation of each frame. E.g. for a 600 frame video, 'pause
-#'   = 0.05' will add an *additional* 30 seconds (600 * 0.05) to the total time
-#'   taken.
+#'   ensure the filesystem is not overloaded by having to write so many image
+#'   files. This adds a delay (in seconds) to the generation of each frame. E.g.
+#'   for a 600 frame video, 'pause = 0.05' will add an *additional* 30 seconds
+#'   (600 * 0.05) to the total time taken.
 #' @param save_data logical. If \code{=TRUE}, exports to the current working
 #'   directory a \code{.csv} file containing the data used to make the
 #'   animation, including the column of values scaled using the
@@ -343,21 +342,21 @@
 #'
 #' @importFrom glue glue
 #' @importFrom plotrix draw.circle
+#' @importFrom stringr str_match
 #' @importFrom grDevices dev.off png
 #' @importFrom graphics arrows par plot.new rect text
 #' @importFrom utils write.csv
-#' @importFrom stringr str_match
 #'
 #' @export
 
 ## To Do
-## option to set position (i.e. distance from side) of dots and frame number
-## gif export option for looping? - would be gigantic for long videos
+## gif export option? - would be gigantic for long videos
 ## option to NOT convert images using ffmpeg, but save them
 
 ## optimisations
 # use apply instead of loop
-# faster way of padding? rather than looping for padded frames, duplicating that frame more quickly?
+# faster way of padding? rather than looping for padded frames, duplicating
+# that frame more quickly in file system?
 # play with ffmpeg options to reduce file size of pngs
 
 ## test
@@ -413,13 +412,13 @@ looming_animation <-
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
       width <- width +1
-      message(glue("Screen `width` cannot be an odd number."))
-      message(glue("Screen `width` modified to {width}."))
+      message(glue::glue("Screen `width` cannot be an odd number."))
+      message(glue::glue("Screen `width` modified to {width}."))
     }
     if(height %% 2 != 0){
       height <- height +1
-      message(glue("Screen `height` cannot be an odd number."))
-      message(glue("Screen `height` modified to {height}"))
+      message(glue::glue("Screen `height` cannot be an odd number."))
+      message(glue::glue("Screen `height` modified to {height}"))
     }
 
     ## extract data and parameters
@@ -430,7 +429,7 @@ looming_animation <-
     total_frames_anim <- nrow(cs_model)
 
 
-# Padding -----------------------------------------------------------------
+    # Padding -----------------------------------------------------------------
 
     ## use pad to duplicate starting frame the required number of times
     ## this modifies the input 'constant_speed_model' cs_model and replaces it
@@ -474,13 +473,13 @@ looming_animation <-
     }
 
 
-# Total Frames ------------------------------------------------------------
+    # Total Frames ------------------------------------------------------------
 
     ## total frames
     total_frames <- nrow(cs_model)
 
 
-# Correct diameters -------------------------------------------------------
+    # Correct diameters -------------------------------------------------------
 
     ## use correction factor to modify diameters
     if(!is.null(correction)){
@@ -490,7 +489,7 @@ looming_animation <-
     }
 
 
-# Loop to create images ---------------------------------------------------
+    # Loop to create images ---------------------------------------------------
 
     for(i in 1:total_frames){
 
@@ -551,31 +550,31 @@ looming_animation <-
         }
 
         ## draw dot in corner of first animation frame
-        if(i == asf){draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                 r <- dots_size,
-                                 nv=100,
-                                 border=dots_colour,
-                                 col=dots_colour,
-                                 lty=1,
-                                 lwd=1)}
+        if(i == asf){plotrix::draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                          r <- dots_size,
+                                          nv=100,
+                                          border=dots_colour,
+                                          col=dots_colour,
+                                          lty=1,
+                                          lwd=1)}
 
         # draw dot in corner every nth animation frame
-        if(af %% dots_interval == 0) {draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                                  r <- dots_size,
-                                                  nv=100,
-                                                  border=dots_colour,
-                                                  col=dots_colour,
-                                                  lty=1,
-                                                  lwd=1)}
+        if(af %% dots_interval == 0) {plotrix::draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                                           r <- dots_size,
+                                                           nv=100,
+                                                           border=dots_colour,
+                                                           col=dots_colour,
+                                                           lty=1,
+                                                           lwd=1)}
 
         # draw dot in corner of last frame
-        if(i == total_frames) {draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                           r <- dots_size,
-                                           nv=100,
-                                           border=dots_colour,
-                                           col=dots_colour,
-                                           lty=1,
-                                           lwd=1)}
+        if(i == total_frames) {plotrix::draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                                    r <- dots_size,
+                                                    nv=100,
+                                                    border=dots_colour,
+                                                    col=dots_colour,
+                                                    lty=1,
+                                                    lwd=1)}
       }
 
 
@@ -653,25 +652,25 @@ looming_animation <-
     } # end loop
 
 
-# Export data -------------------------------------------------------------
+    # Export data -------------------------------------------------------------
 
     if(save_data == TRUE){
-      exp_filename <- glue('ANIM_from_',
-                             deparse(quote(x)),
-                             '_',
-                             {frame_rate},
-                             'fps_',
-                             {width},
-                             'x',
-                             {height},
-                             '.csv'
+      exp_filename <- glue::glue('ANIM_from_',
+                                 deparse(quote(x)),
+                                 '_',
+                                 {frame_rate},
+                                 'fps_',
+                                 {width},
+                                 'x',
+                                 {height},
+                                 '.csv'
       )
 
-      write.csv(cs_model, file = glue(exp_filename))
+      write.csv(cs_model, file = glue::glue(exp_filename))
     }
 
 
-# Run ffmpeg command ------------------------------------------------------
+    # Run ffmpeg command ------------------------------------------------------
 
     ## Add 5 second delay (for slow PCs to make sure file system has updated )
     for(i in 1:10){
@@ -698,7 +697,7 @@ looming_animation <-
     if(os() == "mac"){
       message("Encoding movie...")
       instruction_string <-
-        glue(
+        glue::glue(
           ## rm loom_img_*.png'
           ## old remove command above - ran into Terminal "Argument list too long" error when there were huge numbers of files
           ## this seems to work ok
@@ -716,7 +715,7 @@ looming_animation <-
     else if(os() == "win"){
       message("Encoding movie...")
       instruction_string <-
-        glue(
+        glue::glue(
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4'
         )
 
@@ -738,7 +737,7 @@ looming_animation <-
     ## make looped video
     if(loop > 1){
       loop_n <- loop-1
-      instruction_string <- glue(
+      instruction_string <- glue::glue(
         'ffmpeg -y -stream_loop {loop_n} -i {filename}.mp4 -c copy {filename}_loop.mp4')
       system(instruction_string)
     }
@@ -746,16 +745,16 @@ looming_animation <-
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
     cat("\n# Conversion complete # -------------------------\n")
-    message(glue('Resulting {filename}.mp4 video should be {duration}s in duration.'))
+    message(glue::glue('Resulting {filename}.mp4 video should be {duration}s in duration.'))
     if(loop > 1) cat("\n# Looped video created # ------------------------\n")
-    if(loop > 1) message(glue('Resulting {filename}_loop.mp4 video should be {duration_loop}s in duration and contain {loop} loops.'))
+    if(loop > 1) message(glue::glue('Resulting {filename}_loop.mp4 video should be {duration_loop}s in duration and contain {loop} loops.'))
     message("")
     message('Any ffmpeg errors should be listed above')
 
 
-# Check total frames of video are correct ---------------------------------
+    # Check total frames of video are correct ---------------------------------
     ## check and save video metadata
-    ffmpeg_log <- suppressWarnings(system2(command = "ffmpeg", args = glue("-i {filename}.mp4 -map 0:v:0 -c copy -f null -"), stderr = TRUE))
+    ffmpeg_log <- suppressWarnings(system2(command = "ffmpeg", args = glue::glue("-i {filename}.mp4 -map 0:v:0 -c copy -f null -"), stderr = TRUE))
 
     ## where is total frames within metadata
     frames_loc <- grep("frame=", ffmpeg_log)
