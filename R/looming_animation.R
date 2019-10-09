@@ -186,6 +186,7 @@
 #'
 #'
 #'
+#'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
 #'   \code{setwd()} to the current or desired folder. It has not been
@@ -305,6 +306,8 @@
 #'   animation, including the column of values scaled using the
 #'   \code{correction} value. File name: \code{ANIM_from_**name of R object
 #'   used**_**frame rate**_**display resolution**.csv}
+#' @param save_images logical. If \code{=TRUE}, does not delete image files
+#'   after the animation video is created.
 #' @param filename string. Desired name of the output file without file
 #'   extension. Default is `animation`, and output file is `animation.mp4`. Also
 #'   used for looped video output, if the `loop` operator is used.
@@ -391,6 +394,7 @@ looming_animation <-
            loop = 1,
            pause = 0,
            save_data = FALSE,
+           save_images = FALSE,
            filename = "animation"){
 
     ## check class
@@ -693,6 +697,7 @@ looming_animation <-
     ## && rm *.png OR del *.png  = delete ALL png files on Mac or Win respectively
 
     ## build system/ffmpeg command on OS specific basis
+
     ## For Mac
     if(os() == "mac"){
       message("Encoding movie...")
@@ -701,12 +706,15 @@ looming_animation <-
           ## rm loom_img_*.png'
           ## old remove command above - ran into Terminal "Argument list too long" error when there were huge numbers of files
           ## this seems to work ok
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4; find . -maxdepth 1 -name "loom_img_*.png" -delete'
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4'
         )
-
-      message("Deleting image files...")
-      ## run the command
       system(instruction_string)
+
+      if(isFALSE(save_images)){
+        message("\nDeleting image files...")
+        system('find . -maxdepth 1 -name "loom_img_*.png" -delete')
+        }
+      ## run the command
     }
 
     ## For Windows
@@ -722,9 +730,11 @@ looming_animation <-
       ## run command
       system(instruction_string)
 
-      message("Deleting image files...")
-      ## delete png files
-      shell("del loom_img_*.png")
+      if(isFALSE(save_images)){
+        message("\nDeleting image files...")
+        ## delete png files
+        shell("del loom_img_*.png")
+      }
     }
 
     ## calculate and round duration for message

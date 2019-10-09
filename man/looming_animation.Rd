@@ -13,7 +13,8 @@ looming_animation(x, correction = 0.0285, width = 1280,
   frame_number_size = 2, frame_number_rotation = 0,
   frame_number_inset = 0.05, start_marker = TRUE,
   start_marker_colour = "black", start_marker_size = 2, loop = 1,
-  pause = 0, save_data = FALSE, filename = "animation")
+  pause = 0, save_data = FALSE, save_images = FALSE,
+  filename = "animation")
 }
 \arguments{
 \item{x}{list. A list object of class \code{constant_speed_model},
@@ -113,6 +114,9 @@ directory a \code{.csv} file containing the data used to make the
 animation, including the column of values scaled using the
 \code{correction} value. File name: \code{ANIM_from_**name of R object
   used**_**frame rate**_**display resolution**.csv}}
+
+\item{save_images}{logical. If \code{=TRUE}, does not delete image files
+after the animation video is created.}
 
 \item{filename}{string. Desired name of the output file without file
 extension. Default is \code{animation}, and output file is \code{animation.mp4}. Also
