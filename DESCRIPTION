@@ -13,7 +13,7 @@ BugReports: https://github.com/nicholascarey/loomeR/issues
 LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-Imports:
+Depends:
     glue, plotrix
 Suggests: knitr,
     rmarkdown, testthat
