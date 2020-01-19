@@ -11,7 +11,7 @@ Encoding: UTF-8
 URL: https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570
 BugReports: https://github.com/nicholascarey/loomeR/issues
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
 Depends:
     glue, plotrix

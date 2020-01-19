@@ -4,16 +4,35 @@
 \alias{looming_animation}
 \title{Create a looming animation}
 \usage{
-looming_animation(x, correction = 0.0285, width = 1280,
-  height = 1024, fill = "black", background = "white", pad = NULL,
-  pad_blank = FALSE, dots = FALSE, dots_interval = 20,
-  dots_colour = "grey", dots_position = "br", dots_size = 0.005,
-  dots_inset = 0.05, frame_number = FALSE, frame_number_tag = NULL,
-  frame_number_colour = "grey", frame_number_position = "tr",
-  frame_number_size = 2, frame_number_rotation = 0,
-  frame_number_inset = 0.05, start_marker = TRUE,
-  start_marker_colour = "black", start_marker_size = 2, loop = 1,
-  save_data = FALSE, filename = "animation")
+looming_animation(
+  x,
+  correction = 0.0285,
+  width = 1280,
+  height = 1024,
+  fill = "black",
+  background = "white",
+  pad = NULL,
+  pad_blank = FALSE,
+  dots = FALSE,
+  dots_interval = 20,
+  dots_colour = "grey",
+  dots_position = "br",
+  dots_size = 0.005,
+  dots_inset = 0.05,
+  frame_number = FALSE,
+  frame_number_tag = NULL,
+  frame_number_colour = "grey",
+  frame_number_position = "tr",
+  frame_number_size = 2,
+  frame_number_rotation = 0,
+  frame_number_inset = 0.05,
+  start_marker = TRUE,
+  start_marker_colour = "black",
+  start_marker_size = 2,
+  loop = 1,
+  save_data = FALSE,
+  filename = "animation"
+)
 }
 \arguments{
 \item{x}{list. A list object of class \code{constant_speed_model},
@@ -284,11 +303,11 @@ size.
 
 \section{Looping animations}{
  If you want the animation to loop or repeat a
-set number of times, use the \code{loop =} operator. If set with any value
+set number of times, use the \verb{loop =} operator. If set with any value
 greater than the default of \code{1} this lets you output an additional video of
 the animation looped the set number of times. In this case there will be
 two output videos, the original \code{animation.mp4} (or whatever is set with
-the \code{filename} input) plus a looped version appended with \code{_loop.mp4}. This
+the \code{filename} input) plus a looped version appended with \verb{_loop.mp4}. This
 process is extremely fast, since it does not recreate the animation for
 each loop, but just copies the \code{animation.mp4} file the set number of times
 into a new video file.

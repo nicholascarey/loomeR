@@ -12,13 +12,13 @@
 #'   for each frame from the specified starting distance until the hypothetical
 #'   distance between the attacker and target is zero.
 #'
-#'   Requires the frame rate at which the subsequent animation will be
-#'   played, and distance from the screen at which the observing specimen will
-#'   be located. These details are important in experiments where you want to
-#'   precisely determine at what time, perceived distance, or perceived velocity
-#'   of an attack an escape response occurs. Note: if the specimen is closer or
-#'   further away than the specified screen distance, the animation will be
-#'   perceived as a different distance and a different velocity.
+#'   Requires the frame rate at which the animation will be played, and distance
+#'   from the screen at which the observing specimen will be located. These
+#'   details are important in experiments where you want to precisely determine
+#'   at what time, perceived distance, or perceived velocity of an attack an
+#'   escape response occurs. Note: if the specimen is closer or further away
+#'   than the specified screen distance, the animation will be perceived as a
+#'   different distance and a different velocity.
 #'
 #'   If you need to create a looming animation simply to elicit a response, and
 #'   are not concerned with the precise details, see
