@@ -425,7 +425,12 @@ looming_animation <-
       message(glue::glue("Screen `height` modified to {height}"))
     }
 
-    ## extract data and parameters
+    ## check pause is not too high, since it will massively increase the time
+    ## taken
+    if(pause >= 0.5) warning("The `pause` value is quite high.\nGenerally, it is not necessary to pause for more than a few milliseconds per frame, e.g. 'pause = 0.05'.")
+
+
+    # Extract data and parameters ---------------------------------------------
     cs_model <- x$model
     frame_rate <- x$frame_rate
 
