@@ -4,8 +4,13 @@
 \alias{diameter_model}
 \title{Diameter Model}
 \usage{
-diameter_model(start_diameter = 3, end_diameter = 50, duration = 3,
-  frame_rate = 60, expansion = "constant_speed")
+diameter_model(
+  start_diameter = 3,
+  end_diameter = 50,
+  duration = 3,
+  frame_rate = 60,
+  expansion = "constant_speed"
+)
 }
 \arguments{
 \item{start_diameter}{numeric. Diameter (cm) you want the animation to start

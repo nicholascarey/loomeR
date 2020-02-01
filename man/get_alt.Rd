@@ -21,19 +21,19 @@ if this is different from that used to create the model.}
 }
 \value{
 The function returns a \code{list} object of class \code{get_alt}. The first
-value in the output object (\code{$alt}) is the ALT in rad/s at the response
+value in the output object (\verb{$alt}) is the ALT in rad/s at the response
 frame (with latency correction if entered). It also includes the original
-looming animation model (\code{$original_model}), and an adjusted model for any
-\code{new_distance}  (\code{$adjusted_model}). It also returns perceived speed and
-distance (\code{$speed_perceived}, \code{$distance_perceived}) at the response frame
+looming animation model (\verb{$original_model}), and an adjusted model for any
+\code{new_distance}  (\verb{$adjusted_model}). It also returns perceived speed and
+distance (\verb{$speed_perceived}, \verb{$distance_perceived}) at the response frame
 (with latency correction) adjusted for a new viewing distance, and also the
 original speed and distance in the model at that same frame without this
-correction (\code{$speed_in_model}, \code{$distance_in_model}). All angular and
+correction (\verb{$speed_in_model}, \verb{$distance_in_model}). All angular and
 \strong{da/dt} results are returned in radians, as is typically used in the
-literature. However the output also includes these in degrees with a \code{_deg}
-suffix (e.g. \code{$alt} vs. \code{$alt_deg}). All calculated (\strong{a} & \strong{da/dt}) and
+literature. However the output also includes these in degrees with a \verb{_deg}
+suffix (e.g. \verb{$alt} vs. \verb{$alt_deg}). All calculated (\strong{a} & \strong{da/dt}) and
 adjusted (perceived speed and distance) parameters are available for every
-frame in the \code{$adjusted_model$model} component. Note, that because
+frame in the \verb{$adjusted_model$model} component. Note, that because
 \strong{da/dt} is a derivative, the \strong{da/dt} vector returned in
 \code{adjusted_model$model} will be one value shorter than the total number of
 frames, and therefore starts with a blank value (i.e. \code{NA}). During

@@ -4,8 +4,12 @@
 \alias{variable_speed_model}
 \title{Variable Speed Model}
 \usage{
-variable_speed_model(x, screen_distance = 20, frame_rate = 60,
-  attacker_diameter = 50)
+variable_speed_model(
+  x,
+  screen_distance = 20,
+  frame_rate = 60,
+  attacker_diameter = 50
+)
 }
 \arguments{
 \item{x}{numeric. Vector of speeds (cm/s) of the hypothetical approaching

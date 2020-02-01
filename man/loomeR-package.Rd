@@ -4,9 +4,14 @@
 \name{loomeR-package}
 \alias{loomeR}
 \alias{loomeR-package}
-\title{loomeR: Looming Animations for Use in Behavioural and Neurological Experiments}
+\title{loomeR: Looming Animations for Behavioural and Neurological Experiments}
 \description{
-Create and analyse looming animations for use in behavioural and neurological experiments.
+loomeR is an R package for creating looming animations for use in behavioural 
+  and neurological experiments. In addition, escape response parameters, for example the Apparent 
+  Looming Threshold (ALT) of an escape, can be determined. Looming animations are used in a range of 
+  physiological, psychological and behavioural sciences to simulate an approaching 
+  threat and investigate phenomena such as perception, visual latency, escape responses, 
+  and neurological functioning.
 }
 \seealso{
 Useful links:
