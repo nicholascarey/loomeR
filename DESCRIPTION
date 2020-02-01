@@ -1,17 +1,23 @@
 Package: loomeR
 Type: Package
-Title: Looming Animations for Use in Behavioural and Neurological Experiments
+Title: Looming Animations for Behavioural and Neurological Experiments
 Date: 2019-07-11
 Version: 0.3.0
 Author: Nicholas Carey
 Maintainer: Nicholas Carey <nicholascarey@gmail.com>
-Description: Create and analyse looming animations for use in behavioural and neurological experiments.
+Description: loomeR is an R package for creating looming animations for use in behavioural 
+  and neurological experiments. In addition, escape response parameters, for example the Apparent 
+  Looming Threshold (ALT) of an escape, can be determined. Looming animations are used in a range of 
+  physiological, psychological and behavioural sciences to simulate an approaching 
+  threat and investigate phenomena such as perception, visual latency, escape responses, 
+  and neurological functioning. 
 License: GPL-3
 Encoding: UTF-8
+SystemRequirements: ffmpeg installed ()
 URL: https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570
 BugReports: https://github.com/nicholascarey/loomeR/issues
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
 Imports:
     glue, plotrix, stringr
