@@ -2,6 +2,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
+[![GitHub R package
+version](https://img.shields.io/github/r-package/v/nicholascarey/loomeR)](https://github.com/nicholascarey/loomeR)
 [![R-CMD-check](https://github.com/nicholascarey/loomeR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nicholascarey/loomeR/actions/workflows/R-CMD-check.yaml)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/nicholascarey/loomeR?branch=master&svg=true)](https://ci.appveyor.com/project/nicholascarey/loomeR)
@@ -24,10 +26,18 @@ metric which describes the threshold where a specimen may initiate an
 escape movement based on a combination of the perceived distance and/or
 speed of an oncoming threat.
 
-<p align="center">
-<iframe src="https://player.vimeo.com/video/267812726" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+<!-- <p align="center"> -->
+<!-- <iframe src="https://player.vimeo.com/video/267812726" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+<!-- </p> -->
+
+<div style="padding:56.25% 0 0 0;position:relative;">
+
+<iframe src="https://player.vimeo.com/video/267812726?h=d85f84fdec&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Example looming animation">
 </iframe>
-</p>
+
+</div>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
 
 See the
 [Reference](https://nicholascarey.github.io/loomeR/reference/index.html)
