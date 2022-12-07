@@ -149,7 +149,7 @@ get_alt <-
 
     # Diameter model ----------------------------------------------------------
 
-    if(class(x) == "diameter_model"){
+    if(inherits(x, "diameter_model")){
 
       ## check screen_distance not empty
       if(is.null(new_distance))
@@ -219,7 +219,7 @@ get_alt <-
 
     # Constant speed model ----------------------------------------------------
 
-    if(class(x) == "constant_speed_model"){
+    if(inherits(x, "constant_speed_model")){
 
       ## save inputs for inclusion in final output
       original_model <- x
@@ -310,7 +310,7 @@ get_alt <-
 
     # Variable speed model ----------------------------------------------------
 
-    if(class(x) == "variable_speed_model"){
+    if(inherits(x, "variable_speed_model")){
 
       ## save inputs for inclusion in final output
       original_model <- x

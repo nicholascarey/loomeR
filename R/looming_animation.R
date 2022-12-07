@@ -402,11 +402,11 @@ looming_animation <-
       stop("Input must be an object of class 'constant_speed_model', 'variable_speed_model', or 'diameter_model'")
 
     ## class detection message - assists with testing
-    if(class(x) == "constant_speed_model"){
+    if(inherits(x, "constant_speed_model")){
       message("constant_speed_model detected.")
-    } else if(class(x) == "variable_speed_model"){
+    } else if(inherits(x, "variable_speed_model")){
       message("variable_speed_model detected.")
-    } else if(class(x) == "diameter_model"){
+    } else if(inherits(x, "diameter_model")){
       message("diameter_model detected.")}
 
     ## check loop is an integer
