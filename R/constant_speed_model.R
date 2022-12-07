@@ -12,9 +12,9 @@
 #'   for each frame from the specified starting distance until the hypothetical
 #'   distance between the attacker and target is zero.
 #'
-#'   Requires the frame rate at which the subsequent animation will be
-#'   played, and distance from the screen at which the observing specimen will
-#'   be located. These details are important in experiments where you want to
+#'   Requires the frame rate at which the subsequent animation will be played,
+#'   and distance from the screen at which the observing specimen will be
+#'   located. These details are important in experiments where you want to
 #'   precisely determine at what time, perceived distance, or perceived velocity
 #'   of an attack an escape response occurs. Note: if the specimen is closer or
 #'   further away than the specified screen distance, the animation will be
@@ -24,24 +24,24 @@
 #'   are not concerned with the precise details, see
 #'   \code{\link{diameter_model}}.
 #'
-#'   Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
-#'   \code{Hz} or \code{Frames per Second}.
+#'   Inputs should be in `cm`, speed in `cm/s`, and frame rate in `Hz` (i.e.
+#'   frames per second).
 #'
 #' @seealso \code{\link{looming_animation}},
 #'   \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
 #'   \code{\link{diameter_model}}
 #'
-#' @param screen_distance numeric. Distance (cm) from the playback screen to
+#' @param screen_distance Numeric. Distance (cm) from the playback screen to
 #'   your specimen.
-#' @param frame_rate numeric. Frames per second (Hz) you want the resulting
+#' @param frame_rate Numeric. Frames per second (Hz) you want the resulting
 #'   animation to be.
-#' @param speed numeric. Speed (cm/s) of the hypothetical approaching attacker.
-#' @param attacker_diameter numeric. Diameter of the hypothetical approaching
-#'   attacker
-#' @param start_distance numeric. Starting distance of the hypothetical
+#' @param speed Numeric. Speed (cm/s) of the hypothetical approaching attacker.
+#' @param attacker_diameter Numeric. Diameter (cm) of the hypothetical
+#'   approaching attacker
+#' @param start_distance Numeric. Starting (cm) distance of the hypothetical
 #'   approaching attacker
 #'
-#' @return List object containing the input parameters and the resulting
+#' @return A `list` object containing the input parameters and the resulting
 #'   diameter for each frame in the animation.
 #'
 #' @examples
@@ -52,8 +52,7 @@
 #'                      attacker_diameter = 50,
 #'                      start_distance = 1000)
 #'
-#' @author Nicholas Carey - \email{nicholascarey@gmail.com}
-#'
+#' @md
 #' @export
 
 constant_speed_model <-

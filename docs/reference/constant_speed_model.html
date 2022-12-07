@@ -71,26 +71,26 @@ be created.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>screen_distance</dt>
-<dd><p>numeric. Distance (cm) from the playback screen to
+<dd><p>Numeric. Distance (cm) from the playback screen to
 your specimen.</p></dd>
 
 
 <dt>frame_rate</dt>
-<dd><p>numeric. Frames per second (Hz) you want the resulting
+<dd><p>Numeric. Frames per second (Hz) you want the resulting
 animation to be.</p></dd>
 
 
 <dt>speed</dt>
-<dd><p>numeric. Speed (cm/s) of the hypothetical approaching attacker.</p></dd>
+<dd><p>Numeric. Speed (cm/s) of the hypothetical approaching attacker.</p></dd>
 
 
 <dt>attacker_diameter</dt>
-<dd><p>numeric. Diameter of the hypothetical approaching
-attacker</p></dd>
+<dd><p>Numeric. Diameter (cm) of the hypothetical
+approaching attacker</p></dd>
 
 
 <dt>start_distance</dt>
-<dd><p>numeric. Starting distance of the hypothetical
+<dd><p>Numeric. Starting (cm) distance of the hypothetical
 approaching attacker</p></dd>
 
 </dl></div>
@@ -98,7 +98,7 @@ approaching attacker</p></dd>
     <h2>Value</h2>
     
 
-<p>List object containing the input parameters and the resulting
+<p>A <code>list</code> object containing the input parameters and the resulting
 diameter for each frame in the animation.</p>
     </div>
     <div id="details">
@@ -109,9 +109,9 @@ output list object can be used to create a looming animation in
 <code><a href="looming_animation.html">looming_animation</a></code>. An object screen diameter is calculated
 for each frame from the specified starting distance until the hypothetical
 distance between the attacker and target is zero.</p>
-<p>Requires the frame rate at which the subsequent animation will be
-played, and distance from the screen at which the observing specimen will
-be located. These details are important in experiments where you want to
+<p>Requires the frame rate at which the subsequent animation will be played,
+and distance from the screen at which the observing specimen will be
+located. These details are important in experiments where you want to
 precisely determine at what time, perceived distance, or perceived velocity
 of an attack an escape response occurs. Note: if the specimen is closer or
 further away than the specified screen distance, the animation will be
@@ -119,18 +119,14 @@ perceived as a different distance and a different velocity.</p>
 <p>If you need to create a looming animation simply to elicit a response, and
 are not concerned with the precise details, see
 <code><a href="diameter_model.html">diameter_model</a></code>.</p>
-<p>Inputs should be in <code>cm</code>, speed in <code>cm/s</code>, and frame rate in
-<code>Hz</code> or <code>Frames per Second</code>.</p>
+<p>Inputs should be in <code>cm</code>, speed in <code>cm/s</code>, and frame rate in <code>Hz</code> (i.e.
+frames per second).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="looming_animation.html">looming_animation</a></code>,
 <code><a href="looming_animation_calib.html">looming_animation_calib</a></code>,  <code><a href="variable_speed_model.html">variable_speed_model</a></code>
 <code><a href="diameter_model.html">diameter_model</a></code></p></div>
-    </div>
-    <div id="author">
-    <h2>Author</h2>
-    <p>Nicholas Carey - <a href="mailto:nicholascarey@gmail.com">nicholascarey@gmail.com</a></p>
     </div>
 
     <div id="ref-examples">

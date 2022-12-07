@@ -13,22 +13,22 @@ constant_speed_model(
 )
 }
 \arguments{
-\item{screen_distance}{numeric. Distance (cm) from the playback screen to
+\item{screen_distance}{Numeric. Distance (cm) from the playback screen to
 your specimen.}
 
-\item{frame_rate}{numeric. Frames per second (Hz) you want the resulting
+\item{frame_rate}{Numeric. Frames per second (Hz) you want the resulting
 animation to be.}
 
-\item{speed}{numeric. Speed (cm/s) of the hypothetical approaching attacker.}
+\item{speed}{Numeric. Speed (cm/s) of the hypothetical approaching attacker.}
 
-\item{attacker_diameter}{numeric. Diameter of the hypothetical approaching
-attacker}
+\item{attacker_diameter}{Numeric. Diameter (cm) of the hypothetical
+approaching attacker}
 
-\item{start_distance}{numeric. Starting distance of the hypothetical
+\item{start_distance}{Numeric. Starting (cm) distance of the hypothetical
 approaching attacker}
 }
 \value{
-List object containing the input parameters and the resulting
+A \code{list} object containing the input parameters and the resulting
 diameter for each frame in the animation.
 }
 \description{
@@ -45,9 +45,9 @@ output list object can be used to create a looming animation in
 for each frame from the specified starting distance until the hypothetical
 distance between the attacker and target is zero.
 
-Requires the frame rate at which the subsequent animation will be
-played, and distance from the screen at which the observing specimen will
-be located. These details are important in experiments where you want to
+Requires the frame rate at which the subsequent animation will be played,
+and distance from the screen at which the observing specimen will be
+located. These details are important in experiments where you want to
 precisely determine at what time, perceived distance, or perceived velocity
 of an attack an escape response occurs. Note: if the specimen is closer or
 further away than the specified screen distance, the animation will be
@@ -57,8 +57,8 @@ If you need to create a looming animation simply to elicit a response, and
 are not concerned with the precise details, see
 \code{\link{diameter_model}}.
 
-Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in
-\code{Hz} or \code{Frames per Second}.
+Inputs should be in \code{cm}, speed in \code{cm/s}, and frame rate in \code{Hz} (i.e.
+frames per second).
 }
 \examples{
 loom_model <- constant_speed_model(
@@ -73,7 +73,4 @@ loom_model <- constant_speed_model(
 \code{\link{looming_animation}},
 \code{\link{looming_animation_calib}},  \code{\link{variable_speed_model}}
 \code{\link{diameter_model}}
-}
-\author{
-Nicholas Carey - \email{nicholascarey@gmail.com}
 }
