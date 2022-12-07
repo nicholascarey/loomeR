@@ -1,16 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- badges: start -->
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR)
-[![Travis build
-status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/nicholascarey/loomeR?branch=master&svg=true)](https://ci.appveyor.com/project/nicholascarey/loomeR)
+[![R-CMD-check](https://github.com/nicholascarey/loomeR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nicholascarey/loomeR/actions/workflows/R-CMD-check.yaml)
 [![Coverage
 status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg)](https://codecov.io/github/nicholascarey/loomeR?branch=master)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg)](https://doi.org/10.5281/zenodo.1212570)
-[![HitCount](http://hits.dwyl.io/nicholascarey/loomeR.svg)](http://hits.dwyl.io/nicholascarey/loomeR)
+<!-- badges: end -->
 
 # Welcome
 
