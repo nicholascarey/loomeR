@@ -3,6 +3,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/nicholascarey/loomeR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nicholascarey/loomeR/actions/workflows/R-CMD-check.yaml)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/nicholascarey/loomeR?branch=master&svg=true)](https://ci.appveyor.com/project/nicholascarey/loomeR)
 [![Coverage
 status](https://codecov.io/gh/nicholascarey/loomeR/branch/master/graph/badge.svg)](https://codecov.io/github/nicholascarey/loomeR?branch=master)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
@@ -111,6 +113,7 @@ preparation. For a quick evaluation try out the following code:
 library(loomeR) # load the package
 #> Loading required package: glue
 #> Loading required package: plotrix
+#> Loading required package: stringr
 
 # Simple constant speed model
 # (speed in cm/s, frame rate in Hz, all other inputs in cm)
@@ -196,7 +199,7 @@ citation("loomeR")
 #> 
 #> To cite package 'loomeR' in publications use:
 #> 
-#>   Carey N (2019). _loomeR: Looming Animations for Use in Behavioural
+#>   Carey N (2022). _loomeR: Looming Animations for Use in Behavioural
 #>   and Neurological Experiments_.
 #>   https://github.com/nicholascarey/loomeR,
 #>   https://doi.org/10.5281/zenodo.1212570.
@@ -206,7 +209,7 @@ citation("loomeR")
 #>   @Manual{,
 #>     title = {loomeR: Looming Animations for Use in Behavioural and Neurological Experiments},
 #>     author = {Nicholas Carey},
-#>     year = {2019},
+#>     year = {2022},
 #>     note = {https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570},
 #>   }
 #> 
