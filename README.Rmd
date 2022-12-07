@@ -27,13 +27,11 @@ knitr::opts_chunk$set(
 
 `loomeR` is an `R` package for creating looming animations for use in behavioural and neurological experiments, and analysing escape responses, for example the Apparent Looming Threshold (**ALT**) of an escape (*Dill 1974, Webb 1982*). Looming animations are used in a range of physiological, psychological and behavioural sciences to simulate an approaching threat and investigate phenomena such as perception, visual latency, escape responses, and neurological functioning. **ALT** is a metric which describes the threshold where a specimen may initiate an escape movement based on a combination of the perceived distance and/or speed of an oncoming threat. 
 
-<!-- <p align="center"> -->
+<p align="center">
 
-<!-- <iframe src="https://player.vimeo.com/video/267812726" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+<iframe src="https://player.vimeo.com/video/267812726" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-<!-- </p> -->
-
-<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/267812726?h=d85f84fdec&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Example looming animation"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+</p>
 
 See the [Reference](https://nicholascarey.github.io/loomeR/reference/index.html) page to view the detailed Help file for each function. 
 
