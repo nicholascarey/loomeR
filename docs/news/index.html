@@ -53,6 +53,56 @@
 <li><p><code>looming_animation</code> has a new <code>pause</code> input. This is for users on slow PCs where frames may be dropped because the filesystem is overloaded by having to write so many image files (see above). This operator adds a delay in seconds to the generation of each frame. Generally it should be a small value, but enough that your system doesn’t lag behind. For example, with a 600 frame video, ‘pause = 0.05’ will add an <em>additional</em> 30 seconds (600 * 0.05) to the total time taken.</p></li>
 <li><p>New <code>save_images</code> logical input in <code>looming_animation</code> and <code>looming_animation_calib</code> to save image files, not delete them. This is useful if you want to create the animation in an application other than <code>ffmpeg</code>, or run them through <code>ffmpeg</code> yourself.</p></li>
 </ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.3.0" id="loomer-030--2019-07-09">loomeR 0.3.0 – 2019-07-09<a class="anchor" aria-label="anchor" href="#loomer-030--2019-07-09"></a></h2>
+<ul><li><p>Models from <code>constant_speed_model</code> and <code>variable_speed_model</code> now contain alpha and da/dt columns calculated for the hypothesised screen viewing distance used to create them. (<code>diameter_model</code> objects, where these can’t be calculated since there is never a viewing distance specified, also have these columns but they are filled with <code>NA</code>).</p></li>
+<li><p>Models from <code>constant_speed_model</code> and <code>variable_speed_model</code> are now slightly changed to end on last row with distance = 0. Just seems more correct to do that, however it means the first distance in row 1 isn’t quite at the set <code>start_distance</code> (in <code>constant_speed_model</code> at least) but a single frame later at the specified speed. Hey, derivatives ¯_(ツ)_/¯</p></li>
+<li><p>Added three internal functions to clean up code (<code>calc_alpha</code>, <code>calc_dadt</code>, <code>calc_screen_diam</code>)</p></li>
+</ul><div class="section level4">
+<h4 id="looming_animation-0-3-0"><code>looming_animation</code><a class="anchor" aria-label="anchor" href="#looming_animation-0-3-0"></a></h4>
+<ul><li><p>Frame numbers can have custom text added to the start of each using <code>frame_number_tag</code>. E.g. A-1, A-2, or 1-1, 1-2, etc. This is super useful if you are creating multiple animations and want to make sure you don’t get them mixed up.</p></li>
+<li><p>Output videos can have custom names using the <code>filename</code> operator. Note, the function will still overwrite any videos it encounters with an identical filename.</p></li>
+<li><p>Distances from the screen edge of frame numbers and marker dots can be changed with the <code>_inset</code> operators for each</p></li>
+<li><p>Animations can now be looped with the <code>loop</code> operator. If this is set to 2 or greater, an additional video file is exported with the animation (including padding, if used) looped this number of times. This way you can create a long video containing multiple (though identical) looms separated by whatever time period you want (set by <code>pad</code>). For creating videos with multiple, <em>different</em> looms, I am working on an internal solution, but for now it’s fairly easy to create multiple videos and join them with ffmpeg or another video editor.</p></li>
+<li><p>Padding frames now have their own frame numbers (if <code>frame_numbers = TRUE</code>), which are appended with a<code>P</code>. These are separate from animation frame numbers, and are specific to padded frames, i.e. they start at zero and end at the number of the final padding frame, followed by the actual animation with frame numbers that start at zero and use their own sequence. This is to assist in experiments where the animation is looped or repeated multiple times, and the user wants to identify the particular moment something happens outside of the animation playback period. For example, when a previously startled specimen returns to the experimental arena. They inherit the same <code>frame_number_tag</code> and other characteristics from the frame number settings.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.2" id="loomer-022--2019-02-05">loomeR 0.2.2 – 2019-02-05<a class="anchor" aria-label="anchor" href="#loomer-022--2019-02-05"></a></h2>
+<p>A couple of important bug fixes related to padding videos. Also lots of minor code changes and also added unit testing code.</p>
+<p>v0.2.2 Changes - FIX: making animation from a <code>diameter_model</code> would fail when padded. - FIX: padding would sometimes fail because number of frames being added was not an integer. - <code>citation("loomeR")</code> should return a citation. - Added unit testing. Most code now covered by <code>testthat</code> checks. - Added numerous console messages and input checks to help with testing. - Moved internal functions to separate script and removed unused ones. - Minor changes to pass build checks and prepare for CRAN submission. - Minor changes to <code>get_alt</code> console print out. - Revised README to separate code chunks, add <code><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation()</a></code> code, and a hit counter badge. - Added some URLs to DESCRIPTION. - Added macOS to Travis build checks. - Added Appveyor Windows build checks.</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.1" id="loomer-021--2019-01-11">loomeR 0.2.1 – 2019-01-11<a class="anchor" aria-label="anchor" href="#loomer-021--2019-01-11"></a></h2>
+<p>Incorporated some internal testing using <code>testthat</code>. No outward facing changes.</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.0" id="loomer-020--2018-05-02">loomeR 0.2.0 – 2018-05-02<a class="anchor" aria-label="anchor" href="#loomer-020--2018-05-02"></a></h2>
+<p>This release introduces the <code><a href="../reference/get_alt.html">get_alt()</a></code> function. This lets you calculate the Apparent Looming Threshold for a particular response frame, as well as other metrics to analyse escape responses. Also includes various bugfixes and enhancements.</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.3" id="loomer-013--2018-04-13">loomeR 0.1.3 – 2018-04-13<a class="anchor" aria-label="anchor" href="#loomer-013--2018-04-13"></a></h2>
+<div class="section level3">
+<h3 id="diameter_model-updated-0-1-3">
+<code>diameter_model</code> updated:<a class="anchor" aria-label="anchor" href="#diameter_model-updated-0-1-3"></a></h3>
+<ul><li><p>Fix for start diameter not quite correct under <code>constant_speed</code> expansion option</p></li>
+<li><p>Output no longer includes arbitrary <code>$distance</code> vector in <code>$model</code></p></li>
+<li><p>Code cleaned up to remove use of arbitrary predator distance and size.</p></li>
+<li><p>New internal fn for shortening vectors - <code>vect_rm_end</code></p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.2" id="loomer-012--2018-04-05">loomeR 0.1.2 – 2018-04-05<a class="anchor" aria-label="anchor" href="#loomer-012--2018-04-05"></a></h2>
+<p>Refinement release. Removed requirement for model object input in <code>looming_animation_calib</code></p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.1" id="loomer-011--2018-04-05">loomeR 0.1.1 – 2018-04-05<a class="anchor" aria-label="anchor" href="#loomer-011--2018-04-05"></a></h2>
+<p>Maintenance release. Minor edits to documentation.</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.0" id="loomer-010--2018-04-05">loomeR 0.1.0 – 2018-04-05<a class="anchor" aria-label="anchor" href="#loomer-010--2018-04-05"></a></h2>
+<p>Initial release.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
