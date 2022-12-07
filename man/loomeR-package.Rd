@@ -12,7 +12,7 @@ Create and analyse looming animations for use in behavioural and neurological ex
 Useful links:
 \itemize{
   \item \url{https://github.com/nicholascarey/loomeR}
-  \item \url{https://doi.org/10.5281/zenodo.1212570}
+  \item \doi{10.5281/zenodo.1212570}
   \item Report bugs at \url{https://github.com/nicholascarey/loomeR/issues}
 }
 

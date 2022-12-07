@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/loomeR)](https://cran.r-project.org/package=loomeR)
 [![Travis build
 status](https://travis-ci.org/nicholascarey/loomeR.svg?branch=master)](https://travis-ci.org/nicholascarey/loomeR)
 [![AppVeyor build
@@ -26,11 +26,8 @@ escape movement based on a combination of the perceived distance and/or
 speed of an oncoming threat.
 
 <p align="center">
-
 <iframe src="https://player.vimeo.com/video/267812726" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
-
 </iframe>
-
 </p>
 
 See the
@@ -51,7 +48,7 @@ devtools::install_github("nicholascarey/loomeR")
 
 Using the package is straightforward:
 
-#### 1\. Create an animation model
+#### 1. Create an animation model
 
 ``` r
 diameter_model(), constant_speed_model(), variable_speed_model()
@@ -59,16 +56,16 @@ diameter_model(), constant_speed_model(), variable_speed_model()
 
 The package can create simple or complex animations in three ways:
 
-  - Use of basic inputs: enter start and end screen diameters, and total
-    duration.
-  - Use of realistic parameters: the function will determine the correct
-    screen diameters for each animation frame using…
-      - **Constant speed**: specify a constant speed, size, and starting
-        distance of the hypothetical oncoming threat
-      - **Variable speed**: provide a profile of variable speeds, plus
-        size and starting distance of the oncoming threat <br> <br>
+- Use of basic inputs: enter start and end screen diameters, and total
+  duration.
+- Use of realistic parameters: the function will determine the correct
+  screen diameters for each animation frame using…
+  - **Constant speed**: specify a constant speed, size, and starting
+    distance of the hypothetical oncoming threat
+  - **Variable speed**: provide a profile of variable speeds, plus size
+    and starting distance of the oncoming threat <br> <br>
 
-#### 2\. Create an animation from the model
+#### 2. Create an animation from the model
 
 ``` r
 looming_animation()
@@ -87,7 +84,7 @@ frame rate, modifying the colour and background, padding the video with
 blank frames to a desired total duration, marking frames to assist with
 identifying when escape responses occur, and more. <br> <br>
 
-#### 3\. Analyse escape responses
+#### 3. Analyse escape responses
 
 ``` r
 get_alt()
@@ -111,10 +108,12 @@ The included
 is comprehensive, and a vignette explaining how to use the package is in
 preparation. For a quick evaluation try out the following code:
 
-##### 1\. Create a model
+##### 1. Create a model
 
 ``` r
 library(loomeR) # load the package
+#> Loading required package: glue
+#> Loading required package: plotrix
 
 # Simple constant speed model
 # (speed in cm/s, frame rate in Hz, all other inputs in cm)
@@ -127,13 +126,13 @@ x <- constant_speed_model(
   start_distance = 1000)   # Starting distance of the simulated oncoming object
 ```
 
-##### 2\. Use the model to create the animation
+##### 2. Use the model to create the animation
 
 ``` r
 looming_animation(x)
 ```
 
-##### 3\. Extract the ALT
+##### 3. Extract the ALT
 
 ``` r
 # E.g. from response frame 100, and applying a response latency of 60 milliseconds
@@ -151,22 +150,23 @@ get_alt(x, response_frame = 100, latency = 0.06)
 
 ### Forthcoming and potential features
 
-  - [x] Function to extract model parameters at a particular frame,
-    optionally apply a latency correction, and correct the perceived
-    speed and distance for a different viewing distance. **DONE** - see
-    `get_alt`
-  - [ ] Linux support
-  - [ ] Add a receding option for animations (possibly works by setting
-    speed as a negative, or start/end diameters the other way round, but
-    this has not been tested)
-  - [ ] Enhancements (e.g. quicker padding method) and alternative to
-    `ffmpeg`
-  - [ ] Option to export images only, and not convert them
-  - [ ] Option to subsample or interpolate variable speed profiles to
-    match a desired frame rate
-  - [ ] Use of custom shapes (please [contact
-    me](mailto:nicholascarey@gmail.com) if you know of actual
-    applications for this… it would be a *lot* of work)
+- [x] Function to extract model parameters at a particular frame,
+  optionally apply a latency correction, and correct the perceived speed
+  and distance for a different viewing distance.
+  - **DONE** - see `get_alt`
+- [x] Option to export images only, and not convert them
+  - Partially done. See `save.images` input in `looming_animation()`.
+- [ ] Linux support
+- [ ] Add a receding option for animations (possibly works by setting
+  speed as a negative, or start/end diameters the other way round, but
+  this has not been tested)
+- [ ] Enhancements (e.g. quicker padding method) and alternative to
+  `ffmpeg`
+- [ ] Option to subsample or interpolate variable speed profiles to
+  match a desired frame rate
+- [ ] Use of custom shapes (please [contact
+  me](mailto:nicholascarey@gmail.com) if you know of actual applications
+  for this… it would be a *lot* of work)
 
 ### Feedback
 
@@ -178,12 +178,12 @@ issue](https://github.com/nicholascarey/loomeR/issues).
 
 Working with the following people inspired the creation of this package:
 
-  - Paolo Domenici, CNR IAMC, Italy.
-    [Link](http://iamc.objectis.net/staff/domenici-paolo)
-  - Jeremy Goldbogen & Dave Cade, Hopkins Marine Station, Stanford
-    University. [Link](http://goldbogen.stanford.edu)
-  - Januar Harianto, University of Sydney
-    [Link](https://github.com/januarharianto)
+- Paolo Domenici, CNR IAMC, Italy.
+  [Link](http://iamc.objectis.net/staff/domenici-paolo)
+- Jeremy Goldbogen & Dave Cade, Hopkins Marine Station, Stanford
+  University. [Link](http://goldbogen.stanford.edu)
+- Januar Harianto, University of Sydney
+  [Link](https://github.com/januarharianto)
 
 ### Cite
 
@@ -199,8 +199,8 @@ citation("loomeR")
 #> 
 #> To cite package 'loomeR' in publications use:
 #> 
-#>   Nicholas Carey (2019). loomeR: Looming Animations for Use in
-#>   Behavioural and Neurological Experiments.
+#>   Carey N (2019). _loomeR: Looming Animations for Use in Behavioural
+#>   and Neurological Experiments_.
 #>   https://github.com/nicholascarey/loomeR,
 #>   https://doi.org/10.5281/zenodo.1212570.
 #> 
@@ -213,16 +213,15 @@ citation("loomeR")
 #>     note = {https://github.com/nicholascarey/loomeR, https://doi.org/10.5281/zenodo.1212570},
 #>   }
 #> 
-#> ATTENTION: This citation information has been auto-generated from
-#> the package DESCRIPTION file and may need manual editing, see
+#> ATTENTION: This citation information has been auto-generated from the
+#> package DESCRIPTION file and may need manual editing, see
 #> 'help("citation")'.
 ```
 
-If you don’t have the space to cite it, not a problem, but please do
-**[let me know](mailto:nicholascarey@gmail.com)** if you use it in your
-experiments. I would love to keep an updated list of studies which have
-made use of it, and I can help publicise your paper by tweeting about
-it\!
+Please do **[let me know](mailto:nicholascarey@gmail.com)** if you use
+it in your experiments. I would love to keep an updated list of studies
+which have made use of it, and I can help publicise your paper by
+tweeting about it!
 
 ### References
 

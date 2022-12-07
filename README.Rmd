@@ -112,11 +112,13 @@ get_alt(x, response_frame = 100, latency = 0.06)
 
 ### Forthcoming and potential features
 
-- [X] Function to extract model parameters at a particular frame, optionally apply a latency correction, and correct the perceived speed and distance for a different viewing distance. **DONE** - see `get_alt`
+- [X] Function to extract model parameters at a particular frame, optionally apply a latency correction, and correct the perceived speed and distance for a different viewing distance. 
+  - **DONE** - see `get_alt`
+- [X] Option to export images only, and not convert them
+  - Partially done. See `save.images` input in `looming_animation()`.
 - [ ] Linux support
 - [ ] Add a receding option for animations (possibly works by setting speed as a negative, or start/end diameters the other way round, but this has not been tested)
 - [ ] Enhancements (e.g. quicker padding method) and alternative to `ffmpeg`
-- [ ] Option to export images only, and not convert them
 - [ ] Option to subsample or interpolate variable speed profiles to match a desired frame rate
 - [ ] Use of custom shapes (please [contact me](mailto:nicholascarey@gmail.com) if you know of actual applications for this... it would be a *lot* of work)
 
@@ -144,7 +146,7 @@ citation("loomeR")
 ```
 
 
-If you don't have the space to cite it, not a problem, but please do **[let me know](mailto:nicholascarey@gmail.com)** if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your paper by tweeting about it! 
+Please do **[let me know](mailto:nicholascarey@gmail.com)** if you use it in your experiments. I would love to keep an updated list of studies which have made use of it, and I can help publicise your paper by tweeting about it! 
 
 ### References
 

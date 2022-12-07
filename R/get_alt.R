@@ -128,7 +128,7 @@ get_alt <-
            latency = 0){
 
 
-# Checks ------------------------------------------------------------------
+    # Checks ------------------------------------------------------------------
 
     ## check class
     if(!any(class(x) %in% c("constant_speed_model", "variable_speed_model", "diameter_model")))
@@ -147,7 +147,7 @@ get_alt <-
 
 
 
-# Diameter model ----------------------------------------------------------
+    # Diameter model ----------------------------------------------------------
 
     if(class(x) == "diameter_model"){
 
@@ -214,10 +214,10 @@ get_alt <-
         original_model = original_model,
         inputs = inputs
       )
-      }
+    }
 
 
-# Constant speed model ----------------------------------------------------
+    # Constant speed model ----------------------------------------------------
 
     if(class(x) == "constant_speed_model"){
 
@@ -254,15 +254,15 @@ get_alt <-
       adjusted_model$dadt <- c(NA, diff(adjusted_model$alpha)*frame_rate)
       adjusted_model$dadt_deg <- rad2deg(adjusted_model$dadt)
 
-          ## perceived distance
-          adjusted_model$distance_perceived <-
-            cos(adjusted_model$alpha/2)*
-            (attacker_diameter/2)/(sin((adjusted_model$alpha/2)))
+      ## perceived distance
+      adjusted_model$distance_perceived <-
+        cos(adjusted_model$alpha/2)*
+        (attacker_diameter/2)/(sin((adjusted_model$alpha/2)))
 
-          ## perceived speed
-          ## = perceived distance change per s
-          adjusted_model$speed_perceived <-
-            -1*c(NA, diff(adjusted_model$distance_perceived)*frame_rate)
+      ## perceived speed
+      ## = perceived distance change per s
+      adjusted_model$speed_perceived <-
+        -1*c(NA, diff(adjusted_model$distance_perceived)*frame_rate)
 
       ## EXTRACT ALT
       ## from the ADJUSTED FOR LATENCY response frame
@@ -305,10 +305,10 @@ get_alt <-
         adjusted_model = adjusted_model,
         inputs = inputs
       )
-      }
+    }
 
 
-# Variable speed model ----------------------------------------------------
+    # Variable speed model ----------------------------------------------------
 
     if(class(x) == "variable_speed_model"){
 

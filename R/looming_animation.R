@@ -24,7 +24,8 @@
 #'   want to save an animation, you should move or rename it, or change the
 #'   `filename` input before running the function again or it will get
 #'   overwritten. It has not been rigorously tested on older systems with slow
-#'   read-write speeds to the hard drive, which may cause unknown problems.
+#'   read-write speeds to the hard drive, which may cause unknown problems (but
+#'   see the `pause` operator, which allows the function to be slowed down)
 #'   Please provide feedback if you encounter any issues.
 #'
 #'   The function is capable of controlling precise details of how the object is
@@ -182,6 +183,10 @@
 #'   need to restart) or
 #'   \url{https://github.com/fluent-ffmpeg/node-fluent-ffmpeg/wiki/Installing-ffmpeg-on-Mac-OS-oX}
 #'
+#'
+#'
+#'
+#'
 #'   On Windows, if you encounter an error after installation (e.g. \code{unable
 #'   to start png() device}), try setting the working directory with
 #'   \code{setwd()} to the current or desired folder. It has not been
@@ -224,7 +229,7 @@
 #'   periodically and manually delete unwanted files.
 #'
 #' @section Dependencies: The function requires the following packages:
-#'   \code{glue}, \code{plotrix}
+#'   \code{glue}, \code{plotrix}, \code{stringr}
 #'
 #' @seealso \code{\link{constant_speed_model}},
 #'   \code{\link{variable_speed_model}}, \code{\link{diameter_model}},
@@ -291,11 +296,18 @@
 #'   animation. Any value of 2 or higher will mean an additional video file is
 #'   created called `animation_loop.mp4` with the original animation (including
 #'   any padding) repeated this number of times.
+#' @param pause numeric. Default = 0. For slow PCs a delay can be added to
+#'   ensure the filesystem is not overloaded by having to write so many image
+#'   files. This adds a delay (in seconds) to the generation of each frame. E.g.
+#'   for a 600 frame video, 'pause = 0.05' will add an *additional* 30 seconds
+#'   (600 * 0.05) to the total time taken.
 #' @param save_data logical. If \code{=TRUE}, exports to the current working
 #'   directory a \code{.csv} file containing the data used to make the
 #'   animation, including the column of values scaled using the
 #'   \code{correction} value. File name: \code{ANIM_from_**name of R object
 #'   used**_**frame rate**_**display resolution**.csv}
+#' @param save_images logical. If \code{=TRUE}, does not delete image files
+#'   after the animation video is created.
 #' @param filename string. Desired name of the output file without file
 #'   extension. Default is `animation`, and output file is `animation.mp4`. Also
 #'   used for looped video output, if the `loop` operator is used.
@@ -333,6 +345,7 @@
 #'
 #' @importFrom glue glue
 #' @importFrom plotrix draw.circle
+#' @importFrom stringr str_match
 #' @importFrom grDevices dev.off png
 #' @importFrom graphics arrows par plot.new rect text
 #' @importFrom utils write.csv
@@ -340,13 +353,13 @@
 #' @export
 
 ## To Do
-## option to set position (i.e. distance from side) of dots and frame number
-## gif export option for looping? - would be gigantic for long videos
+## gif export option? - would be gigantic for long videos
 ## option to NOT convert images using ffmpeg, but save them
 
 ## optimisations
 # use apply instead of loop
-# faster way of padding? rather than looping for padded frames, duplicating that frame more quickly?
+# faster way of padding? rather than looping for padded frames, duplicating
+# that frame more quickly in file system?
 # play with ffmpeg options to reduce file size of pngs
 
 ## test
@@ -379,7 +392,9 @@ looming_animation <-
            start_marker_colour = "black",
            start_marker_size = 2,
            loop = 1,
+           pause = 0,
            save_data = FALSE,
+           save_images = FALSE,
            filename = "animation"){
 
     ## check class
@@ -401,22 +416,29 @@ looming_animation <-
     ## odd numbers cause "not divisible by 2" error in ffmpeg
     if(width %% 2 != 0){
       width <- width +1
-      message(glue("Screen `width` cannot be an odd number."))
-      message(glue("Screen `width` modified to {width}."))
+      message(glue::glue("Screen `width` cannot be an odd number."))
+      message(glue::glue("Screen `width` modified to {width}."))
     }
     if(height %% 2 != 0){
       height <- height +1
-      message(glue("Screen `height` cannot be an odd number."))
-      message(glue("Screen `height` modified to {height}"))
+      message(glue::glue("Screen `height` cannot be an odd number."))
+      message(glue::glue("Screen `height` modified to {height}"))
     }
 
-    ## extract data and parameters
+    ## check pause is not too high, since it will massively increase the time
+    ## taken
+    if(pause >= 0.5) warning("The `pause` value is quite high.\nGenerally, it is not necessary to pause for more than a few milliseconds per frame, e.g. 'pause = 0.05'.")
+
+
+    # Extract data and parameters ---------------------------------------------
     cs_model <- x$model
     frame_rate <- x$frame_rate
 
     ## get total frames of the animation - useful later for adding frame markers
     total_frames_anim <- nrow(cs_model)
 
+
+    # Padding -----------------------------------------------------------------
 
     ## use pad to duplicate starting frame the required number of times
     ## this modifies the input 'constant_speed_model' cs_model and replaces it
@@ -460,9 +482,13 @@ looming_animation <-
     }
 
 
+    # Total Frames ------------------------------------------------------------
+
     ## total frames
     total_frames <- nrow(cs_model)
 
+
+    # Correct diameters -------------------------------------------------------
 
     ## use correction factor to modify diameters
     if(!is.null(correction)){
@@ -471,7 +497,9 @@ looming_animation <-
       cs_model$diam_on_screen_corrected <- cs_model$diam_on_screen
     }
 
-    ## create image for each frame
+
+    # Loop to create images ---------------------------------------------------
+
     for(i in 1:total_frames){
 
       # create filename with leading zeros up to 6 numerals total
@@ -531,31 +559,31 @@ looming_animation <-
         }
 
         ## draw dot in corner of first animation frame
-        if(i == asf){draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                 r <- dots_size,
-                                 nv=100,
-                                 border=dots_colour,
-                                 col=dots_colour,
-                                 lty=1,
-                                 lwd=1)}
+        if(i == asf){plotrix::draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                          r <- dots_size,
+                                          nv=100,
+                                          border=dots_colour,
+                                          col=dots_colour,
+                                          lty=1,
+                                          lwd=1)}
 
         # draw dot in corner every nth animation frame
-        if(af %% dots_interval == 0) {draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                                  r <- dots_size,
-                                                  nv=100,
-                                                  border=dots_colour,
-                                                  col=dots_colour,
-                                                  lty=1,
-                                                  lwd=1)}
+        if(af %% dots_interval == 0) {plotrix::draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                                           r <- dots_size,
+                                                           nv=100,
+                                                           border=dots_colour,
+                                                           col=dots_colour,
+                                                           lty=1,
+                                                           lwd=1)}
 
         # draw dot in corner of last frame
-        if(i == total_frames) {draw.circle(x=dots_x_coord, y=dots_y_coord,
-                                           r <- dots_size,
-                                           nv=100,
-                                           border=dots_colour,
-                                           col=dots_colour,
-                                           lty=1,
-                                           lwd=1)}
+        if(i == total_frames) {plotrix::draw.circle(x=dots_x_coord, y=dots_y_coord,
+                                                    r <- dots_size,
+                                                    nv=100,
+                                                    border=dots_colour,
+                                                    col=dots_colour,
+                                                    lty=1,
+                                                    lwd=1)}
       }
 
 
@@ -627,24 +655,36 @@ looming_animation <-
       perc_done <- round(i/total_frames*100)
       image_progress(perc_done)
 
+      ## pause
+      Sys.sleep(pause)
+
     } # end loop
 
-    ## save data
+
+    # Export data -------------------------------------------------------------
+
     if(save_data == TRUE){
-      exp_filename <- glue('ANIM_from_',
-                             deparse(quote(x)),
-                             '_',
-                             {frame_rate},
-                             'fps_',
-                             {width},
-                             'x',
-                             {height},
-                             '.csv'
+      exp_filename <- glue::glue('ANIM_from_',
+                                 deparse(quote(x)),
+                                 '_',
+                                 {frame_rate},
+                                 'fps_',
+                                 {width},
+                                 'x',
+                                 {height},
+                                 '.csv'
       )
 
-      write.csv(cs_model, file = glue(exp_filename))
+      write.csv(cs_model, file = glue::glue(exp_filename))
     }
 
+
+    # Run ffmpeg command ------------------------------------------------------
+
+    ## Add 5 second delay (for slow PCs to make sure file system has updated )
+    for(i in 1:10){
+      prep_progress(i, max = 10)
+      Sys.sleep(0.5)}
 
     ## ffmpeg options
     # -y (global) = Overwrite output files without asking
@@ -662,20 +702,24 @@ looming_animation <-
     ## && rm *.png OR del *.png  = delete ALL png files on Mac or Win respectively
 
     ## build system/ffmpeg command on OS specific basis
+
     ## For Mac
     if(os() == "mac"){
       message("Encoding movie...")
       instruction_string <-
-        glue(
+        glue::glue(
           ## rm loom_img_*.png'
           ## old remove command above - ran into Terminal "Argument list too long" error when there were huge numbers of files
           ## this seems to work ok
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4; find . -maxdepth 1 -name "loom_img_*.png" -delete'
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4'
         )
-
-      message("Deleting image files...")
       ## run the command
       system(instruction_string)
+
+      if(isFALSE(save_images)){
+        message("\nDeleting image files...")
+        system('find . -maxdepth 1 -name "loom_img_*.png" -delete')
+      }
     }
 
     ## For Windows
@@ -684,16 +728,18 @@ looming_animation <-
     else if(os() == "win"){
       message("Encoding movie...")
       instruction_string <-
-        glue(
+        glue::glue(
           'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p {filename}.mp4'
         )
 
       ## run command
       system(instruction_string)
 
-      message("Deleting image files...")
-      ## delete png files
-      shell("del loom_img_*.png")
+      if(isFALSE(save_images)){
+        message("\nDeleting image files...")
+        ## delete png files
+        shell("del loom_img_*.png")
+      }
     }
 
     ## calculate and round duration for message
@@ -706,7 +752,7 @@ looming_animation <-
     ## make looped video
     if(loop > 1){
       loop_n <- loop-1
-      instruction_string <- glue(
+      instruction_string <- glue::glue(
         'ffmpeg -y -stream_loop {loop_n} -i {filename}.mp4 -c copy {filename}_loop.mp4')
       system(instruction_string)
     }
@@ -714,11 +760,27 @@ looming_animation <-
     ## make message (blank line first, to make it more noticable from ffmpeg output)
     message("")
     cat("\n# Conversion complete # -------------------------\n")
-    message(glue('Resulting {filename}.mp4 video should be {duration}s in duration.'))
+    message(glue::glue('Resulting {filename}.mp4 video should be {duration}s in duration.'))
     if(loop > 1) cat("\n# Looped video created # ------------------------\n")
-    if(loop > 1) message(glue('Resulting {filename}_loop.mp4 video should be {duration_loop}s in duration and contain {loop} loops.'))
+    if(loop > 1) message(glue::glue('Resulting {filename}_loop.mp4 video should be {duration_loop}s in duration and contain {loop} loops.'))
     message("")
     message('Any ffmpeg errors should be listed above')
+
+
+    # Check total frames of video are correct ---------------------------------
+    ## check and save video metadata
+    ffmpeg_log <- suppressWarnings(system2(command = "ffmpeg", args = glue::glue("-i {filename}.mp4 -map 0:v:0 -c copy -f null -"), stderr = TRUE))
+
+    ## where is total frames within metadata
+    frames_loc <- grep("\rframe=", ffmpeg_log)
+
+    ## Extract, trim white space and convert to numeric
+    n_frames <- stringr::str_match(ffmpeg_log[frames_loc], "\rframe= (.*?) fps=")
+    n_frames <-trimws(n_frames[,2])
+    n_frames <- as.numeric(n_frames)
+
+    if(n_frames != total_frames) warning("\nWARNING: \nTotal number of frames in the output video does not match total number in model.\nSome frames may have been dropped during conversion.\nTry using 'pause' to slow down the function.")
+
 
   }
 

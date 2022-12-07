@@ -1,3 +1,5 @@
+capture.output({  ## stops printing outputs on assigning
+
 skip_on_cran()
 
 # test --------------------------------------------------------------------
@@ -41,3 +43,5 @@ expect_message(looming_animation_calib(),
 
 ## This will only work if testing on a Mac
 system("rm animation_calib.mp4")
+
+}) ## turns printing back on

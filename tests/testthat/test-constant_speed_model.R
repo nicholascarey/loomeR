@@ -1,3 +1,5 @@
+capture.output({  ## stops printing outputs on assigning
+
 skip_on_cran()
 
 # test --------------------------------------------------------------------
@@ -23,4 +25,4 @@ expect_equal(round(mod$model$distance[120], 2), 0)
 expect_equal(mod$model$time[120], 2)
 
 
-
+}) ## turns printing back on

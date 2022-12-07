@@ -58,8 +58,8 @@ right = function (string, n){
 os <- function() {
   if (Sys.info()["sysname"] == "Darwin")
     "mac" else if (.Platform$OS.type == "windows")
-    "win" else if (.Platform$OS.type == "unix")
-          "unix" else stop("Unknown OS")
+      "win" else if (.Platform$OS.type == "unix")
+        "unix" else stop("Unknown OS")
 }
 
 
@@ -73,7 +73,23 @@ os <- function() {
 #' @export
 image_progress <- function (x, max = 100) {
   percent <- x / max * 100
-  cat(sprintf('\r[%-50s] %d%% Generating image files',
+  cat(sprintf('\r[%-50s] %d%% Generating image files...',
+              paste(rep('=', percent / 2), collapse = ''),
+              floor(percent)))
+  if (x == max)
+    cat('\n')
+}
+
+#' Display preparing video progress bar
+#'
+#' @details
+#' Simply implements a delay
+#'
+#' @keywords internal
+#' @export
+prep_progress <- function (x, max = 100) {
+  percent <- x / max * 100
+  cat(sprintf('\r[%-50s] %d%% Preparing to create video file...',
               paste(rep('=', percent / 2), collapse = ''),
               floor(percent)))
   if (x == max)
@@ -130,53 +146,55 @@ calc_screen_diam <- function(alpha, screen_distance){
 
 
 
-## Leaving the below for now. Getting Windows commands to run is a pain.
-## Might need to look into admin v non-admin user issues
-#' #' Check if ffmpeg is installed
-#' #'
-#' #' @details Runs system commands on OS-specific basis to check if ffmpeg is
-#' #'   installed. Experimental for now. Added `force_ffmpeg` argument to
-#' #'   `looming_animation` and `looming_animation_calib` to override if necessary.
-#' #'
-#' #' @keywords internal
-#' #' @export
+## Leaving the below for now. Getting Windows commands to run is a pain.## Might need to look into admin v non-admin user issues#' Check if ffmpeg is installed
 #'
-#' check_ffmpeg <- function(force_ffmpeg = force_ffmpeg) {
+#' @details Runs system commands on OS-specific basis to check if ffmpeg is
+#'   installed. Experimental for now. Added `force_ffmpeg` argument to
+#'   `looming_animation` and `looming_animation_calib` to override if necessary.
 #'
-#'   os <- os()
-#'
-#'   ## XP
-#'   if(os == "xp" && force_ffmpeg == FALSE){
-#'     stop("Windows XP is not supported for creating animations because of ffmpeg compatibility problems.
-#'          If you want to ignore this warning and try anyway, you can override with force_ffmpeg = TRUE."
-#'     )}
-#'
-#'   ## Linux
-#'   if(os == "unix"){
-#'     stop("Linux systems are not yet supported for creating animations.
-#'          Please contact me if you would like to help with implementing this functionality."
-#'     )}
-#'
-#'   ## MAC
-#'   if(os == "mac" && force_ffmpeg == FALSE){
-#'
-#'     ffmpeg_path <- system("which ffmpeg", intern = TRUE)
-#'
-#'     if(length(ffmpeg_path) == 0 && force_ffmpeg == FALSE){
-#'       stop("ffmpeg does not appear to be installed on this Mac. Animation creation halted.
-#'     Visit ffmpeg.org for installation instructions.
-#'     (Note: this is an experimental warning. If you are sure ffmpeg *IS* installed, you can override with force_ffmpeg = TRUE)")
-#'     }}
-#'
-#'   ## WIN 7/8/10
-#'   if(os == "win" && force_ffmpeg == FALSE){
-#'
-#'     ffmpeg_path <- shell("where ffmpeg", intern = TRUE)
-#'
-#'     if(length(ffmpeg_path) == 2 && force_ffmpeg == FALSE){
-#'       stop("ffmpeg does not appear to be installed on this Mac. Animation creation halted.
-#'   Visit ffmpeg.org for installation instructions.
-#'   (Note: this is an experimental warning. If you are sure ffmpeg *IS* installed, you can override with force_ffmpeg = TRUE)")
-#'     }}
-#'
-#' } #end
+#' @keywords internal
+#' @export
+
+# check_ffmpeg <- function(ffmpeg_check = ffmpeg_check) {
+#
+#   os <- os()
+#
+#   # ## XP - Don't know yet how to detect XP as opposed to other Win versions
+#   # if(os == "xp" && ffmpeg_check == TRUE){
+#   #   stop("Windows XP is not supported for creating animations because of ffmpeg compatibility problems.
+#   #        If you want to ignore this warning and try anyway, you can override with ffmpeg_check = TRUE."
+#   #   )}
+#
+#   ## Linux
+#   if(os == "unix"){
+#     stop("Linux systems are not yet supported for creating animations.
+#          Please contact me if you would like to help with implementing this functionality."
+#     )}
+#
+#   ## MAC
+#   if(os == "mac" && ffmpeg_check == TRUE){
+#
+#     ffmpeg_path <- suppressWarnings(
+#       system2(command = "which", args = "ffmpeg", stderr = TRUE)
+#     )
+#
+#     if(length(ffmpeg_path) == 0 && ffmpeg_check == TRUE){
+#       stop("ffmpeg does not appear to be installed on this Mac. Animation creation halted.
+#       Visit ffmpeg.org for installation instructions.
+#       (Note: this is an experimental warning. If you are sure ffmpeg *IS* installed, you can override this check with ffmpeg_check = FALSE)")
+#     }
+#   }
+#
+#   ## WIN 7/8/10
+#   if(os == "win" && ffmpeg_check == FALSE){
+#
+#     ffmpeg_path <- shell("where ffmpeg", intern = TRUE)
+#
+#     if(length(ffmpeg_path) == 2 && ffmpeg_check == FALSE){
+#       stop("ffmpeg does not appear to be installed on this Mac. Animation creation halted.
+#   Visit ffmpeg.org for installation instructions.
+#   (Note: this is an experimental warning. If you are sure ffmpeg *IS* installed, you can override this check with ffmpeg_check = FALSE)")
+#     }}
+#
+# } #end
+#

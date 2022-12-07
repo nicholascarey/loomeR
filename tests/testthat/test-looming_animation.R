@@ -1,3 +1,5 @@
+capture.output({  ## stops printing outputs on assigning
+
 skip_on_cran()
 
 # test --------------------------------------------------------------------
@@ -143,3 +145,6 @@ expect_message(looming_animation(mod,
 
 ## This will only work if testing on a Mac
 system("rm animation.mp4")
+
+
+}) ## turns printing back on

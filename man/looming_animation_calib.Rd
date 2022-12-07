@@ -8,7 +8,8 @@ looming_animation_calib(
   correction_range = c(0.02, 0.03),
   width = 1920,
   height = 1080,
-  ruler = 10
+  ruler = 10,
+  save_images = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ on the playback display to check.}
 \item{ruler}{numeric. Width in cm to check onscreen with your ruler. Should be
 less than the physical horizontal width of the screen, or - obviously - it
 will be too large to display.}
+
+\item{save_images}{logical. If \code{=TRUE}, does not delete image files
+after the animation video is created.}
 }
 \description{
 All screens are different, so an object of a hypothetical size

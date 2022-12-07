@@ -83,6 +83,8 @@
 #'@param ruler numeric. Width in cm to check onscreen with your ruler. Should be
 #'  less than the physical horizontal width of the screen, or - obviously - it
 #'  will be too large to display.
+#' @param save_images logical. If \code{=TRUE}, does not delete image files
+#'   after the animation video is created.
 #'
 #' @examples
 #' ## Uncomment to run
@@ -103,7 +105,8 @@ looming_animation_calib <-
   function(correction_range = c(0.02, 0.03),
            width = 1920,
            height = 1080,
-           ruler = 10){
+           ruler = 10,
+           save_images = FALSE){
 
     ## Message to help with testing
     message("Creating calibration animation...")
@@ -140,11 +143,11 @@ looming_animation_calib <-
                  0.05 + ruler_lengths[3],
                  0.05 + ruler_lengths[4],
                  0.05 + ruler_lengths[5],
-                0.05 + ruler_lengths[6],
-                0.05 + ruler_lengths[7],
-                0.05 + ruler_lengths[8],
-                0.05 + ruler_lengths[9],
-                0.05 + ruler_lengths[10])
+                 0.05 + ruler_lengths[6],
+                 0.05 + ruler_lengths[7],
+                 0.05 + ruler_lengths[8],
+                 0.05 + ruler_lengths[9],
+                 0.05 + ruler_lengths[10])
 
     y_top <- rev(seq(0.1, 0.82, 0.08))
 
@@ -157,8 +160,8 @@ looming_animation_calib <-
       name <- paste0("loom_img_", sprintf("%02d", i), ".png")
 
       # make png file
-        # res= here is a bit of a hack to scale the text so that it's readable on
-        # different sized screens - results in low resolution on smaller screens though
+      # res= here is a bit of a hack to scale the text so that it's readable on
+      # different sized screens - results in low resolution on smaller screens though
       png(name, width=width, height=height, res=round(width*0.05))
 
       # create new plot
@@ -225,11 +228,15 @@ looming_animation_calib <-
       message("Encoding movie...")
       instruction_string <-
         glue::glue(
-          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%02d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation_calib.mp4; rm loom_img_*.png'
+          'ffmpeg -y -r {frame_rate} -f image2 -s {width}x{height} -i loom_img_%02d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p animation_calib.mp4'
         )
-      message("Deleting image files...")
       ## run the command
       system(instruction_string)
+
+      if(isFALSE(save_images)){
+        message("\nDeleting image files...")
+        system('find . -maxdepth 1 -name "loom_img_*.png" -delete')
+      }
     }
 
     ## For Windows
@@ -244,9 +251,11 @@ looming_animation_calib <-
       ## run command
       system(instruction_string)
 
-      message("Deleting image files...")
-      ## delete png files
-      shell("del loom_img_*.png")
+      if(isFALSE(save_images)){
+        message("Deleting image files...")
+        ## delete png files
+        shell("del loom_img_*.png")
+      }
     }
 
   }

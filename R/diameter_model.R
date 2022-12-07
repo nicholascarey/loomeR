@@ -65,58 +65,58 @@ diameter_model <-
 
     ## IF CONSTANT SPEED
     if(expansion == "constant_speed"){
-    ## calculate total number of frames
-    ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
-    total_frames <- ceiling(duration*frame_rate)
+      ## calculate total number of frames
+      ## ceiling to round up, otherwise results df will be a frame short if total frames ends up a decimal
+      total_frames <- ceiling(duration*frame_rate)
 
-    ## Distances - these are arbitrary/proportional
-    ## start distance
-    start_dist <- 1/start_diameter
-    ## end distance
-    end_dist <- 1/end_diameter
+      ## Distances - these are arbitrary/proportional
+      ## start distance
+      start_dist <- 1/start_diameter
+      ## end distance
+      end_dist <- 1/end_diameter
 
-    ## calculate distance covered each frame
-    ## -1 because we are interested in what happens between frames
-    distance_per_frame <- (start_dist-end_dist)/(total_frames-1)
+      ## calculate distance covered each frame
+      ## -1 because we are interested in what happens between frames
+      distance_per_frame <- (start_dist-end_dist)/(total_frames-1)
 
-    ## build up data frame
-    ## list of frames
-    results_df <- data.frame(frame = seq(1,total_frames,1))
+      ## build up data frame
+      ## list of frames
+      results_df <- data.frame(frame = seq(1,total_frames,1))
 
-    ## add time
-    results_df$time <- results_df$frame/frame_rate
+      ## add time
+      results_df$time <- results_df$frame/frame_rate
 
-    ## add hypothetical predator distance
-    ## start with start distance
-    ## then add distance per frame for each frame
-    ## minus 1 because we want first entry to be start_dist, so no need to add to it
-    results_df$distance <- start_dist-((results_df$frame-1) * distance_per_frame)
+      ## add hypothetical predator distance
+      ## start with start distance
+      ## then add distance per frame for each frame
+      ## minus 1 because we want first entry to be start_dist, so no need to add to it
+      results_df$distance <- start_dist-((results_df$frame-1) * distance_per_frame)
 
-    ## add empty alpha and dadt
-    results_df$alpha <- NA
-    results_df$dadt <- NA
+      ## add empty alpha and dadt
+      results_df$alpha <- NA
+      results_df$dadt <- NA
 
-    ## add screen diameter of model for each frame
-    results_df$diam_on_screen <- 1/results_df$distance
+      ## add screen diameter of model for each frame
+      results_df$diam_on_screen <- 1/results_df$distance
 
-    ## Change distance column to NAs
-    results_df$distance <- NA
+      ## Change distance column to NAs
+      results_df$distance <- NA
     }
 
 
-  ## IF CONSTANT DIAMETER
-  if(expansion == "constant_diameter"){
-  total_frames <- ceiling(duration*frame_rate)
-  diam_per_frame <- (end_diameter - start_diameter)/(total_frames-1)
-  results_df <- data.frame(frame = seq(1,total_frames,1))
-  results_df$time <- results_df$frame/frame_rate
-  results_df$distance <- NA
-  results_df$alpha <- NA
-  results_df$dadt <- NA
-  ## add diameter change to start distance for each row
-  results_df$diam_on_screen <-
-    apply(results_df, 1, function(x) start_diameter + (x[1]-1)*diam_per_frame)
-  }
+    ## IF CONSTANT DIAMETER
+    if(expansion == "constant_diameter"){
+      total_frames <- ceiling(duration*frame_rate)
+      diam_per_frame <- (end_diameter - start_diameter)/(total_frames-1)
+      results_df <- data.frame(frame = seq(1,total_frames,1))
+      results_df$time <- results_df$frame/frame_rate
+      results_df$distance <- NA
+      results_df$alpha <- NA
+      results_df$dadt <- NA
+      ## add diameter change to start distance for each row
+      results_df$diam_on_screen <-
+        apply(results_df, 1, function(x) start_diameter + (x[1]-1)*diam_per_frame)
+    }
 
 
     ## assemble output list object

@@ -1,4 +1,6 @@
-skip_on_cran()
+capture.output({  ## stops printing outputs on assigning
+
+  skip_on_cran()
 
 # test --------------------------------------------------------------------
 
@@ -95,3 +97,5 @@ result <- get_alt(variable_speed_model(x = c(1:100)),
                   response_frame = 10)
 
 expect_output(print(result))
+
+}) ## turns printing back on

@@ -1,3 +1,5 @@
+capture.output({  ## stops printing outputs on assigning
+
 skip_on_cran()
 
 # test --------------------------------------------------------------------
@@ -34,3 +36,5 @@ expect_error(diameter_model(expansion = "diam_mod"), "expansion operator not set
 
 ## check it works with expansion = "constant_diameter"
 expect_output(str(diameter_model(expansion = "constant_diameter")), "List of 6")
+
+}) ## turns printing back on
