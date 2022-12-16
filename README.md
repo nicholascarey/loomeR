@@ -31,6 +31,9 @@ speed of an oncoming threat.
 </iframe>
 </p>
 
+Visit the full [website
+here](https://nicholascarey.github.io/loomeR/index.html).
+
 See the
 [Reference](https://nicholascarey.github.io/loomeR/reference/index.html)
 page to view the detailed Help file for each function.
@@ -51,11 +54,19 @@ Using the package is straightforward:
 
 #### 1. Create an animation model
 
+The package can create simple or complex animations in three ways:
+
 ``` r
-diameter_model(), constant_speed_model(), variable_speed_model()
+diameter_model()
 ```
 
-The package can create simple or complex animations in three ways:
+``` r
+constant_speed_model()
+```
+
+``` r
+variable_speed_model()
+```
 
 - Use of basic inputs: enter start and end screen diameters, and total
   duration.

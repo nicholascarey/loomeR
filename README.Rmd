@@ -33,6 +33,8 @@ knitr::opts_chunk$set(
 
 </p>
 
+Visit the full [website here](https://nicholascarey.github.io/loomeR/index.html).
+
 See the [Reference](https://nicholascarey.github.io/loomeR/reference/index.html) page to view the detailed Help file for each function. 
 
 ### Installation
@@ -47,10 +49,17 @@ devtools::install_github("nicholascarey/loomeR")
 Using the package is straightforward: 
 
 #### 1. Create an animation model
-```r
-diameter_model(), constant_speed_model(), variable_speed_model()
-```
+
 The package can create simple or complex animations in three ways: 
+```r
+diameter_model()
+```
+```r
+constant_speed_model()
+```
+```r
+variable_speed_model()
+```
 
 - Use of basic inputs: enter start and end screen diameters, and total duration. 
 - Use of realistic parameters: the function will determine the correct screen diameters for each animation frame using...
