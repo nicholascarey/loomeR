@@ -75,6 +75,7 @@
 <iframe src="https://player.vimeo.com/video/267812726" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
 </iframe>
 </p>
+<p>Visit the full <a href="https://nicholascarey.github.io/loomeR/index.html" class="external-link">website here</a>.</p>
 <p>See the <a href="https://nicholascarey.github.io/loomeR/reference/index.html" class="external-link">Reference</a> page to view the detailed Help file for each function.</p>
 <div class="section level3">
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -91,8 +92,13 @@
 <div class="section level4">
 <h4 id="id_1-create-an-animation-model">1. Create an animation model<a class="anchor" aria-label="anchor" href="#id_1-create-an-animation-model"></a>
 </h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diameter_model</span>(), <span class="fu">constant_speed_model</span>(), <span class="fu">variable_speed_model</span>()</span></code></pre></div>
 <p>The package can create simple or complex animations in three ways:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/diameter_model.html">diameter_model</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/constant_speed_model.html">constant_speed_model</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/variable_speed_model.html">variable_speed_model</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Use of basic inputs: enter start and end screen diameters, and total duration.</li>
 <li>Use of realistic parameters: the function will determine the correct screen diameters for each animation frame using…
@@ -109,7 +115,7 @@
 <div class="section level4">
 <h4 id="id_2-create-an-animation-from-the-model">2. Create an animation from the model<a class="anchor" aria-label="anchor" href="#id_2-create-an-animation-from-the-model"></a>
 </h4>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/looming_animation.html">looming_animation</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>To create the animation from the model, <code>loomeR</code> requires <a href="http://ffmpeg.org" class="external-link">ffmpeg</a>, a free, cross-platform, command-line utility for encoding video to be installed on your system. This currently works in <code>R</code> on <strong>macOS</strong> and <strong>Windows</strong>. Support for <strong>Linux</strong> is planned: please <a href="mailto:nicholascarey@gmail.com">get in touch</a> if you would like to help with testing on Linux systems.</p>
 <p>Many options are available to customise the animation; specifying a frame rate, modifying the colour and background, padding the video with blank frames to a desired total duration, marking frames to assist with identifying when escape responses occur, and more. <br><br></p>
@@ -117,7 +123,7 @@
 <div class="section level4">
 <h4 id="id_3-analyse-escape-responses">3. Analyse escape responses<a class="anchor" aria-label="anchor" href="#id_3-analyse-escape-responses"></a>
 </h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/get_alt.html">get_alt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This function calculates the viewing angle, alpha (<strong>α</strong>), for each frame in the animation, and the change in this viewing angle per unit time (<strong>dα/dt</strong> in radians/second) (<em>Dill 1974</em>). Given a response frame the <em>Apparent Looming Threshold</em> (<strong>ALT</strong>, <em>Webb 1982</em>) can be determined. These metrics can all be corrected for different viewing distances if the specimen has moved to a different distance from the screen, which will affect the perceived <strong>α</strong> and thus <strong>ALT</strong>. The new perceived speed and distance for the different viewing distance are also returned. A visual response latency (i.e. to account for neurological lag in response time) can also be applied. <br><br></p>
 </div>
@@ -129,7 +135,7 @@
 <div class="section level5">
 <h5 id="id_1-create-a-model">1. Create a model<a class="anchor" aria-label="anchor" href="#id_1-create-a-model"></a>
 </h5>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nicholascarey/loomeR" class="external-link">loomeR</a></span><span class="op">)</span> <span class="co"># load the package</span></span>
 <span><span class="co">#&gt; Loading required package: glue</span></span>
 <span><span class="co">#&gt; Loading required package: plotrix</span></span>
@@ -148,13 +154,13 @@
 <div class="section level5">
 <h5 id="id_2-use-the-model-to-create-the-animation">2. Use the model to create the animation<a class="anchor" aria-label="anchor" href="#id_2-use-the-model-to-create-the-animation"></a>
 </h5>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/looming_animation.html">looming_animation</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="id_3-extract-the-alt">3. Extract the ALT<a class="anchor" aria-label="anchor" href="#id_3-extract-the-alt"></a>
 </h5>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># E.g. from response frame 100, and applying a response latency of 60 milliseconds</span></span>
 <span><span class="fu"><a href="reference/get_alt.html">get_alt</a></span><span class="op">(</span><span class="va">x</span>, response_frame <span class="op">=</span> <span class="fl">100</span>, latency <span class="op">=</span> <span class="fl">0.06</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -221,7 +227,7 @@
 <p>If you use <code>loomeR</code> in your work, a citation using this zenodo DOI would be much appreciated:</p>
 <p><a href="https://doi.org/10.5281/zenodo.1212570" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1212570.svg" alt="DOI"></a></p>
 <p>Or run this code:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"loomeR"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To cite package 'loomeR' in publications use:</span></span>
